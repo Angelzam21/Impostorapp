@@ -23,7 +23,7 @@
       --line: rgba(255,255,255,.09); --glow-line: rgba(255,107,0,.25);
       --safe-top: env(safe-area-inset-top,0px); --safe-bottom: env(safe-area-inset-bottom,0px);
       --safe-left: env(safe-area-inset-left,0px); --safe-right: env(safe-area-inset-right,0px);
-      --app-height: 100dvh; --viewport-top: 0px; --header-height: 80px; --bar-height: 84px;
+      --app-height: 100dvh; --viewport-top: 0px;
       --gutter: 22px; color-scheme: dark;
     }
     * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
@@ -44,21 +44,22 @@
     [hidden] { display:none!important; }
     .sr-only { position:absolute; width:1px; height:1px; padding:0; overflow:hidden; clip:rect(0,0,0,0); white-space:nowrap; border:0; }
     /* The document never scrolls. Only designated lists and sheet bodies scroll. */
-    .app-shell { position:relative; top:var(--viewport-top); height:var(--app-height); max-height:100dvh; max-width:980px; margin:auto; }
-    .topbar { position:fixed; z-index:30; top:var(--viewport-top); left:50%; transform:translateX(-50%); width:min(100%,980px); height:calc(var(--header-height) + var(--safe-top)); padding:var(--safe-top) max(var(--gutter),var(--safe-right)) 0 max(var(--gutter),var(--safe-left)); display:flex; align-items:center; justify-content:space-between; gap:8px; background:rgba(9,9,11,.88); -webkit-backdrop-filter:blur(20px); backdrop-filter:blur(20px); }
-    .brand { display:flex; align-items:center; gap:9px; min-width:0; }
-    .brand-crest { width:30px; height:34px; color:var(--accent); }
-    .brand-name { font-size:15px; font-weight:850; letter-spacing:2.4px; line-height:1.2; }
-    .brand-sub { font-size:7px; letter-spacing:1.65px; color:var(--lavender); margin-top:5px; font-weight:700; white-space:nowrap; }
-    .top-actions { display:flex; gap:0; flex-shrink:0; }
-    .icon-button { display:inline-flex; align-items:center; justify-content:center; min-width:44px; width:44px; height:44px; flex-shrink:0; border-radius:12px; color:var(--muted); background:transparent; }
+    .app-shell { position:relative; top:var(--viewport-top); height:var(--app-height); max-height:100dvh; max-width:980px; margin:auto; display:flex; flex-direction:column; padding:calc(var(--safe-top) + 8px) max(var(--gutter),var(--safe-right)) calc(var(--safe-bottom) + 12px) max(var(--gutter),var(--safe-left)); }
+    .game-hud { position:relative; z-index:30; flex-shrink:0; align-self:center; display:flex; align-items:center; gap:8px; min-height:44px; max-width:100%; padding:0 4px 0 16px; border-radius:28px; background:#050506; box-shadow:0 6px 20px #0003; }
+    .hud-label { font-size:11px; font-weight:650; white-space:nowrap; color:var(--muted); font-variant-numeric:tabular-nums; }
+    .hud-lock { color:var(--accent); width:15px!important; height:15px!important; }
+    .hud-private { font-size:10px; color:var(--muted); }
+    .hud-tools { display:flex; }
+    .icon-button { display:inline-flex; align-items:center; justify-content:center; min-width:44px; width:44px; height:44px; flex-shrink:0; border-radius:50%; color:var(--muted); background:transparent; }
     .icon-button:hover { background:#ffffff08; color:var(--text); }
-    .top-actions svg { width:19px; height:19px; }
-    .progress { position:absolute; bottom:0; left:50%; transform:translate(-50%,50%); display:flex; gap:6px; align-items:center; background:var(--bg); padding:0 9px; }
-    .progress span { width:5px; height:5px; border-radius:8px; background:#ffffff26; transition:width .2s,background .2s; }
+    .hud-tools svg { width:18px; height:18px; }
+    .progress { display:flex; gap:5px; align-items:center; }
+    .progress span { width:5px; height:5px; border-radius:8px; background:#ffffff26; transition:width .42s cubic-bezier(.32,.72,0,1),background .2s; }
     .progress .done { background:var(--purple); }
-    .progress .current { width:25px; background:var(--accent); box-shadow:0 0 15px #ff6b0030; }
-    .main-stage { position:relative; z-index:0; width:100%; height:100%; padding:calc(var(--header-height) + var(--safe-top)) max(var(--gutter),var(--safe-right)) calc(84px + var(--safe-bottom)) max(var(--gutter),var(--safe-left)); display:flex; outline:none; overflow:hidden; }
+    .progress .current { width:18px; background:var(--accent); }
+    .app-shell[data-phase="game"] .game-hud,.app-shell[data-phase="vote"] .game-hud,.app-shell[data-phase="guess"] .game-hud,.app-shell[data-phase="result"] .game-hud { align-self:stretch; justify-content:space-between; padding:0; background:transparent; box-shadow:none; }
+    .app-shell:not([data-phase="setup"]) #hud-help { display:none; }
+    .main-stage { position:relative; z-index:0; width:100%; flex:1; min-height:0; display:flex; outline:none; overflow:clip; }
     .screen { width:100%; max-width:620px; margin:0 auto; min-height:0; min-width:0; display:flex; flex-direction:column; padding:26px 0 18px; gap:18px; animation:enter .28s ease-out; }
     .screen-heading { flex-shrink:0; min-width:0; }
     .chapter { display:inline-flex; align-items:center; min-height:24px; padding:4px 8px; background:#211b17; border-radius:6px; text-transform:uppercase; letter-spacing:.1em; font-size:9px; font-weight:800; color:var(--lavender); margin-bottom:12px; }
@@ -94,8 +95,9 @@
     .note { font-size:11px; color:var(--muted); display:flex; align-items:center; gap:8px; flex-shrink:0; }
     .note svg { width:14px; height:14px; }
     .threshold.ready { color:var(--lavender); }
-    .bottom-bar { position:fixed; z-index:20; top:calc(var(--viewport-top) + var(--app-height) - var(--bar-height) - var(--safe-bottom)); left:50%; transform:translateX(-50%); width:min(100%,980px); height:calc(var(--bar-height) + var(--safe-bottom)); padding:8px max(var(--gutter),var(--safe-right)) calc(8px + var(--safe-bottom)) max(var(--gutter),var(--safe-left)); background:rgba(9,9,11,.94); -webkit-backdrop-filter:blur(12px); backdrop-filter:blur(12px); }
-    .bar-inner { max-width:620px; margin:0 auto; }
+    /* Intrinsic controls occupy only their own height; there is no fixed footer. */
+    .action-deck { position:relative; z-index:20; flex-shrink:0; width:100%; max-width:620px; margin:0 auto; padding-top:8px; background:transparent; }
+    .deck-inner { display:flex; flex-direction:column; gap:10px; }
     .action-row { display:flex; align-items:stretch; gap:10px; }
     .action-row>* { flex:1; min-width:0; }
     .action-row .back { flex:0 0 94px; }
@@ -104,8 +106,8 @@
     .primary:hover { filter:brightness(1.08); }
     .secondary { background:#232326; border:0; color:#e5ddeb; }
     .danger { background:var(--purple); color:white; }
-    .action-caption { display:flex; justify-content:space-between; gap:10px; font-size:8px; line-height:12px; letter-spacing:.7px; text-transform:uppercase; color:var(--muted); margin-top:2px; }
-    .action-caption span:last-child { flex-shrink:0; color:var(--lavender); }
+    .action-hint { font-size:11px; line-height:16px; text-align:center; color:var(--muted); }
+    .action-hint:empty { display:none; }
     .text-button { background:transparent; min-height:44px; color:var(--muted); font-size:12px; }
     .segmented { display:flex; background:#09090b; border:0; border-radius:14px; padding:5px; gap:5px; }
     .segmented button { flex:1; min-width:0; min-height:64px; border-radius:10px; background:transparent; color:var(--muted); display:flex; align-items:center; justify-content:center; gap:8px; font-size:13px; font-weight:650; }
@@ -226,7 +228,7 @@
     .sheet .action-row .primary { margin-top:0; }
     .sheet .small-print { font-size:11px; margin-top:12px; }
     .error-text { color:#e5c5ff!important; font-size:12px; min-height:18px; margin-top:8px; }
-    .toast { position:fixed; left:50%; top:calc(var(--viewport-top) + var(--header-height) + var(--safe-top) + 12px); transform:translateX(-50%); z-index:40; width:max-content; max-width:calc(100% - 32px); padding:12px 16px; border:0; background:#2d2722; border-radius:13px; font-size:12px; box-shadow:0 10px 35px #0008; text-align:center; pointer-events:none; }
+    .toast { position:fixed; left:50%; top:calc(var(--viewport-top) + var(--safe-top) + 60px); transform:translateX(-50%); z-index:40; width:max-content; max-width:calc(100% - 32px); padding:12px 16px; border:0; background:#2d2722; border-radius:13px; font-size:12px; box-shadow:0 10px 35px #0008; text-align:center; pointer-events:none; }
     .splash { align-items:center; justify-content:center; text-align:center; gap:0; }
     .splash-title { font-family:"SF Pro Display",-apple-system,BlinkMacSystemFont,"Helvetica Neue",sans-serif; color:#f5f5f7; font-size:clamp(48px,14vw,76px); letter-spacing:-.055em; font-weight:850; line-height:1.15; }
     .splash-edition { color:#ff6b00; font-size:11px; font-weight:700; letter-spacing:.25em; text-transform:uppercase; margin-top:14px; padding:8px 13px 8px 16px; border:0; border-radius:4px; background:transparent; line-height:1.3; flex-shrink:0; }
@@ -255,8 +257,8 @@
       .result-card .result-word { font-size:22px; }
     }
     @keyframes enter { from { opacity:0; transform:translate3d(0,7px,0); } to { opacity:1; transform:translate3d(0,0,0); } }
-    @media(min-width:760px) { :root { --gutter:36px; --header-height:88px; } .screen { padding-top:30px; gap:22px; } .brand-name { font-size:17px; } .brand-sub { font-size:8px; } }
-    @media(max-width:360px) { :root { --gutter:14px; } .brand-name { font-size:13px; letter-spacing:1.8px; } .brand-sub { font-size:6px; letter-spacing:1.3px; } .brand { gap:6px; } .brand-crest { width:24px; } .category { padding:12px; } .primary,.secondary { font-size:12px; padding-left:10px; padding-right:10px; } .vote-choice { padding:9px; gap:6px; } .vote-choice .avatar { width:26px; height:30px; } }
+    @media(min-width:760px) { :root { --gutter:36px; } .screen { padding-top:30px; gap:22px; } }
+    @media(max-width:360px) { :root { --gutter:14px; } .category { padding:12px; } .primary,.secondary { font-size:12px; padding-left:10px; padding-right:10px; } .vote-choice { padding:9px; gap:6px; } .vote-choice .avatar { width:26px; height:30px; } }
     @media(max-height:760px) { .screen { padding-top:20px; gap:14px; } .screen-heading h1 { font-size:30px; } .center-heading h1 { font-size:27px; } .intro { margin-top:8px; } .panel { padding:16px; } .timer-ring { max-height:230px; } .time-preview { padding:12px; } .preview-time { font-size:48px; } .summary { gap:8px; } .summary-value { font-size:20px; } .summary-themes { padding-top:8px; } .pumpkin-hero { width:210px; margin:18px 0; } }
     /* visualViewport updates this state when the iOS keyboard reduces usable height. */
     .compact .screen { padding:12px 0; gap:10px; }
@@ -319,13 +321,13 @@
     .short .result-card .label { font-size:8px; }
     .short .result-card .result-names { font-size:16px; }
     .short .result-card .result-word { font-size:21px; }
-    @media(max-height:480px) and (orientation:landscape) { :root { --header-height:56px; } .screen { max-width:720px; } .brand-sub { display:none; } .screen[data-screen="setup-1"] .stage-body { flex-direction:row; align-items:start; } .screen[data-screen="setup-1"] .stage-body>* { flex:1; } .toggle-description { display:none; } .screen[data-screen="setup-1"] .panel { padding:8px; } .screen[data-screen="setup-1"] .divider { margin:5px 0; } .splash { display:grid; grid-template-columns:1fr 1fr; align-content:center; column-gap:20px; } .pumpkin-hero { grid-column:1; grid-row:1/4; justify-self:center; width:170px!important; margin:0!important; } .splash-title,.splash-edition,.splash-tagline { grid-column:2; } .splash-title { font-size:34px!important; } .splash-edition { margin:8px 0; } }
+    @media(max-height:480px) and (orientation:landscape) { .screen { max-width:720px; } .screen[data-screen="setup-1"] .stage-body { flex-direction:row; align-items:start; } .screen[data-screen="setup-1"] .stage-body>* { flex:1; } .toggle-description { display:none; } .screen[data-screen="setup-1"] .panel { padding:8px; } .screen[data-screen="setup-1"] .divider { margin:5px 0; } .splash { display:grid; grid-template-columns:1fr 1fr; align-content:center; column-gap:20px; } .pumpkin-hero { grid-column:1; grid-row:1/4; justify-self:center; width:170px!important; margin:0!important; } .splash-title,.splash-edition,.splash-tagline { grid-column:2; } .splash-title { font-size:34px!important; } .splash-edition { margin:8px 0; } }
     /* Persistent setup pages occupy one composited, horizontal navigation track. */
-    .view-layer { position:absolute; inset:calc(var(--header-height) + var(--safe-top)) max(var(--gutter),var(--safe-right)) calc(var(--bar-height) + var(--safe-bottom)) max(var(--gutter),var(--safe-left)); display:flex; min-width:0; min-height:0; }
+    .view-layer { position:absolute; inset:0; display:flex; min-width:0; min-height:0; }
     .view-layer > .screen { height:100%; animation:none; }
     .view-enter { animation:view-arrive .42s cubic-bezier(.32,.72,0,1) both; }
     .view-exit { pointer-events:none; animation:view-depart .32s ease both; }
-    .wizard-viewport { overflow:hidden; width:100%; max-width:620px; height:100%; margin:0 auto; }
+    .wizard-viewport { overflow:clip; width:100%; max-width:620px; height:100%; margin:0 auto; }
     .wizard-track { display:flex; width:400%; height:100%; transition:transform .42s cubic-bezier(.32,.72,0,1); will-change:transform; }
     .wizard-step { width:25%; flex-shrink:0; height:100%; min-width:0; }
     .wizard-step > .screen { width:100%; height:100%; animation:none; }
@@ -334,7 +336,40 @@
     .category-name { line-height:1.3; font-size:13px; font-weight:700; }
     .category-size { line-height:1.45; font-size:10px; }
     .primary,.secondary,.danger,.hold-button { border-radius:18px; }
-    .primary { background:#f58a38; box-shadow:0 4px 24px #ff6b0012; }
+    .primary { background:#f58a38; box-shadow:inset 0 2px 0 #ffc18a55,0 4px 0 #8c401a,0 9px 24px #0004; }
+    .action-deck .primary,.action-deck .secondary,.action-deck .hold-button { min-height:56px; border-radius:28px; }
+    .action-deck .primary:active { transform:translateY(2px) scale(.985); box-shadow:inset 0 1px 0 #ffc18a44,0 2px 0 #8c401a; }
+    .action-deck .hold-button { min-height:60px; background:#222225; }
+    .action-deck .timer-controls .secondary { background:#222225; }
+    .app-shell[data-phase="pass"] .chapter,.app-shell[data-phase="game"] .chapter { display:none; }
+    .app-shell[data-phase="game"] .timer-ring { max-height:340px; }
+    .app-shell[data-phase="game"] .timer-value strong { font-size:clamp(64px,18vw,86px); }
+    .options-list { display:flex; flex-direction:column; gap:8px; }
+    .options-list button { justify-content:flex-start; min-height:56px; }
+    /* Peripheral shading is a visual cue, not protection against shoulder surfing. */
+    .privacy-shield { position:fixed; z-index:25; inset:0; pointer-events:none; opacity:0; background:linear-gradient(#000e,transparent 29%,transparent 72%,#000e),linear-gradient(90deg,#000c,transparent 22%,transparent 78%,#000c); }
+    .secret-open .privacy-shield { opacity:1; }
+    .secret-open .game-hud { opacity:.35; }
+    .edge-light { position:fixed; z-index:1; inset:0; pointer-events:none; opacity:0; --edge-color:255,112,24; background:linear-gradient(to bottom,rgba(var(--edge-color),.26),transparent 17%,transparent 82%,rgba(var(--edge-color),.22)); }
+    .edge-light.heartbeat { animation:edge-heartbeat .65s linear both; }
+    .edge-light[data-verdict="crew"] { --edge-color:238,164,64; opacity:.65; }
+    .edge-light[data-verdict="impostors"] { --edge-color:139,18,30; opacity:.8; }
+    .celebration[data-verdict="impostors"] { background:radial-gradient(ellipse at 50% 58%,#8b121e55,transparent 72%); }
+    .app-shell[data-outcome="impostors"] .verdict-seal { color:#d36a60; }
+    .handoff-ready { animation:handoff-breathe .85s ease-out; }
+    @keyframes edge-heartbeat { 0%,100% { opacity:0; } 6% { opacity:.85; } 23% { opacity:.12; } 35% { opacity:.65; } 66% { opacity:0; } }
+    @keyframes handoff-breathe { 0%,100% { filter:brightness(1); } 30% { filter:brightness(1.25); box-shadow:inset 0 2px 0 #ffc18a55,0 4px 0 #8c401a,0 0 28px #f58a3855; } }
+    .compact .app-shell { padding-top:calc(var(--safe-top) + 4px); padding-bottom:calc(var(--safe-bottom) + 8px); }
+    .compact .deck-inner { gap:8px; }
+    .compact .app-shell[data-phase="game"] .timer-ring { max-height:210px; }
+    .short .app-shell[data-phase="game"] .timer-ring { max-height:130px; }
+    .short .app-shell[data-phase="game"] .timer-value strong { font-size:38px; }
+    .short .action-deck .primary,.short .action-deck .secondary { min-height:48px; }
+    .short .action-deck .hold-button { min-height:52px; }
+    .short .app-shell[data-phase="pass"] .intro { display:none; }
+    @media(max-width:360px) { .game-hud { gap:6px; padding-left:12px; } .hud-label,.hud-private { font-size:10px; } }
+    @media(max-height:480px) and (orientation:landscape) { .app-shell[data-phase="pass"] .deck-inner,.app-shell[data-phase="game"] .deck-inner { flex-direction:row; align-items:stretch; } .app-shell[data-phase="pass"] .deck-inner>*,.app-shell[data-phase="game"] .deck-inner>* { flex:1; width:0; } }
+    @media(prefers-reduced-motion:reduce) { .edge-light.heartbeat { animation:none; } .edge-light[data-urgent="true"] { opacity:.3; } }
     .celebration { position:fixed; inset:0; z-index:45; pointer-events:none; opacity:0; background:radial-gradient(ellipse at 50% 58%,#ffae5238,transparent 72%); }
     .celebration.is-playing { animation:verdict-pulse 1.1s ease-out both; }
     .verdict-seal { width:100px; height:100px; margin:0 auto 8px; position:relative; color:#e8a95e; flex-shrink:0; }
@@ -356,22 +391,23 @@
     .short .verdict-seal { width:40px; height:40px; }
     .motion-paused .pumpkin-hero::before { animation-play-state:paused; }
     @media(max-width:360px) { .category { padding:12px; min-height:138px; } }
-    @media(prefers-reduced-motion:reduce) { *,*::before,*::after { animation:none!important; transition:none!important; } .pumpkin-sculpture,.pumpkin-light { will-change:auto; } .verdict-seal .laurel { stroke-dashoffset:0; } }
+    @media(prefers-reduced-motion:reduce) { .view-exit { visibility:hidden; } *,*::before,*::after { animation:none!important; transition:none!important; } .pumpkin-sculpture,.pumpkin-light { will-change:auto; } .verdict-seal .laurel { stroke-dashoffset:0; } }
   </style>
 </head>
 <body>
   <div class="app-shell">
-    <header class="topbar">
-      <div class="brand"><svg class="brand-crest" viewBox="0 0 240 220" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M112 55c-8-19 2-33 21-36-4 12-5 24-2 36M130 51c16-18 34-20 49-13-10 13-25 19-44 18"/><path d="M120 64c-39-21-84 3-88 47-5 45 25 76 63 75 18 10 35 10 51 0 40 3 69-30 64-75-4-43-45-68-81-48Z"/><path d="M102 64c-27 20-32 76-14 111m48-111c26 19 31 77 13 111M119 68v24m1 80v15"/><path d="m62 112 32 10-23 11Zm116 0-32 10 23 11ZM109 140l11-16 11 16M77 151l20 7 9-5 14 8 14-8 9 5 20-7-15 21-28 4-28-4Z"/></svg><div><div class="brand-name">IMPOSTOR</div><div class="brand-sub">HALLOWEDDA EDITION</div></div></div>
-      <div id="progress" class="progress" role="img" aria-label="Paso 1 de 4"></div>
-      <nav class="top-actions" aria-label="Opciones de la partida">
-        <button id="sound-button" class="icon-button" data-action="sound" aria-label="Silenciar sonido" aria-pressed="false"></button>
-        <button class="icon-button" data-action="help" aria-label="Cómo jugar"><i data-lucide="circle-help"></i></button>
-        <button class="icon-button" data-action="reset" aria-label="Reiniciar partida"><i data-lucide="rotate-ccw"></i></button>
+    <header id="game-hud" class="game-hud" aria-label="Estado de la partida" hidden>
+      <span id="hud-lock" class="hud-lock" hidden><i data-lucide="lock-keyhole"></i></span>
+      <span id="hud-label" class="hud-label"></span>
+      <div id="progress" class="progress" role="img" aria-label="Paso 1 de 4"><span></span><span></span><span></span><span></span></div>
+      <span id="hud-private" class="hud-private" hidden>Solo tus ojos</span>
+      <nav class="hud-tools" aria-label="Opciones de la partida">
+        <button id="hud-help" class="icon-button" data-action="help" aria-label="Cómo jugar"><i data-lucide="circle-help"></i></button>
+        <button class="icon-button" data-action="options" aria-label="Opciones de la partida" aria-haspopup="dialog"><i data-lucide="ellipsis"></i></button>
       </nav>
     </header>
     <main id="app" class="main-stage" tabindex="-1"></main>
-    <footer id="actions" class="bottom-bar" aria-label="Acciones"></footer>
+    <footer id="actions" class="action-deck" aria-label="Acciones"></footer>
   </div>
   <div id="sheet-layer" class="sheet-layer" aria-hidden="true" inert>
     <div class="sheet-backdrop" data-dismiss-sheet></div>
@@ -379,6 +415,8 @@
       <div class="sheet-grabber" aria-hidden="true"></div><div id="sheet-content" class="sheet-content"></div>
     </section>
   </div>
+  <div id="edge-light" class="edge-light" aria-hidden="true"></div>
+  <div class="privacy-shield" aria-hidden="true"></div>
   <div id="celebration" class="celebration" aria-hidden="true"></div>
   <div id="toast" class="toast" role="status" hidden></div>
   <noscript>Activa JavaScript para jugar a IMPOSTOR.</noscript>
@@ -654,6 +692,7 @@
   const duration = () => settings.players.length*30000;
   // Small inline vector set also keeps every control recognizable without a CDN.
   const paths = {
+    'ellipsis':'<circle cx="5" cy="12" r="1"/><circle cx="12" cy="12" r="1"/><circle cx="19" cy="12" r="1"/>',
     'arrow-right':'<path d="M5 12h14m-6-6 6 6-6 6"/>','arrow-left':'<path d="M19 12H5m6-6-6 6 6 6"/>',
     'plus':'<path d="M12 5v14M5 12h14"/>','x':'<path d="m6 6 12 12M18 6 6 18"/>','check':'<path d="m5 12 4 4L19 6"/>',
     'user':'<circle cx="12" cy="7" r="4"/><path d="M4 21v-2a8 8 0 0 1 16 0v2"/>',
@@ -802,8 +841,24 @@
     }
     if(type==='crew-win'){chord([130.81,164.81,196]);chord([196,261.63,329.63],.2);}
   }
-  function updateSound(){const b=$('#sound-button');b.innerHTML=icon(settings.muted?'volume-x':'volume-2');b.setAttribute('aria-label',settings.muted?'Activar sonido':'Silenciar sonido');b.setAttribute('aria-pressed',String(settings.muted));}
-  function setView(next){stopHold();view=next;render();app.focus({preventScroll:true});}
+  function updateSound(){const b=$('#sound-button');if(!b)return;b.replaceChildren(fragment(`${icon(settings.muted?'volume-x':'volume-2')}<span>${settings.muted?'Activar sonido':'Silenciar sonido'}</span>`));b.setAttribute('aria-label',settings.muted?'Activar sonido':'Silenciar sonido');b.setAttribute('aria-pressed',String(settings.muted));}
+  function setView(next){stopHold();clearHeartbeat();view=next;render();app.focus({preventScroll:true});}
+  function haptic(pattern=8){if(!document.hidden)navigator.vibrate?.(pattern);}
+  function clearHeartbeat(){const edge=$('#edge-light');edge.classList.remove('heartbeat');delete edge.dataset.urgent;}
+  function heartbeat(){
+    if(view!=='game'||document.hidden||sheetOpen)return;
+    const edge=$('#edge-light');edge.classList.remove('heartbeat');void edge.offsetWidth;edge.classList.add('heartbeat');
+  }
+  function renderHUD(){
+    const shell=$('.app-shell'),hud=$('#game-hud'),setup=view==='setup',pass=view==='pass';
+    shell.dataset.phase=view;shell.dataset.outcome=view==='result'?(game.outcome==='crew'?'crew':'impostors'):'';
+    const edge=$('#edge-light');edge.dataset.verdict=shell.dataset.outcome;
+    hud.hidden=view==='splash';$('#hud-lock').hidden=!pass;$('#hud-private').hidden=!pass;
+    $('#hud-label').textContent=setup?`Paso ${step+1} de 4`:pass?`Jugador ${game.passIndex+1} de ${game.players.length}`:view==='splash'?'':`${game.players.length} jugadores`;
+    const progress=$('#progress');progress.hidden=!setup;
+    progress.setAttribute('aria-label',`Configuración: paso ${step+1} de 4`);
+    [...progress.children].forEach((dot,i)=>dot.className=i===step?'current':i<step?'done':'');
+  }
   function heading(kicker,title,description='',center=false){return `<div class="screen-heading ${center?'center-heading':''}"><div class="chapter">${kicker}</div><h1>${title}</h1>${description?`<p class="intro">${description}</p>`:''}</div>`;}
   function screen(content){return `<section class="screen ${view==='splash'?'splash':''}" data-screen="${view==='setup'?`setup-${step}`:view}">${content}</section>`;}
   function primary(label,action,disabled=false,id=''){return `<button ${id?`id="${id}"`:''} class="primary" data-action="${action}" ${disabled?'disabled':''}>${label}${icon('arrow-right')}</button>`;}
@@ -851,23 +906,20 @@
       next.hidden=false;next.inert=false;next.removeAttribute('aria-hidden');next.classList.remove('view-exit');next.classList.add('view-enter');
       if(!next.isConnected)app.append(next);activeLayer=next;
     }
-    renderActions();updateSound();const n=view==='setup'?step:({splash:0,pass:0,game:1,vote:2,guess:2,result:3}[view]);
-    $('#progress').hidden=view==='splash';$('[data-action="reset"]').hidden=view==='splash';
-    $('#progress').innerHTML=Array.from({length:4},(_,i)=>`<span class="${i===n?'current':i<n?'done':''}"></span>`).join('');
-    $('#progress').setAttribute('aria-label',view==='setup'?`Configuración: paso ${step+1} de 4`:`Partida: ${['reparto de cartas','debate','votación','resultado'][n]}`);
+    renderHUD();renderActions();updateSound();
     icons();if(view==='pass')bindHold();if(view==='game')updateTimer();
   }
   function stepError(){if(step===0&&settings.players.length<3)return 'Mínimo 3 jugadores';if(step===1&&settings.players.length<(settings.impostors===2?5:3))return '2 impostores: mínimo 5 jugadores';if(step===2&&!settings.active.length)return 'Elige al menos una categoría';return '';}
   function startError(){return settings.players.length<(settings.impostors===2?5:3)?`Necesitas ${settings.impostors===2?5:3} jugadores para este modo.`:!settings.active.length?'Elige al menos una categoría.':'';}
   function renderActions(){let html='';
-    if(view==='splash')html=`${primary('Entrar a la fiesta','enter')}<div class="action-caption"><span>El misterio empieza contigo</span><span>HALLOWEDDA</span></div>`;
-    if(view==='setup')html=`<div class="action-row">${step>0?`<button class="secondary back" data-action="back">${icon('arrow-left')}Atrás</button>`:''}${primary(step===3?'Comenzar partida':'Siguiente',step===3?'start':'next',!!(step===3?startError():stepError()),'wizard-next')}</div><div class="action-caption"><span id="wizard-status">${escapeHTML(stepError()||['Tu grupo. Tu coartada.','Las reglas del engaño','Cada tema guarda un secreto','Un teléfono. Muchas sospechas.'][step])}</span><span>0${step+1} / 04</span></div>`;
-    if(view==='pass')html=`${primary(game.passIndex===game.players.length-1?'Comenzar debate':'Pasar el teléfono','next-player',!game.seen||holding,'next-player')}<div class="action-caption"><span>Solo tus ojos</span><span>${String(game.passIndex+1).padStart(2,'0')} / ${String(game.players.length).padStart(2,'0')}</span></div>`;
-    if(view==='game')html=`${primary('Votar','vote')}<div class="action-caption"><span>Confía en tus sospechas</span><span>${game.players.length} jugadores</span></div>`;
+    if(view==='splash')html=primary('Entrar a la fiesta','enter');
+    if(view==='setup')html=`<p id="wizard-status" class="action-hint" role="status">${escapeHTML(step===3?startError():stepError())}</p><div class="action-row">${step>0?`<button class="secondary back" data-action="back">${icon('arrow-left')}Atrás</button>`:''}${primary(step===3?'Comenzar partida':'Siguiente',step===3?'start':'next',!!(step===3?startError():stepError()),'wizard-next')}</div>`;
+    if(view==='pass')html=`<button id="hold-button" class="hold-button" aria-label="Mantén presionado para ver tu carta"><span>${icon('fingerprint')}<span id="hold-label">Mantén presionado para revelar</span></span></button>${primary(game.passIndex===game.players.length-1?'Comenzar debate':'Pasar el teléfono','next-player',!game.seen||holding,'next-player')}`;
+    if(view==='game')html=`<div class="timer-controls"><button id="timer-toggle" class="secondary" data-action="timer-toggle">${icon('pause')}<span>Pausar</span></button><button class="secondary" data-action="timer-extend" aria-label="Agregar 30 segundos">+30s</button></div>${primary('Votar','vote')}`;
     if(view==='vote')html=`<div class="action-row"><button class="secondary back" data-action="back-debate">Volver</button>${primary('Confirmar voto','confirm-vote',game.votes.length!==game.impostorIds.length)}</div>`;
     if(view==='guess')html=`<div class="action-row"><button class="secondary back" data-action="skip-guess">Rendirse</button><button class="primary" type="submit" form="guess-form">Confirmar palabra ${icon('arrow-right')}</button></div>`;
     if(view==='result')html=`<div class="action-row"><button class="secondary back" data-action="setup">Editar grupo</button>${primary('Otra ronda','start')}</div>`;
-    actions.innerHTML=`<div class="bar-inner">${html}</div>`;
+    actions.replaceChildren(fragment(`<div class="deck-inner">${html}</div>`));
   }
   function splashView(){return screen(`<h1 class="splash-title">IMPOSTOR</h1><p class="splash-edition">HALLOWEDDA EDITION</p><div class="pumpkin-hero">${pumpkin()}</div><p class="splash-tagline">Un teléfono. Muchas sospechas. ¿Quién está mintiendo?</p>`);}
   function setupView(){
@@ -880,17 +932,26 @@
   function refreshPlayers(){const container=$('#players-container');if(container){container.innerHTML=playerList();$('#player-count').textContent=`${String(settings.players.length).padStart(2,'0')} / 20`;const t=$('#player-threshold');t.innerHTML=`${icon(settings.players.length>=3?'check':'users')}${settings.players.length>=3?'La mesa está lista. Puedes agregar más jugadores.':'Mínimo 3 jugadores. Máximo 20 sospechosos.'}`;t.classList.toggle('ready',settings.players.length>=3);}renderActions();icons();}
   function categoryCard(c){const custom=c.id.startsWith('custom-');return `${custom?'<div class="custom-category">':''}<button class="category" data-action="category" data-id="${c.id}" aria-pressed="${settings.active.includes(c.id)}"><span class="selection-mark">${icon('check')}</span><span class="category-icon">${icon(c.icon)}</span><span class="category-name">${escapeHTML(c.name)}</span><span class="category-size">${escapeHTML(c.description||`${c.words.length} secretos de tu grupo`)}</span></button>${custom?`<button class="custom-delete" data-action="delete-category" data-id="${c.id}" aria-label="Eliminar categoría ${escapeHTML(c.name)}">${icon('trash-2')}Eliminar</button></div>`:''}`;}
   function startGame(){if(startError())return toast(startError());clearInterval(timerInterval);const categories=allCategories().filter(c=>settings.active.includes(c.id)),category=categories[randomIndex(categories.length)],players=settings.players.map((name,id)=>({id,name}));game={players,category,word:category.words[randomIndex(category.words.length)],impostorIds:shuffle(players).slice(0,settings.impostors).map(p=>p.id),hints:settings.hints,passIndex:0,seen:false,remaining:duration(),total:duration(),deadline:null,lastTick:null,votes:[],outcome:null};setView('pass');requestWakeLock();}
-  function passView(){return screen(`${heading(`El secreto · ${game.passIndex+1} de ${game.players.length}`,`Pasa el teléfono a<span class="pass-name">${escapeHTML(game.players[game.passIndex].name)}</span>`,'Asegúrate de que nadie más esté mirando.',true)}<div class="stage-body"><div id="secret-card" class="panel secret-card">${hiddenCard()}</div><button id="hold-button" class="hold-button" aria-label="Mantén presionado para ver tu carta"><span>${icon('fingerprint')}<span id="hold-label">Mantén presionado para revelar</span></span></button><p class="security-note">${icon('lock-keyhole')}Tu carta se oculta en cuanto sueltas.</p></div>`);}
+  function passView(){return screen(`${heading(`El secreto · ${game.passIndex+1} de ${game.players.length}`,`Pasa el teléfono a<span class="pass-name">${escapeHTML(game.players[game.passIndex].name)}</span>`,'Asegúrate de que nadie más esté mirando.',true)}<div class="stage-body"><div id="secret-card" class="panel secret-card">${hiddenCard()}</div><p class="security-note">${icon('lock-keyhole')}Tu carta se oculta en cuanto sueltas.</p></div>`);}
   function hiddenCard(){return `<div class="secret-content"><div class="secret-symbol">${crest()}</div><div class="role-label">ACCESO RESERVADO</div><h2>Que nadie mire.</h2><p>Tu lealtad está al otro lado.</p></div>`;}
-  function beginHold(){if(holding||view!=='pass'||document.hidden||sheetOpen)return;unlockAudio();holding=true;$('#hold-button').classList.add('holding');$('#hold-label').textContent='Un instante… sigue presionando';$('#next-player').disabled=true;holdTimeout=setTimeout(()=>{if(!holding||view!=='pass'||document.hidden)return;const impostor=game.impostorIds.includes(game.players[game.passIndex].id),card=$('#secret-card');card.classList.toggle('impostor',impostor);sound(impostor?'impostor-reveal':'crew-reveal');card.innerHTML=`<div class="secret-content"><div class="secret-symbol">${crest(impostor?'dagger':'eye')}</div><div class="role-label">${impostor?'NO CONOCES LA PALABRA':'ERES TRIPULANTE'}</div><h2>${impostor?'¡Eres el impostor!':escapeHTML(game.word)}</h2><p>${impostor?(game.hints?`Tu pista: ${escapeHTML(game.category.name)}`:'Escucha. Improvisa. No dejes rastro.'):escapeHTML(game.category.name)}</p></div>`;game.seen=true;$('#hold-label').textContent='Memoriza. Suelta para ocultar.';},650);}
-  function stopHold(){clearTimeout(holdTimeout);holding=false;pointerId=null;holdKey=null;const button=$('#hold-button');if(button){button.classList.remove('holding');$('#hold-label').textContent='Mantén presionado para revelar';$('#secret-card').classList.remove('impostor');$('#secret-card').innerHTML=hiddenCard();if($('#next-player'))$('#next-player').disabled=!game?.seen;}}
+  function beginHold(){if(holding||view!=='pass'||document.hidden||sheetOpen)return;unlockAudio();holding=true;document.documentElement.classList.add('secret-open');$('#next-player').classList.remove('handoff-ready');$('#hold-button').classList.add('holding');$('#hold-label').textContent='Un instante… sigue presionando';$('#next-player').disabled=true;holdTimeout=setTimeout(()=>{if(!holding||view!=='pass'||document.hidden)return;const impostor=game.impostorIds.includes(game.players[game.passIndex].id),card=$('#secret-card');card.classList.toggle('impostor',impostor);sound(impostor?'impostor-reveal':'crew-reveal');card.innerHTML=`<div class="secret-content"><div class="secret-symbol">${crest(impostor?'dagger':'eye')}</div><div class="role-label">${impostor?'NO CONOCES LA PALABRA':'ERES TRIPULANTE'}</div><h2>${impostor?'¡Eres el impostor!':escapeHTML(game.word)}</h2><p>${impostor?(game.hints?`Tu pista: ${escapeHTML(game.category.name)}`:'Escucha. Improvisa. No dejes rastro.'):escapeHTML(game.category.name)}</p></div>`;game.seen=true;$('#hold-label').textContent='Memoriza. Suelta para ocultar.';},650);}
+  function stopHold(){
+    const wasHolding=holding;clearTimeout(holdTimeout);holding=false;pointerId=null;holdKey=null;
+    document.documentElement.classList.remove('secret-open');
+    const button=$('#hold-button');
+    if(button){button.classList.remove('holding');$('#hold-label').textContent='Mantén presionado para revelar';$('#secret-card').classList.remove('impostor');$('#secret-card').replaceChildren(fragment(hiddenCard()));
+      const next=$('#next-player');if(next){next.disabled=!game?.seen;if(wasHolding&&game?.seen){next.classList.add('handoff-ready');haptic();}}
+    }
+  }
   function bindHold(){const button=$('#hold-button');button.addEventListener('pointerdown',event=>{if(event.button!==0||holding)return;event.preventDefault();button.focus({preventScroll:true});pointerId=event.pointerId;button.setPointerCapture(event.pointerId);beginHold();});button.addEventListener('pointermove',event=>{if(event.pointerId!==pointerId)return;const r=button.getBoundingClientRect();if(event.clientX<r.left||event.clientX>r.right||event.clientY<r.top||event.clientY>r.bottom)stopHold();});['pointerup','pointercancel','lostpointercapture','blur'].forEach(type=>button.addEventListener(type,stopHold));button.addEventListener('contextmenu',event=>event.preventDefault());button.addEventListener('keydown',event=>{if(event.key===' '||event.key==='Enter'){event.preventDefault();if(!event.repeat&&!holding){holdKey=event.key;beginHold();}}});button.addEventListener('keyup',event=>{if(event.key===holdKey){event.preventDefault();stopHold();}});}
   function nextPlayer(){if(!game.seen||holding)return;game.passIndex++;game.seen=false;if(game.passIndex>=game.players.length){setView('game');startTimer();}else setView('pass');}
-  function gameView(){return screen(`${heading('El momento de sospechar','Hablen. Duden.<br><em>Encuentren al impostor.</em>','Den pistas sin decir la palabra. Escuchen cada detalle.',true)}<div class="stage-body"><div class="timer-stage"><div id="timer-ring" class="timer-ring"><svg viewBox="0 0 260 260" aria-hidden="true"><circle class="timer-ticks" cx="130" cy="130" r="120"/><circle class="timer-track" cx="130" cy="130" r="106"/><circle id="timer-progress" class="timer-progress" cx="130" cy="130" r="106" stroke-dasharray="666.018" stroke-dashoffset="0"/></svg><div class="timer-value" role="timer" aria-label="Tiempo restante de debate"><strong id="timer-display">${formatTime(game.remaining)}</strong><small id="timer-label">Para debatir</small></div></div><p id="timer-announcement" class="timer-announcement" aria-live="polite">${game.remaining<=0?'El tiempo terminó. Es hora de votar.':'Una buena coartada también puede ser una mentira.'}</p></div><div class="timer-controls"><button id="timer-toggle" class="secondary" data-action="timer-toggle">${icon('pause')}<span id="timer-toggle-label">Pausar</span></button><button class="secondary" data-action="timer-extend" aria-label="Agregar 30 segundos">+30s</button></div></div>`);}
+  function gameView(){return screen(`${heading('El momento de sospechar','Hablen. Duden.<br><em>Encuentren al impostor.</em>','Den pistas sin decir la palabra. Escuchen cada detalle.',true)}<div class="stage-body"><div class="timer-stage"><div id="timer-ring" class="timer-ring"><svg viewBox="0 0 260 260" aria-hidden="true"><circle class="timer-ticks" cx="130" cy="130" r="120"/><circle class="timer-track" cx="130" cy="130" r="106"/><circle id="timer-progress" class="timer-progress" cx="130" cy="130" r="106" stroke-dasharray="666.018" stroke-dashoffset="0"/></svg><div class="timer-value" role="timer" aria-label="Tiempo restante de debate"><strong id="timer-display">${formatTime(game.remaining)}</strong><small id="timer-label">Para debatir</small></div></div><p id="timer-announcement" class="timer-announcement" aria-live="polite">${game.remaining<=0?'El tiempo terminó. Es hora de votar.':'Una buena coartada también puede ser una mentira.'}</p></div></div>`);}
   function startTimer(){if(!game||game.remaining<=0)return;game.deadline=Date.now()+game.remaining;game.lastTick=null;clearInterval(timerInterval);timerInterval=setInterval(updateTimer,100);updateTimer();}
   function pauseTimer(){if(game?.deadline){game.remaining=Math.max(0,game.deadline-Date.now());game.deadline=null;}clearInterval(timerInterval);updateTimer();}
   function updateTimer(){if(!game)return;const wasRunning=!!game.deadline;if(wasRunning){game.remaining=Math.max(0,game.deadline-Date.now());if(game.remaining===0){game.deadline=null;clearInterval(timerInterval);sound('gong');if(view==='game'){$('#timer-announcement').textContent='El tiempo terminó. Es hora de votar.';}}}
-    const seconds=Math.ceil(game.remaining/1000);if(wasRunning&&seconds>0&&seconds<=10&&game.lastTick!==seconds){game.lastTick=seconds;sound('tick');}
+    const seconds=Math.ceil(game.remaining/1000);if(wasRunning&&seconds>0&&seconds<=10&&game.lastTick!==seconds){game.lastTick=seconds;sound('tick');heartbeat();}
+    const urgent=view==='game'&&!!game.deadline&&seconds>0&&seconds<=10&&!document.hidden&&!sheetOpen;
+    if(!urgent)clearHeartbeat();else $('#edge-light').dataset.urgent='true';
     if(view!=='game'||!$('#timer-display'))return;
     $('#timer-display').textContent=formatTime(game.remaining);$('#timer-progress').style.strokeDashoffset=666.018*(1-Math.min(1,game.remaining/game.total));$('#timer-label').textContent=seconds===0?'Es hora de votar':game.deadline?'Para debatir':'En pausa';$('#timer-ring').classList.toggle('urgent',seconds<=10&&seconds>0);
     const state=game.deadline?'running':'paused',button=$('#timer-toggle');if(button.dataset.state!==state){button.dataset.state=state;button.innerHTML=`${icon(game.deadline?'pause':'play')}<span>${game.deadline?'Pausar':'Continuar'}</span>`;icons();}button.disabled=seconds===0;
@@ -903,7 +964,7 @@
   function verdictSeal(crew){return `<div class="verdict-seal"><svg viewBox="0 0 120 120" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><g class="laurel" stroke-linecap="round" stroke-linejoin="round"><path d="M53 103C18 91 13 54 31 26M67 103c35-12 40-49 22-77M29 36l-9-2 2 13 6 4M23 55l-10-1 5 13 7 2M27 74l-10 2 9 11 8-1M37 91l-8 5 12 7 8-5M91 36l9-2-2 13-6 4M97 55l10-1-5 13-7 2M93 74l10 2-9 11-8-1M83 91l8 5-12 7-8-5"/></g><g class="seal-core"><path d="m60 17 25 12v30c0 19-25 34-25 34S35 78 35 59V29Z" fill="#e8a95e0a"/>${crew?'<path d="m46 55 10 10 19-23" stroke-width="3"/>':'<path d="m60 34 8 26-8 13-8-13Zm-13 29h26M60 73v9"/>'}<path d="m60 3 2 5 5 2-5 2-2 5-2-5-5-2 5-2Z" fill="currentColor" stroke="none"/></g></svg>${Array.from({length:9},(_,i)=>`<span class="ember" style="--delay:${i*.08+.2}s;--drift:${(i-4)*15}px"></span>`).join('')}</div>`;}
   function finish(outcome){
     document.activeElement?.blur();clearInterval(timerInterval);releaseWakeLock();game.deadline=null;game.outcome=outcome;setView('result');sound(outcome==='crew'?'crew-win':'impostor-win');
-    const pulse=$('#celebration');pulse.classList.remove('is-playing');void pulse.offsetWidth;pulse.classList.add('is-playing');
+    haptic([18,35,24]);const pulse=$('#celebration');pulse.dataset.verdict=outcome==='crew'?'crew':'impostors';pulse.classList.remove('is-playing');void pulse.offsetWidth;pulse.classList.add('is-playing');
     activeLayer.querySelector('.result-card').classList.add('verdict-shake');
   }
   const modalHeader=title=>`<div class="sheet-heading"><h2 id="modal-title">${title}</h2><button class="icon-button" data-action="close-modal" aria-label="Cerrar">${icon('x')}</button></div>`;
@@ -911,7 +972,7 @@
   let sheetOpen=false,sheetReturnFocus=null,sheetDrag=null;
   const sheetLayer=$('#sheet-layer'),sheetContent=$('#sheet-content');
   function openModal(html){
-    stopHold();if(!sheetOpen)sheetReturnFocus=document.activeElement;
+    stopHold();clearHeartbeat();if(!sheetOpen)sheetReturnFocus=document.activeElement;
     sheetContent.replaceChildren(fragment(html));sheetContent.scrollTop=0;sheetOpen=true;
     sheetLayer.inert=false;sheetLayer.setAttribute('aria-hidden','false');sheetLayer.classList.add('is-open');
     $('.app-shell').inert=true;syncSplashMotion();icons();modal.focus({preventScroll:true});
@@ -946,6 +1007,9 @@
     sheetDrag=null;modal.style.transition='';modal.style.transform='';if(dismiss)closeModal();
   }
   ['pointerup','pointercancel','lostpointercapture'].forEach(type=>modal.addEventListener(type,endSheetDrag));
+  function showOptions(){
+    openModal(`${modalHeader('Opciones de la partida')}<div class="options-list"><button id="sound-button" class="secondary" data-action="sound" aria-pressed="${settings.muted}"></button><button class="secondary" data-action="help">${icon('circle-help')}Cómo jugar</button><button class="secondary" data-action="reset">${icon('rotate-ccw')}${view==='setup'?'Volver al primer paso':'Terminar la partida'}</button></div>`);updateSound();icons();
+  }
   function showHelp(){openModal(`${modalHeader('El arte de sospechar')}<ol><li><strong>Reúne al grupo.</strong> Mínimo 3 jugadores para 1 impostor, o 5 para 2.</li><li><strong>Protege tu carta.</strong> Pasa el teléfono. Mantén presionado para ver tu rol y suelta para ocultarlo. Los tripulantes ven la misma palabra; los impostores no.</li><li><strong>Empieza el debate.</strong> Tras la última carta, el tiempo comienza: 30 segundos por jugador. Den pistas sin revelar la palabra. Puedes pausar o agregar 30 segundos.</li><li><strong>Acuerden su voto.</strong> Con 2 impostores deben descubrir a ambos. Si el grupo falla, ganan los impostores.</li><li><strong>Una última oportunidad.</strong> Si los descubren, los impostores pueden ganar adivinando la palabra. Tienen un solo intento, en equipo.</li></ol><div class="divider"></div><p><strong>En tu iPhone:</strong> abre en Safari, toca Compartir y selecciona “Agregar a inicio”.</p><p class="small-print">Los nombres y las categorías se guardan en este dispositivo. Los sonidos se generan en el teléfono. La partida funciona sin conexión una vez abierta; volver a abrir la página sin internet depende de la caché del navegador.</p><button class="primary" data-action="close-modal">Entendido</button>`);}
   function showCustom(){if(settings.custom.length>=20)return toast('Puedes crear hasta 20 categorías.');openModal(`${modalHeader('Tu propio misterio')}<p>Recuerdos, lugares o secretos que solo tu grupo conoce.</p><form id="category-form"><label for="category-name">Nombre de la categoría</label><input id="category-name" class="field" maxlength="36" required placeholder="Ej. Leyendas de la fiesta" autocomplete="off"><label for="category-words">Palabras separadas por comas o saltos de línea</label><textarea id="category-words" class="field" maxlength="5000" required placeholder="La terraza, El vecino, El karaoke"></textarea><p class="small-print">De 3 a 100 palabras distintas. Hasta 48 caracteres por palabra.</p><p id="category-error" class="error-text" role="alert"></p><button class="primary" type="submit">Guardar categoría ${icon('plus')}</button></form>`);}
   function confirmReset(){openModal(`${modalHeader(view==='setup'?'¿Volver al primer paso?':'¿Terminar la partida?')}<p>${view==='setup'?'Volverás a la lista de jugadores.':'La partida actual termina y sus roles se descartan.'} Tus jugadores, categorías y preferencias se conservan.</p><div class="action-row"><button class="secondary" data-action="close-modal">Cancelar</button><button class="danger" data-action="reset-confirm">${view==='setup'?'Volver':'Terminar'}</button></div>`);}
@@ -955,11 +1019,12 @@
     if(event.target.id==='guess-form'){event.preventDefault();if(!normalize($('#word-guess').value))return toast('Escribe tu respuesta antes de revelar.');finish(normalize($('#word-guess').value)===normalize(game.word)?'guessed':'crew');}
   });
   document.addEventListener('click',event=>{
-    const b=event.target.closest('button[data-action]');if(!b||b.disabled)return;const action=b.dataset.action;
+    const b=event.target.closest('button[data-action]');if(!b||b.disabled)return;const action=b.dataset.action;haptic();
     if(action==='enter'){enterParty();return;}
     if(action==='sound'){settings.muted=!settings.muted;if(audioMaster)audioMaster.gain.setValueAtTime(settings.muted?0:.65,audioCtx.currentTime);saveSettings();updateSound();icons();if(!settings.muted)sound('click');return;}
     if(!['suspect','confirm-vote','skip-guess'].includes(action))sound('click');
     if(action==='close-modal')return closeModal();
+    if(action==='options')return showOptions();
     if(action==='help')return showHelp();if(action==='reset')return confirmReset();
     if(action==='next'&&view==='setup'&&!stepError()){document.activeElement?.blur();step=Math.min(3,step+1);render();app.focus({preventScroll:true});}
     if(action==='back'&&view==='setup'){step=Math.max(0,step-1);render();app.focus({preventScroll:true});}
@@ -982,7 +1047,7 @@
   });
   document.addEventListener('pointerdown',unlockAudio,{passive:true});document.addEventListener('keydown',unlockAudio);
   window.addEventListener('blur',stopHold);window.addEventListener('pagehide',()=>{stopHold();releaseWakeLock();});window.addEventListener('pointerup',stopHold);window.addEventListener('pointercancel',stopHold);
-  document.addEventListener('visibilitychange',()=>{syncSplashMotion();stopHold();if(!document.hidden){updateTimer();requestWakeLock();}else if(audioCtx?.state==='running')audioCtx.suspend().catch(()=>{});});
+  document.addEventListener('visibilitychange',()=>{syncSplashMotion();stopHold();clearHeartbeat();if(!document.hidden){updateTimer();requestWakeLock();}else if(audioCtx?.state==='running')audioCtx.suspend().catch(()=>{});});
   // Keyboard-aware viewport height without ever enabling document scrolling.
   function syncViewport(){
     const root=document.documentElement,v=window.visualViewport;
