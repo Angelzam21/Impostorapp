@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover, interactive-widget=resizes-content">
-  <meta name="theme-color" content="#080405">
+  <meta name="theme-color" content="#09090b">
   <meta name="color-scheme" content="dark">
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="mobile-web-app-capable" content="yes">
@@ -15,31 +15,313 @@
   <link id="touch-icon" rel="apple-touch-icon">
   <link id="manifest" rel="manifest">
   <!-- Optional enhancements. Layout, vector fallbacks, audio and gameplay work without CDNs. -->
-  <script src="https://cdn.tailwindcss.com/3.4.17" onload="tailwind.config={corePlugins:{preflight:false}}" async></script>
   <script src="https://unpkg.com/lucide@0.468.0/dist/umd/lucide.min.js" defer></script>
   <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.9.3/dist/confetti.browser.min.js" defer></script>
   <style>
-    :root{--bg:#080405;--glass:rgba(22,10,13,.75);--red:#ff2a3b;--blood:#a8111e;--text:#f5f5f7;--muted:#ac999e;--line:#ffffff12;--app-height:100dvh;color-scheme:dark}
-    *{box-sizing:border-box;-webkit-tap-highlight-color:transparent}html,body{margin:0;width:100%;height:100%;height:100dvh;overflow:hidden;overscroll-behavior:none;background:var(--bg)}body{color:var(--text);font:14px/1.5 -apple-system,BlinkMacSystemFont,"SF Pro Display","SF Pro Text","Helvetica Neue",sans-serif;-webkit-font-smoothing:antialiased;user-select:none;-webkit-user-select:none}body:before{content:"";position:fixed;inset:0;pointer-events:none;background:radial-gradient(ellipse at 50% -15%,#8a162835,transparent 65%)}button,input,textarea{font:inherit}button{border:0;cursor:pointer;color:inherit;transition:transform .16s,background .2s,border-color .2s;touch-action:manipulation}button:active{transform:scale(.97)}button:disabled{opacity:.35;cursor:not-allowed;transform:none}button:focus-visible,input:focus-visible,textarea:focus-visible{outline:2px solid var(--red);outline-offset:4px}input,textarea{user-select:text;-webkit-user-select:text;min-width:0}h1,h2,h3,p{margin:0}svg{display:block;flex-shrink:0}i[data-lucide],svg.lucide{width:20px;height:20px;display:inline-flex;flex-shrink:0}i[data-lucide]>svg{width:100%;height:100%}[hidden]{display:none!important}.sr-only{position:absolute;width:1px;height:1px;padding:0;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
-    .app-shell{position:relative;display:flex;flex-direction:column;height:var(--app-height);max-width:980px;margin:auto;padding:env(safe-area-inset-top) 36px 0}.topbar{flex-shrink:0;display:flex;align-items:center;justify-content:space-between;gap:10px;min-height:92px;border-bottom:1px solid var(--line)}.brand{display:flex;align-items:center;gap:12px}.brand-crest{width:32px;height:42px;color:var(--red)}.brand-name{font-size:17px;font-weight:850;letter-spacing:3px;line-height:1.2}.brand-sub{font-size:8px;letter-spacing:2.2px;color:var(--muted);margin-top:6px;font-weight:700}.top-actions{display:flex;gap:2px}.icon-button{display:inline-flex;align-items:center;justify-content:center;min-width:44px;height:44px;border-radius:12px;color:var(--muted);background:transparent}.icon-button:hover{background:#ffffff08;color:var(--text)}.progress{display:flex;gap:7px;align-items:center}.progress span{width:7px;height:7px;border-radius:8px;background:#ffffff1b;transition:width .2s,background .2s}.progress .done{background:var(--blood)}.progress .current{width:27px;background:var(--red);box-shadow:0 0 15px #ff2a3b30}
-    .main-stage{flex:1;min-height:0;display:flex;outline:none;width:100%;max-width:620px;margin:0 auto}.screen{flex:1;min-height:0;min-width:0;display:flex;flex-direction:column;padding:30px 0 20px;gap:20px;animation:enter .25s ease-out}.screen-heading{flex-shrink:0;position:relative}.eyebrow{display:flex;align-items:center;gap:9px;text-transform:uppercase;letter-spacing:.2em;font-size:10px;font-weight:750;color:var(--red);margin-bottom:12px}.eyebrow:before{content:"";height:5px;width:5px;background:currentColor;border-radius:50%}h1{font-size:clamp(30px,4.7vw,46px);font-weight:780;letter-spacing:-1.8px;line-height:1.08}h1 em{font-style:normal;color:var(--red)}.intro{font-size:13px;color:var(--muted);margin-top:12px;line-height:1.65}.stage-body{flex:1;min-height:0;display:flex;flex-direction:column;gap:16px}.panel{border:1px solid var(--line);border-radius:20px;background:var(--glass);padding:23px;-webkit-backdrop-filter:blur(24px);backdrop-filter:blur(24px)}.panel-top{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:16px}.label{font-size:10px;font-weight:750;letter-spacing:.2em;text-transform:uppercase}.muted,.subtle{color:var(--muted)}.subtle{font-size:12px}.count{font-variant-numeric:tabular-nums;color:var(--muted);font-size:11px;letter-spacing:1px}.scroll-list{overflow-y:auto;overscroll-behavior:contain;scrollbar-width:none;-webkit-overflow-scrolling:touch;min-height:0}.scroll-list::-webkit-scrollbar{display:none}.players-panel{flex:1;min-height:0;display:flex;flex-direction:column}.add-form{display:flex;gap:8px;flex-shrink:0}.field{width:100%;border:1px solid #ffffff16;background:#08040599;border-radius:12px;min-height:52px;padding:13px 15px;color:var(--text);font-size:16px}.field::placeholder{color:#87767c}.add-button{display:grid;place-items:center;background:var(--red);color:white;border-radius:12px;min-width:52px;height:52px}.players-container{flex:1;min-height:0;display:flex;flex-direction:column;margin-top:12px}.player-list{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:2px}.player-row{display:flex;gap:12px;align-items:center;min-height:56px;border-bottom:1px solid #ffffff08}.player-row:last-child{border-bottom:0}.player-number{font-size:10px;font-variant-numeric:tabular-nums;color:#775c65;width:18px}.avatar{width:34px;height:34px;display:grid;place-items:center;border-radius:10px;background:#ffffff06;border:1px solid #ffffff0b;color:#d5bfc5;font-size:11px;font-weight:700;flex-shrink:0}.player-name{flex:1;min-width:0;overflow-wrap:anywhere;font-size:14px}.player-row .icon-button svg{width:16px;height:16px}.empty-players{margin:auto;text-align:center;padding:20px 0}.empty-crest{width:70px;height:80px;color:#67434e;margin:0 auto 16px}.empty-players p{color:#d7c9cd;font-size:14px}.empty-players small{display:block;color:var(--muted);font-size:11px;margin-top:6px}.note{font-size:11px;color:var(--muted);display:flex;align-items:center;gap:8px;flex-shrink:0}.note svg{width:14px;height:14px}.threshold{color:#d8bec5}.threshold.ready{color:#f2d9df}.bottom-bar{flex-shrink:0;max-width:620px;width:100%;margin:auto;padding:15px 0 calc(18px + env(safe-area-inset-bottom));border-top:1px solid var(--line)}.action-row{display:flex;align-items:stretch;gap:10px}.action-row>*{flex:1;min-width:0}.action-row .back{flex:0 0 110px}.primary,.secondary,.danger{display:flex;align-items:center;justify-content:center;gap:10px;min-height:54px;width:100%;padding:13px 18px;border-radius:13px;font-size:13px;font-weight:700}.primary{background:linear-gradient(110deg,#d51d30,var(--red));box-shadow:0 7px 24px #ff2a3b14;color:white}.primary:hover{filter:brightness(1.1)}.secondary{background:#ffffff05;border:1px solid #ffffff13;color:#e5d9dd}.danger{background:#a8111e;color:white}.action-caption{display:flex;justify-content:space-between;gap:12px;font-size:9px;letter-spacing:1.1px;text-transform:uppercase;color:#907a82;margin-top:12px}.action-caption span:last-child{color:#b2959f}.button-stack{display:flex;flex-direction:column;gap:8px}.text-button{background:transparent;min-height:44px;color:var(--muted);font-size:12px}.segmented{display:flex;background:#070405;border:1px solid #ffffff0c;border-radius:14px;padding:5px;gap:5px}.segmented button{flex:1;min-height:72px;border-radius:10px;background:transparent;color:var(--muted);display:flex;align-items:center;justify-content:center;gap:10px;font-size:13px;font-weight:650}.segmented button[aria-pressed=true]{background:#372027;color:white;box-shadow:0 2px 8px #0005}.segmented button svg{width:19px;height:19px}.divider{height:1px;background:var(--line);margin:22px 0}.toggle-row{display:flex;align-items:center;justify-content:space-between;gap:20px}.toggle-title{font-size:14px;font-weight:650}.toggle-description{font-size:12px;color:var(--muted);margin-top:5px;max-width:300px}.switch{width:50px;min-width:50px;height:30px;background:#47373d;border-radius:30px;position:relative}.switch:before{content:"";position:absolute;inset:-7px -2px}.switch:after{content:"";position:absolute;width:24px;height:24px;border-radius:50%;top:3px;left:3px;background:#fff;box-shadow:0 2px 4px #0003;transition:transform .2s}.switch[aria-checked=true]{background:var(--red)}.switch[aria-checked=true]:after{transform:translateX(20px)}.rule-note{display:flex;align-items:flex-start;gap:12px;color:var(--muted);font-size:12px;line-height:1.7;padding:16px 5px}.rule-note svg{width:18px;height:18px;margin-top:2px;color:#a16e7d}.mode-art{flex:1;min-height:0;display:grid;place-items:center;opacity:.35}.mode-art svg{max-height:140px;height:100%;width:110px;color:#a75a70}
-    .category-heading{margin:0;flex-shrink:0}.category-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;align-content:start;padding:2px}.category{position:relative;text-align:left;background:var(--glass);border:1px solid var(--line);border-radius:16px;padding:18px;min-height:117px;width:100%}.category[aria-pressed=true]{border-color:#bc344b;background:linear-gradient(125deg,#51111f80,#1b0d12)}.category-icon{display:block;margin-bottom:13px;color:#c7aab4}.category-icon svg{height:24px;width:24px;stroke-width:1.5}.category[aria-pressed=true] .category-icon{color:#ff5362}.category-name{display:block;font-size:12px;font-weight:650;overflow-wrap:anywhere;padding-right:6px}.category-size{font-size:10px;color:var(--muted);display:block;margin-top:4px}.selection-mark{position:absolute;top:17px;right:16px;width:16px;height:16px;border-radius:50%;border:1px solid #ffffff29;display:grid;place-items:center}.selection-mark svg{width:10px;height:10px;opacity:0}.category[aria-pressed=true] .selection-mark{background:var(--red);border-color:var(--red)}.category[aria-pressed=true] .selection-mark svg{opacity:1}.custom-category{position:relative}.custom-category .category{padding-bottom:40px;height:100%}.custom-delete{position:absolute;right:5px;bottom:0;height:44px;min-width:44px;color:var(--muted);background:transparent;display:grid;place-items:center}.custom-delete svg{width:15px;height:15px}.custom-add{display:flex;justify-content:center;align-items:center;gap:8px;min-height:52px;width:100%;border-radius:12px;border:1px dashed #ffffff24;background:transparent;font-size:12px;color:#d4bec6;flex-shrink:0}.time-preview{text-align:center;padding:22px;background:radial-gradient(ellipse at 50% 110%,#a8111e25,transparent 70%),var(--glass)}.preview-time{font-size:64px;font-weight:250;letter-spacing:-4px;font-variant-numeric:tabular-nums;line-height:1.3}.time-preview .label{color:#d7b1bd}.summary{display:grid;grid-template-columns:1fr 1fr;gap:16px}.summary-item .label{color:var(--muted);font-size:9px}.summary-value{font-size:24px;font-weight:650;margin-top:5px}.summary-themes{grid-column:1/-1;border-top:1px solid var(--line);padding-top:14px}.theme-preview{max-height:55px;overflow:auto;margin-top:7px;color:#e4d4da;font-size:12px;scrollbar-width:none}.summary-hints{font-size:11px;color:var(--muted);margin-top:7px}
-    .center-heading{text-align:center}.center-heading .eyebrow{justify-content:center}.center-heading h1{font-size:34px;overflow-wrap:anywhere}.pass-name{color:var(--red);display:block;margin-top:6px}.secret-card{flex:1;min-height:0;display:flex;align-items:center;justify-content:center;position:relative;text-align:center;overflow:hidden;background:radial-gradient(ellipse at 50% 100%,#76394e1f,transparent 70%),var(--glass)}.secret-card:before,.secret-card:after{content:"";position:absolute;width:16px;height:16px;border-color:#ffffff20;pointer-events:none}.secret-card:before{top:13px;left:13px;border-left:1px solid;border-top:1px solid;color:#ffffff18}.secret-card:after{bottom:13px;right:13px;border-right:1px solid;border-bottom:1px solid;color:#ffffff18}.secret-content{width:100%;display:flex;flex-direction:column;align-items:center;gap:12px}.secret-symbol{height:84px;width:84px;color:#c5a2b0}.secret-symbol svg{width:100%;height:100%}.secret-content h2{font-size:clamp(23px,5vw,32px);line-height:1.15;letter-spacing:-1px;overflow-wrap:anywhere;max-width:100%;text-wrap:balance}.secret-content p{font-size:12px;color:var(--muted);max-width:330px}.role-label{font-size:9px;letter-spacing:2px;font-weight:750;color:#c5a2b0}.secret-card.impostor{border-color:#a8111e;background:radial-gradient(ellipse at 50% 100%,#a8111e55,transparent 75%),var(--glass)}.impostor .secret-symbol,.impostor .role-label{color:var(--red)}.hold-button{position:relative;overflow:hidden;width:100%;min-height:58px;border-radius:13px;background:#25151b;border:1px solid #ffffff20;touch-action:none;-webkit-touch-callout:none;flex-shrink:0}.hold-button:active{transform:none}.hold-button:before{content:"";position:absolute;inset:0;background:#ff2a3b25;transform:scaleX(0);transform-origin:left}.hold-button.holding:before{transform:scaleX(1);transition:transform .65s linear}.hold-button>span{position:relative;display:flex;align-items:center;justify-content:center;gap:10px;font-size:12px;font-weight:650}.security-note{display:flex;align-items:center;justify-content:center;gap:7px;font-size:10px;color:var(--muted)}.security-note svg{width:13px;height:13px}.timer-stage{display:flex;flex-direction:column;align-items:center;justify-content:center;flex:1;min-height:0;gap:18px}.timer-ring{position:relative;width:min(100%,300px);max-height:100%;aspect-ratio:1;flex-shrink:1;min-height:100px}.timer-ring>svg{width:100%;height:100%;transform:rotate(-90deg);overflow:visible}.timer-ring circle{fill:none}.timer-track{stroke:#ffffff09;stroke-width:2}.timer-ticks{stroke:#ffffff12;stroke-width:5;stroke-dasharray:1 11.57}.timer-progress{stroke:var(--red);stroke-width:3;stroke-linecap:round;transition:stroke-dashoffset .15s linear;filter:drop-shadow(0 0 5px #ff2a3b40)}.timer-value{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center}.timer-value strong{font-size:clamp(48px,10vw,72px);font-weight:250;letter-spacing:-3px;font-variant-numeric:tabular-nums;line-height:1.3}.timer-value small{font-size:9px;letter-spacing:2px;text-transform:uppercase;color:var(--muted)}.timer-ring.urgent .timer-value strong{color:var(--red)}.timer-announcement{text-align:center;font-size:12px;color:var(--muted);flex-shrink:0}.timer-controls{display:flex;gap:10px;width:100%;flex-shrink:0}.timer-controls>*{flex:1}.vote-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;align-content:start;padding:2px}.vote-choice{display:flex;align-items:center;gap:10px;text-align:left;min-height:74px;padding:13px;border:1px solid var(--line);border-radius:14px;background:var(--glass)}.vote-choice[aria-pressed=true]{border-color:var(--red);background:#48131f88}.vote-name{font-size:13px;overflow-wrap:anywhere;min-width:0;flex:1}.vote-choice>.lucide,.vote-choice>i{width:15px;height:15px;color:var(--red)}.vote-status{font-size:11px;color:var(--muted);text-align:center}.guess-card{display:flex;flex-direction:column;justify-content:center;gap:18px;flex:1;min-height:0;text-align:center}.guess-card .secret-symbol{margin:0 auto}.result-names{font-size:21px;font-weight:650;overflow-wrap:anywhere;max-height:90px;overflow:auto;scrollbar-width:none;color:#e1b1c0}.guess-card label{display:block;text-align:left;margin-bottom:8px;font-size:11px;color:var(--muted)}.result-card{text-align:center;min-height:0;display:flex;flex-direction:column;justify-content:center;gap:10px;flex:1}.result-card .secret-symbol{height:54px;width:54px;margin:0 auto 8px;color:var(--red)}.result-word{font-size:clamp(24px,5vw,34px);font-weight:700;line-height:1.2;letter-spacing:-1px;overflow-wrap:anywhere}.result-card .divider{margin:8px 0}.result-detail{font-size:11px;color:var(--muted);text-align:center;max-height:50px;overflow:auto}.dialog{color:var(--text);background:#190d12;border:1px solid #ffffff20;border-radius:24px;width:calc(100% - 32px);max-width:460px;max-height:calc(var(--app-height) - 32px);padding:24px;overflow:auto;scrollbar-width:none;box-shadow:0 24px 100px #000a}.dialog::backdrop{background:#080405cc;-webkit-backdrop-filter:blur(12px);backdrop-filter:blur(12px)}.dialog-heading{display:flex;justify-content:space-between;align-items:center;gap:10px;margin-bottom:14px}.dialog h2{font-size:23px;font-weight:700;letter-spacing:-.7px}.dialog p,.dialog li{font-size:13px;color:var(--muted);line-height:1.7}.dialog strong{color:#f1dde5}.dialog ol{padding-left:20px}.dialog li{padding:6px 0}.dialog label{display:block;font-size:12px;margin:16px 0 7px}.dialog textarea{height:120px;resize:vertical}.dialog .primary,.dialog .action-row{margin-top:18px}.dialog .small-print{font-size:11px;margin-top:13px}.error-text{color:#ff9da9!important;font-size:12px;min-height:18px;margin-top:8px}.toast{position:fixed;left:50%;top:calc(96px + env(safe-area-inset-top));transform:translateX(-50%);z-index:100;width:max-content;max-width:calc(100% - 32px);padding:13px 18px;border:1px solid #83505f;background:#302028f5;border-radius:13px;font-size:12px;box-shadow:0 10px 35px #0008;text-align:center}
-    @keyframes enter{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:translateY(0)}}
-    @media(min-width:760px){.screen{padding-top:36px;gap:25px}.app-shell:after{content:"HALLOWEDDA / SOCIAL DEDUCTION CLUB";position:fixed;bottom:45%;left:20px;writing-mode:vertical-rl;font-size:8px;letter-spacing:3px;color:#75535f}.category-grid{grid-template-columns:1fr 1fr}.category{min-height:115px}.empty-crest{width:95px;height:110px}}
-    @media(max-width:600px){.app-shell{padding-left:22px;padding-right:22px}.topbar{min-height:79px;flex-wrap:wrap;position:relative;padding-bottom:13px;padding-top:8px}.brand-name{font-size:14px;letter-spacing:2px}.brand-sub{font-size:7px;letter-spacing:1.6px}.brand{gap:8px}.brand-crest{width:24px;height:34px}.top-actions{gap:0}.icon-button{min-width:40px}.top-actions .icon-button{min-width:38px}.top-actions svg{width:18px;height:18px}.progress{position:absolute;bottom:0;left:50%;width:max-content;justify-content:center;transform:translate(-50%,50%);gap:6px;background:var(--bg);padding:0 8px}.progress span{height:4px;width:4px}.progress .current{width:24px}.screen{padding-top:28px;gap:20px}.panel{padding:19px}.intro{font-size:12px}h1{font-size:36px}.center-heading h1{font-size:29px}.category{padding:16px;min-height:113px}.bottom-bar{padding-top:13px}.action-row .back{flex-basis:95px}.action-caption{font-size:8px}.secret-symbol{width:70px;height:70px}.time-preview{padding:18px}.timer-ring{width:260px}.timer-value strong{font-size:64px}}
-    @media(max-height:720px){.topbar{min-height:70px}.screen{padding-top:19px;padding-bottom:14px;gap:14px}.eyebrow{margin-bottom:9px;font-size:9px}h1{font-size:31px}.center-heading h1{font-size:26px}.intro{margin-top:8px;font-size:12px}.panel{padding:16px}.panel-top{margin-bottom:12px}.bottom-bar{padding-bottom:calc(12px + env(safe-area-inset-bottom))}.action-caption{margin-top:8px}.empty-crest{height:56px;width:50px;margin-bottom:10px}.secret-content{gap:8px}.secret-symbol{width:52px;height:52px}.secret-content h2{font-size:24px}.secret-content p{font-size:11px}.timer-ring{width:220px}.timer-value strong{font-size:53px}.preview-time{font-size:48px}.time-preview{padding:12px}.summary{gap:10px}.summary-value{font-size:20px}.mode-art{display:none}.divider{margin:17px 0}.result-card .secret-symbol{height:42px;width:42px;margin-bottom:0}.result-card{gap:7px}.guess-card{gap:12px}}
-    @media(min-height:481px) and (max-height:720px){.screen[data-screen="setup-3"] .intro{display:none}.screen[data-screen="setup-3"] .stage-body{gap:10px}.screen[data-screen="setup-3"] .time-preview{padding:10px}.screen[data-screen="setup-3"] .preview-time{font-size:44px;line-height:1.15}.screen[data-screen="setup-3"] .time-preview .subtle{font-size:10px;margin-top:4px}.screen[data-screen="setup-3"] .summary{padding:12px;gap:8px}.screen[data-screen="setup-3"] .summary-value{font-size:18px;margin-top:2px}.screen[data-screen="setup-3"] .summary-themes{padding-top:8px}.screen[data-screen="setup-3"] .theme-preview{max-height:36px;font-size:11px}.screen[data-screen="setup-3"] .summary-hints{font-size:10px;margin-top:4px}}
-    @media(max-height:600px){.screen[data-screen="setup-3"] .summary-hints{display:none}}
-    @media(max-width:360px){.app-shell{padding-left:16px;padding-right:16px}.brand-name{font-size:12px}.brand-sub{font-size:6px}.top-actions .icon-button{min-width:34px}.category-name{font-size:11px}.category{padding:13px}.primary,.secondary{font-size:12px;padding-left:12px;padding-right:12px}.vote-choice{padding:10px;gap:7px}.vote-choice .avatar{width:27px;height:30px}}
-    @media(max-height:480px){.topbar{min-height:55px}.brand-sub,.action-caption,.screen-heading .intro,.mode-art,.security-note{display:none}.screen{padding:12px 0;gap:10px}.screen-heading h1{font-size:24px}.screen-heading .eyebrow{font-size:8px;margin-bottom:5px}.bottom-bar{padding:8px 0 calc(8px + env(safe-area-inset-bottom))}.stage-body{gap:8px}.main-stage{max-width:720px}.screen[data-screen="setup-1"] .stage-body,.screen[data-screen="setup-3"] .stage-body{flex-direction:row}.screen[data-screen="setup-1"] .stage-body>*{flex:1}.rule-note{padding:5px;font-size:11px}.segmented button{min-height:52px}.screen[data-screen="setup-1"] .divider{margin:10px 0}.time-preview,.summary{flex:1}.summary{gap:5px}.summary-themes{padding-top:5px}.theme-preview{max-height:30px}.summary-hints{display:none}.secret-content{gap:3px}.secret-content .secret-symbol{display:none}.secret-content h2{font-size:20px}.secret-content p{font-size:10px}.hold-button{min-height:52px}.screen[data-screen="pass"] .intro{display:none}.pass-name{display:inline;margin-left:6px}.timer-stage{flex-direction:row;gap:24px}.timer-ring{height:100%;width:auto;max-width:150px}.timer-value strong{font-size:35px}.timer-value small{font-size:7px}.timer-announcement{max-width:160px}.timer-controls{max-width:280px;align-self:center}.result-card .secret-symbol,.result-card .divider{display:none}.result-card{display:grid;grid-template-columns:1fr 1fr;align-content:center;gap:5px}.result-card .result-names{grid-column:1}.result-card .result-word{font-size:23px}.result-detail{display:none}.guess-card{gap:7px}.guess-card .secret-symbol{display:none}.guess-card form{display:flex;align-items:center;gap:12px}.guess-card label{margin:0;flex-shrink:0}.empty-players{padding:8px 0}.empty-crest,.empty-players small{display:none}}
-    @media(prefers-reduced-motion:reduce){*,*:before,*:after{animation:none!important;transition:none!important}}
+    :root {
+      --bg: #09090b; --glass: rgba(24,24,27,.8); --accent: #ff6b00;
+      --purple: #8b49c1; --lavender: #c398fa; --text: #f5f5f7; --muted: #b0a8b9;
+      --line: rgba(255,255,255,.09); --glow-line: rgba(255,107,0,.25);
+      --safe-top: env(safe-area-inset-top,0px); --safe-bottom: env(safe-area-inset-bottom,0px);
+      --safe-left: env(safe-area-inset-left,0px); --safe-right: env(safe-area-inset-right,0px);
+      --app-height: 100dvh; --viewport-top: 0px; --header-height: 80px; --bar-height: 84px;
+      --gutter: 22px; color-scheme: dark;
+    }
+    * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+    html, body { margin:0; width:100%; height:100vh; height:100dvh; max-height:100dvh; overflow:hidden; overscroll-behavior:none; background:var(--bg); }
+    html { -webkit-text-size-adjust:100%; text-size-adjust:100%; }
+    body { color:var(--text); font:14px/1.5 -apple-system,BlinkMacSystemFont,"SF Pro Display","SF Pro Text","Helvetica Neue",sans-serif; -webkit-font-smoothing:antialiased; user-select:none; -webkit-user-select:none; }
+    body::before { content:""; position:fixed; inset:0; pointer-events:none; background:radial-gradient(ellipse at 50% -15%,rgba(139,73,193,.16),transparent 62%); }
+    button,input,textarea { font:inherit; }
+    button { border:0; cursor:pointer; color:inherit; transition:transform .16s,background .2s,border-color .2s; touch-action:manipulation; }
+    button:active { transform:scale(.97); }
+    button:disabled { opacity:.4; cursor:not-allowed; transform:none; }
+    button:focus-visible,input:focus-visible,textarea:focus-visible { outline:2px solid var(--lavender); outline-offset:3px; }
+    input,textarea { user-select:text; -webkit-user-select:text; min-width:0; }
+    h1,h2,h3,p { margin:0; }
+    svg { display:block; flex-shrink:0; }
+    i[data-lucide],svg.lucide { width:20px; height:20px; display:inline-flex; flex-shrink:0; }
+    i[data-lucide]>svg { width:100%; height:100%; }
+    [hidden] { display:none!important; }
+    .sr-only { position:absolute; width:1px; height:1px; padding:0; overflow:hidden; clip:rect(0,0,0,0); white-space:nowrap; border:0; }
+    /* The document never scrolls. Only designated lists and dialog bodies scroll. */
+    .app-shell { position:relative; top:var(--viewport-top); height:var(--app-height); max-height:100dvh; max-width:980px; margin:auto; }
+    .topbar { position:fixed; z-index:30; top:var(--viewport-top); left:50%; transform:translateX(-50%); width:min(100%,980px); height:calc(var(--header-height) + var(--safe-top)); padding:var(--safe-top) max(var(--gutter),var(--safe-right)) 0 max(var(--gutter),var(--safe-left)); display:flex; align-items:center; justify-content:space-between; gap:8px; border-bottom:1px solid var(--line); background:rgba(9,9,11,.88); -webkit-backdrop-filter:blur(20px); backdrop-filter:blur(20px); }
+    .brand { display:flex; align-items:center; gap:9px; min-width:0; }
+    .brand-crest { width:30px; height:34px; color:var(--accent); }
+    .brand-name { font-size:15px; font-weight:850; letter-spacing:2.4px; line-height:1.2; }
+    .brand-sub { font-size:7px; letter-spacing:1.65px; color:var(--lavender); margin-top:5px; font-weight:700; white-space:nowrap; }
+    .top-actions { display:flex; gap:0; flex-shrink:0; }
+    .icon-button { display:inline-flex; align-items:center; justify-content:center; min-width:44px; width:44px; height:44px; flex-shrink:0; border-radius:12px; color:var(--muted); background:transparent; }
+    .icon-button:hover { background:#ffffff08; color:var(--text); }
+    .top-actions svg { width:19px; height:19px; }
+    .progress { position:absolute; bottom:0; left:50%; transform:translate(-50%,50%); display:flex; gap:6px; align-items:center; background:var(--bg); padding:0 9px; }
+    .progress span { width:5px; height:5px; border-radius:8px; background:#ffffff26; transition:width .2s,background .2s; }
+    .progress .done { background:var(--purple); }
+    .progress .current { width:25px; background:var(--accent); box-shadow:0 0 15px #ff6b0030; }
+    .main-stage { position:relative; z-index:0; width:100%; height:100%; padding:calc(var(--header-height) + var(--safe-top)) max(var(--gutter),var(--safe-right)) calc(84px + var(--safe-bottom)) max(var(--gutter),var(--safe-left)); display:flex; outline:none; overflow:hidden; }
+    .screen { width:100%; max-width:620px; margin:0 auto; min-height:0; min-width:0; display:flex; flex-direction:column; padding:26px 0 18px; gap:18px; animation:enter .28s ease-out; }
+    .screen-heading { flex-shrink:0; min-width:0; }
+    .eyebrow { display:flex; align-items:center; gap:9px; text-transform:uppercase; letter-spacing:.18em; font-size:10px; font-weight:750; color:var(--lavender); margin-bottom:10px; }
+    .eyebrow::before { content:""; height:5px; width:5px; background:currentColor; border-radius:50%; flex-shrink:0; }
+    h1 { font-size:clamp(30px,4.7vw,44px); font-weight:780; letter-spacing:-1.5px; line-height:1.1; }
+    h1 em { font-style:normal; color:var(--accent); }
+    .intro { font-size:12px; color:var(--muted); margin-top:10px; line-height:1.6; }
+    .stage-body { flex:1; min-height:0; min-width:0; display:flex; flex-direction:column; gap:14px; }
+    .panel { border:1px solid var(--line); border-radius:20px; background:var(--glass); padding:20px; -webkit-backdrop-filter:blur(20px); backdrop-filter:blur(20px); min-width:0; }
+    .panel-top { display:flex; align-items:center; justify-content:space-between; gap:10px; margin-bottom:14px; flex-shrink:0; }
+    .label { font-size:10px; font-weight:750; letter-spacing:.18em; text-transform:uppercase; }
+    .muted,.subtle { color:var(--muted); }
+    .subtle { font-size:12px; }
+    .count { font-variant-numeric:tabular-nums; color:var(--muted); font-size:11px; letter-spacing:1px; flex-shrink:0; }
+    .scroll-list,.theme-preview,.result-names,.result-detail,.result-card,.dialog { overflow-y:auto; overscroll-behavior:contain; scrollbar-width:none; -webkit-overflow-scrolling:touch; min-height:0; }
+    .scroll-list::-webkit-scrollbar,.dialog::-webkit-scrollbar { display:none; }
+    .players-panel { flex:1; min-height:0; display:flex; flex-direction:column; }
+    .add-form { display:flex; gap:8px; flex-shrink:0; }
+    .field { width:100%; border:1px solid #ffffff1c; background:#09090b99; border-radius:12px; min-height:52px; padding:13px 14px; color:var(--text); font-size:16px; }
+    .field::placeholder { color:#9a91a3; }
+    .add-button { display:grid; place-items:center; background:var(--accent); color:var(--bg); border-radius:12px; min-width:52px; height:52px; }
+    .players-container { flex:1; min-height:0; display:flex; flex-direction:column; margin-top:10px; }
+    .player-list { list-style:none; margin:0; padding:0; display:flex; flex-direction:column; gap:2px; }
+    .player-row { display:flex; gap:10px; align-items:center; min-height:54px; border-bottom:1px solid #ffffff08; flex-shrink:0; }
+    .player-row:last-child { border-bottom:0; }
+    .player-number { font-size:10px; font-variant-numeric:tabular-nums; color:#9a91a3; width:18px; flex-shrink:0; }
+    .avatar { width:34px; height:34px; display:grid; place-items:center; border-radius:10px; background:#8b49c114; border:1px solid #c398fa20; color:var(--lavender); font-size:11px; font-weight:700; flex-shrink:0; }
+    .player-name { flex:1; min-width:0; overflow-wrap:anywhere; font-size:14px; }
+    .player-row .icon-button svg { width:16px; height:16px; }
+    .empty-players { margin:auto; text-align:center; padding:12px 0; flex-shrink:0; }
+    .empty-crest { width:64px; height:74px; color:var(--purple); margin:0 auto 10px; }
+    .empty-players p { color:#e1d9e9; font-size:13px; }
+    .empty-players small { display:block; color:var(--muted); font-size:11px; margin-top:6px; }
+    .note { font-size:11px; color:var(--muted); display:flex; align-items:center; gap:8px; flex-shrink:0; }
+    .note svg { width:14px; height:14px; }
+    .threshold.ready { color:var(--lavender); }
+    .bottom-bar { position:fixed; z-index:20; top:calc(var(--viewport-top) + var(--app-height) - var(--bar-height) - var(--safe-bottom)); left:50%; transform:translateX(-50%); width:min(100%,980px); height:calc(var(--bar-height) + var(--safe-bottom)); padding:8px max(var(--gutter),var(--safe-right)) calc(8px + var(--safe-bottom)) max(var(--gutter),var(--safe-left)); border-top:1px solid var(--line); background:rgba(18,18,20,.88); -webkit-backdrop-filter:blur(12px); backdrop-filter:blur(12px); }
+    .bar-inner { max-width:620px; margin:0 auto; }
+    .action-row { display:flex; align-items:stretch; gap:10px; }
+    .action-row>* { flex:1; min-width:0; }
+    .action-row .back { flex:0 0 94px; }
+    .primary,.secondary,.danger { display:flex; align-items:center; justify-content:center; gap:9px; min-height:52px; width:100%; padding:12px 14px; border-radius:13px; font-size:13px; font-weight:700; line-height:1.3; }
+    .primary { background:linear-gradient(110deg,#ff781f,var(--accent)); box-shadow:0 7px 24px #ff6b001a; color:#09090b; }
+    .primary:hover { filter:brightness(1.08); }
+    .secondary { background:#ffffff05; border:1px solid #ffffff1a; color:#e5ddeb; }
+    .danger { background:var(--purple); color:white; }
+    .action-caption { display:flex; justify-content:space-between; gap:10px; font-size:8px; line-height:12px; letter-spacing:.7px; text-transform:uppercase; color:var(--muted); margin-top:2px; }
+    .action-caption span:last-child { flex-shrink:0; color:var(--lavender); }
+    .text-button { background:transparent; min-height:44px; color:var(--muted); font-size:12px; }
+    .segmented { display:flex; background:#09090b; border:1px solid #ffffff0c; border-radius:14px; padding:5px; gap:5px; }
+    .segmented button { flex:1; min-width:0; min-height:64px; border-radius:10px; background:transparent; color:var(--muted); display:flex; align-items:center; justify-content:center; gap:8px; font-size:13px; font-weight:650; }
+    .segmented button[aria-pressed=true] { background:#8b49c12e; color:var(--lavender); box-shadow:inset 0 0 0 1px #c398fa30; }
+    .segmented button svg { width:18px; height:18px; }
+    .divider { height:1px; background:var(--line); margin:20px 0; flex-shrink:0; }
+    .toggle-row { display:flex; align-items:center; justify-content:space-between; gap:14px; }
+    .toggle-title { font-size:14px; font-weight:650; }
+    .toggle-description { font-size:12px; color:var(--muted); margin-top:5px; }
+    .switch { width:50px; min-width:50px; height:44px; background:transparent; border-radius:30px; position:relative; }
+    .switch::before { content:""; position:absolute; inset:7px 0; border-radius:30px; background:#443d4b; }
+    .switch::after { content:""; position:absolute; width:24px; height:24px; border-radius:50%; top:10px; left:3px; background:#fff; box-shadow:0 2px 4px #0003; transition:transform .2s; }
+    .switch[aria-checked=true]::before { background:var(--purple); }
+    .switch[aria-checked=true]::after { transform:translateX(20px); }
+    .rule-note { display:flex; align-items:flex-start; gap:10px; color:var(--muted); font-size:12px; line-height:1.7; padding:4px; flex-shrink:0; }
+    .rule-note svg { width:18px; height:18px; margin-top:2px; color:var(--lavender); }
+    .mode-art { flex:1; min-height:0; display:grid; place-items:center; opacity:.5; }
+    .mode-art svg { max-height:130px; height:100%; width:100px; color:var(--purple); }
+    .category-heading { margin:0; }
+    .category-grid { flex:1; display:grid; grid-template-columns:minmax(0,1fr) minmax(0,1fr); gap:10px; align-content:start; padding:3px; }
+    .category { text-align:left; background:var(--glass); border:1px solid var(--line); border-radius:16px; padding:15px; min-height:114px; width:100%; min-width:0; display:grid; grid-template-columns:1fr 18px; align-content:start; gap:5px; }
+    .category[aria-pressed=true] { border-color:var(--glow-line); background:linear-gradient(125deg,#ff6b001a,#1a1a1ed9); }
+    .category-icon { grid-row:1; grid-column:1; margin-bottom:6px; color:var(--lavender); }
+    .category-icon svg { height:24px; width:24px; stroke-width:1.5; }
+    .category[aria-pressed=true] .category-icon { color:var(--accent); }
+    .category-name { grid-column:1/-1; display:block; font-size:12px; font-weight:650; overflow-wrap:anywhere; }
+    .category-size { grid-column:1/-1; font-size:10px; color:var(--muted); display:block; }
+    .selection-mark { grid-row:1; grid-column:2; width:16px; height:16px; border-radius:50%; border:1px solid #ffffff40; display:grid; place-items:center; margin-top:3px; }
+    .selection-mark svg { width:10px; height:10px; opacity:0; }
+    .category[aria-pressed=true] .selection-mark { background:var(--accent); border-color:var(--accent); color:var(--bg); }
+    .category[aria-pressed=true] .selection-mark svg { opacity:1; }
+    .custom-category { display:flex; flex-direction:column; min-width:0; border:1px solid var(--line); border-radius:16px; background:var(--glass); }
+    .custom-category .category { flex:1; border-radius:15px 15px 0 0; }
+    .custom-delete { min-height:44px; width:100%; color:var(--muted); background:transparent; display:flex; align-items:center; justify-content:center; gap:8px; font-size:11px; }
+    .custom-delete svg { width:15px; height:15px; }
+    .custom-add { display:flex; justify-content:center; align-items:center; gap:8px; min-height:48px; width:100%; border-radius:12px; border:1px dashed #c398fa40; background:transparent; font-size:12px; color:var(--lavender); flex-shrink:0; }
+    .time-preview { text-align:center; padding:18px; background:radial-gradient(ellipse at 50% 110%,#ff6b001a,transparent 70%),var(--glass); flex-shrink:0; }
+    .preview-time { font-size:60px; font-weight:250; letter-spacing:-3px; font-variant-numeric:tabular-nums; line-height:1.25; }
+    .time-preview .label { color:var(--lavender); }
+    .summary { display:grid; grid-template-columns:minmax(0,1fr) minmax(0,1fr); gap:12px; min-height:0; }
+    .summary-item { min-width:0; }
+    .summary-item .label { color:var(--muted); font-size:9px; }
+    .summary-value { font-size:24px; font-weight:650; margin-top:4px; }
+    .summary-themes { grid-column:1/-1; border-top:1px solid var(--line); padding-top:12px; min-height:0; }
+    .theme-preview { max-height:42px; margin-top:6px; color:#e5ddeb; font-size:12px; }
+    .summary-hints { font-size:11px; color:var(--muted); margin-top:6px; }
+    .center-heading { text-align:center; }
+    .center-heading .eyebrow { justify-content:center; }
+    .center-heading h1 { font-size:30px; overflow-wrap:anywhere; }
+    .pass-name { color:var(--accent); display:block; margin-top:6px; }
+    .secret-card { container:secret / size; flex:1; min-height:0; display:flex; align-items:center; justify-content:center; position:relative; text-align:center; background:radial-gradient(ellipse at 50% 100%,#8b49c11a,transparent 70%),var(--glass); }
+    .secret-card::before,.secret-card::after { content:""; position:absolute; width:16px; height:16px; pointer-events:none; color:#c398fa55; }
+    .secret-card::before { top:12px; left:12px; border-left:1px solid; border-top:1px solid; }
+    .secret-card::after { bottom:12px; right:12px; border-right:1px solid; border-bottom:1px solid; }
+    .secret-content { width:100%; max-height:100%; display:flex; flex-direction:column; align-items:center; gap:10px; }
+    .secret-symbol { height:70px; width:70px; color:var(--lavender); flex-shrink:0; }
+    .secret-symbol svg { width:100%; height:100%; }
+    .secret-content h2 { font-size:clamp(23px,5vw,32px); line-height:1.15; letter-spacing:-.8px; overflow-wrap:anywhere; max-width:100%; text-wrap:balance; }
+    .secret-content p { font-size:12px; color:var(--muted); max-width:330px; overflow-wrap:anywhere; }
+    .role-label { font-size:9px; letter-spacing:2px; font-weight:750; color:var(--lavender); }
+    .secret-card.impostor { border-color:#8b49c180; background:radial-gradient(ellipse at 50% 100%,#8b49c133,transparent 75%),var(--glass); }
+    .impostor .secret-symbol,.impostor .role-label { color:var(--accent); }
+    .hold-button { position:relative; overflow:hidden; width:100%; min-height:56px; border-radius:13px; background:#c398fa12; border:1px solid #c398fa30; touch-action:none; -webkit-touch-callout:none; flex-shrink:0; }
+    .hold-button:active { transform:none; }
+    .hold-button::before { content:""; position:absolute; inset:0; background:#ff6b0025; transform:scaleX(0); transform-origin:left; }
+    .hold-button.holding::before { transform:scaleX(1); transition:transform .65s linear; }
+    .hold-button>span { position:relative; display:flex; align-items:center; justify-content:center; gap:9px; font-size:12px; font-weight:650; }
+    .security-note { display:flex; align-items:center; justify-content:center; gap:7px; font-size:10px; color:var(--muted); flex-shrink:0; }
+    .security-note svg { width:13px; height:13px; }
+    .timer-stage { display:grid; grid-template-rows:minmax(0,1fr) auto; justify-items:center; align-items:center; flex:1; min-height:0; gap:14px; }
+    .timer-ring { position:relative; height:100%; max-height:280px; max-width:100%; aspect-ratio:1; min-height:0; }
+    .timer-ring>svg { width:100%; height:100%; transform:rotate(-90deg); }
+    .timer-ring circle { fill:none; }
+    .timer-track { stroke:#ffffff0e; stroke-width:2; }
+    .timer-ticks { stroke:#c398fa30; stroke-width:5; stroke-dasharray:1 11.57; }
+    .timer-progress { stroke:var(--accent); stroke-width:3; stroke-linecap:round; transition:stroke-dashoffset .15s linear; filter:drop-shadow(0 0 5px #ff6b0040); }
+    .timer-value { position:absolute; inset:0; display:flex; flex-direction:column; align-items:center; justify-content:center; }
+    .timer-value strong { font-size:64px; font-weight:250; letter-spacing:-3px; font-variant-numeric:tabular-nums; line-height:1.3; }
+    .timer-value small { font-size:9px; letter-spacing:2px; text-transform:uppercase; color:var(--muted); }
+    .timer-ring.urgent .timer-value strong { color:var(--accent); }
+    .timer-announcement { text-align:center; font-size:12px; color:var(--muted); flex-shrink:0; }
+    .timer-controls { display:flex; gap:10px; width:100%; flex-shrink:0; }
+    .timer-controls>* { flex:1; min-width:0; }
+    .vote-grid { flex:1; display:grid; grid-template-columns:minmax(0,1fr) minmax(0,1fr); gap:10px; align-content:start; padding:3px; }
+    .vote-choice { display:flex; align-items:center; gap:9px; text-align:left; min-height:74px; padding:12px; border:1px solid var(--line); border-radius:14px; background:var(--glass); min-width:0; }
+    .vote-choice[aria-pressed=true] { border-color:var(--glow-line); background:#ff6b001a; }
+    .vote-name { font-size:13px; overflow-wrap:anywhere; min-width:0; flex:1; }
+    .vote-choice>.lucide,.vote-choice>i { width:15px; height:15px; color:var(--accent); }
+    .vote-status { font-size:11px; color:var(--muted); text-align:center; flex-shrink:0; }
+    .guess-card { display:flex; flex-direction:column; justify-content:center; gap:16px; flex:1; min-height:0; text-align:center; }
+    .guess-card .secret-symbol { margin:0 auto; }
+    .guess-card label { display:block; text-align:left; margin-bottom:8px; font-size:11px; color:var(--muted); }
+    .result-names { font-size:21px; font-weight:650; overflow-wrap:anywhere; max-height:84px; color:var(--lavender); flex-shrink:0; }
+    .result-card { container:result / size; text-align:center; min-height:0; display:flex; flex-direction:column; flex:1; }
+    .result-content { display:flex; flex-direction:column; gap:9px; flex-shrink:0; margin:auto 0; }
+    .result-card .secret-symbol { height:54px; width:54px; margin:0 auto 4px; color:var(--accent); }
+    .result-word { font-size:clamp(24px,5vw,34px); font-weight:700; line-height:1.2; letter-spacing:-1px; overflow-wrap:anywhere; }
+    .result-card .subtle { overflow-wrap:anywhere; }
+    .result-card .divider { margin:6px 0; }
+    .result-detail { font-size:11px; color:var(--muted); text-align:center; max-height:36px; flex-shrink:0; }
+    /* Native dialogs use the browser top layer in addition to the z-50 tier. */
+    .dialog { z-index:50; color:var(--text); background:#1a1a1e; border:1px solid #c398fa30; border-radius:24px; width:calc(100% - 32px); max-width:460px; max-height:calc(var(--app-height) - var(--safe-top) - var(--safe-bottom) - 24px); padding:22px; box-shadow:0 24px 100px #000a; position:fixed; top:calc(var(--viewport-top) + var(--safe-top) + 12px); bottom:auto; margin:0 auto; }
+    .dialog::backdrop { background:#09090bcc; -webkit-backdrop-filter:blur(12px); backdrop-filter:blur(12px); }
+    .dialog-heading { display:flex; justify-content:space-between; align-items:center; gap:10px; margin-bottom:12px; }
+    .dialog h2 { font-size:22px; font-weight:700; letter-spacing:-.7px; }
+    .dialog p,.dialog li { font-size:13px; color:var(--muted); line-height:1.7; }
+    .dialog strong { color:#efe5ff; }
+    .dialog ol { padding-left:20px; }
+    .dialog li { padding:6px 0; }
+    .dialog label { display:block; font-size:12px; margin:14px 0 7px; }
+    .dialog textarea { height:120px; resize:vertical; }
+    .dialog .primary,.dialog .action-row { margin-top:16px; }
+    .dialog .action-row .primary { margin-top:0; }
+    .dialog .small-print { font-size:11px; margin-top:12px; }
+    .error-text { color:#e5c5ff!important; font-size:12px; min-height:18px; margin-top:8px; }
+    .toast { position:fixed; left:50%; top:calc(var(--viewport-top) + var(--header-height) + var(--safe-top) + 12px); transform:translateX(-50%); z-index:40; width:max-content; max-width:calc(100% - 32px); padding:12px 16px; border:1px solid var(--glow-line); background:#242028fa; border-radius:13px; font-size:12px; box-shadow:0 10px 35px #0008; text-align:center; pointer-events:none; }
+    .splash { align-items:center; justify-content:center; text-align:center; gap:0; }
+    .splash-title { font-family:"SF Pro Display",-apple-system,BlinkMacSystemFont,"Helvetica Neue",sans-serif; color:#f5f5f7; font-size:clamp(48px,14vw,76px); letter-spacing:-.055em; font-weight:850; line-height:1.15; }
+    .splash-edition { color:#ff6b00; font-size:11px; font-weight:700; letter-spacing:.25em; text-transform:uppercase; margin-top:14px; padding:8px 13px 8px 16px; border:1px solid rgba(255,107,0,.2); border-radius:999px; background:rgba(255,107,0,.045); line-height:1.3; flex-shrink:0; }
+    .pumpkin-hero { width:min(82%,294px); aspect-ratio:1; display:grid; grid-template:minmax(0,1fr) / minmax(0,1fr); place-items:center; position:relative; margin:24px 0; flex-shrink:1; min-height:0; isolation:isolate; }
+    .pumpkin-hero::before { content:""; position:absolute; inset:8% 0 0; border-radius:50%; background:radial-gradient(ellipse,rgba(255,107,0,.13),rgba(255,107,0,.035) 42%,transparent 68%); pointer-events:none; }
+    .pumpkin-hero::after { content:""; position:absolute; width:51%; height:8%; bottom:7%; border-radius:50%; background:radial-gradient(ellipse,#0009,transparent 70%); pointer-events:none; z-index:-1; }
+    .pumpkin-sculpture { position:relative; width:100%; height:100%; min-height:0; min-width:0; overflow:visible; transform:translate3d(0,0,0); will-change:transform; -webkit-backface-visibility:hidden; backface-visibility:hidden; animation:pumpkin-float 4s ease-in-out infinite; }
+    /* Keep the SVG shadow kernel static. Compositing its layer opacity makes both
+       the carved fill and its glow breathe without animating blur geometry. */
+    .pumpkin-light { opacity:.78; will-change:opacity; animation:pumpkin-breathe 4s ease-in-out infinite; }
+    .splash-tagline { color:#a1a1aa; font-size:15px; line-height:1.8; max-width:290px; text-wrap:balance; flex-shrink:0; }
+    .splash-exiting { pointer-events:none; animation:splash-exit .2s ease-in forwards; }
+    .motion-paused .pumpkin-sculpture,.motion-paused .pumpkin-light { animation-play-state:paused; }
+    @keyframes pumpkin-float { 0%,100% { transform:translate3d(0,0,0); } 50% { transform:translate3d(0,-7px,0); } }
+    @keyframes pumpkin-breathe { 0%,100% { opacity:.6; } 50% { opacity:.95; } }
+    @keyframes splash-exit { to { opacity:0; transform:translate3d(0,-8px,0); } }
+    /* Fit private cards to their actual available space, including long custom words. */
+    @container secret (max-height:280px) {
+      .secret-content .secret-symbol { display:none; }
+      .secret-content { gap:7px; }
+      .secret-content h2 { font-size:22px; }
+    }
+    @container result (max-height:400px) {
+      .result-card .secret-symbol { display:none; }
+      .result-card .result-names { font-size:18px; max-height:54px; }
+      .result-card .result-word { font-size:22px; }
+    }
+    @keyframes enter { from { opacity:0; transform:translate3d(0,7px,0); } to { opacity:1; transform:translate3d(0,0,0); } }
+    @media(min-width:760px) { :root { --gutter:36px; --header-height:88px; } .screen { padding-top:30px; gap:22px; } .brand-name { font-size:17px; } .brand-sub { font-size:8px; } }
+    @media(max-width:360px) { :root { --gutter:14px; } .brand-name { font-size:13px; letter-spacing:1.8px; } .brand-sub { font-size:6px; letter-spacing:1.3px; } .brand { gap:6px; } .brand-crest { width:24px; } .category { padding:12px; } .primary,.secondary { font-size:12px; padding-left:10px; padding-right:10px; } .vote-choice { padding:9px; gap:6px; } .vote-choice .avatar { width:26px; height:30px; } }
+    @media(max-height:760px) { .screen { padding-top:20px; gap:14px; } .screen-heading h1 { font-size:30px; } .center-heading h1 { font-size:27px; } .intro { margin-top:8px; } .panel { padding:16px; } .timer-ring { max-height:230px; } .time-preview { padding:12px; } .preview-time { font-size:48px; } .summary { gap:8px; } .summary-value { font-size:20px; } .summary-themes { padding-top:8px; } .pumpkin-hero { width:210px; margin:18px 0; } }
+    /* visualViewport updates this state when the iOS keyboard reduces usable height. */
+    .compact .screen { padding:12px 0; gap:10px; }
+    .compact .screen-heading .intro,.compact .eyebrow,.compact .mode-art,.compact .security-note,.compact .summary-hints { display:none; }
+    .compact .screen-heading h1 { font-size:24px; }
+    .compact .panel { padding:12px; }
+    .compact .panel-top { margin-bottom:8px; }
+    .compact .stage-body { gap:8px; }
+    .compact .empty-crest,.compact .empty-players small { display:none; }
+    .compact .empty-players { padding:8px 0; }
+    .compact .rule-note { font-size:11px; padding:0; }
+    .compact .segmented button { min-height:48px; }
+    .compact .divider { margin:10px 0; }
+    .compact .toggle-description { font-size:11px; }
+    .compact .time-preview { padding:10px; }
+    .compact .preview-time { font-size:36px; }
+    .compact .time-preview .subtle { font-size:10px; }
+    .compact .summary { gap:5px; }
+    .compact .summary-value { font-size:17px; }
+    .compact .theme-preview { max-height:30px; font-size:11px; }
+    .compact .secret-content { gap:5px; }
+    .compact .secret-content .secret-symbol,.compact .guess-card .secret-symbol,.compact .result-card .secret-symbol { display:none; }
+    .compact .secret-content h2 { font-size:22px; }
+    .compact .secret-content p { font-size:11px; }
+    .compact .pass-name { margin-top:3px; }
+    .compact .timer-ring { max-height:180px; }
+    .compact .timer-value strong { font-size:46px; }
+    .compact .timer-announcement { font-size:11px; }
+    .compact .timer-stage { gap:7px; }
+    .compact .guess-card { gap:9px; }
+    .compact .result-content { gap:6px; }
+    .compact .result-names { font-size:18px; max-height:48px; }
+    .compact .result-word { font-size:24px; }
+    .compact .pumpkin-hero { width:145px; margin:12px 0; }
+    .compact .splash-title { font-size:38px; }
+    .compact .splash-tagline { font-size:13px; }
+    .short .screen-heading h1 { font-size:21px; }
+    .short .screen[data-screen="setup-0"] h1 br,.short .screen[data-screen="setup-2"] h1 br { display:none; }
+    .short .screen[data-screen="setup-3"] .stage-body { flex-direction:row; }
+    .short .time-preview,.short .summary { flex:1; }
+    .short .summary-themes { padding-top:4px; }
+    .short .screen[data-screen="setup-3"] .theme-preview { max-height:24px; }
+    .short .timer-stage { grid-template-rows:minmax(0,1fr); grid-template-columns:minmax(0,1fr) minmax(0,1fr); gap:12px; }
+    .short .timer-ring { max-height:130px; }
+    .short .timer-value strong { font-size:34px; }
+    .short .timer-value small { font-size:7px; }
+    .short .timer-announcement { max-width:150px; }
+    .short .result-card .divider { display:none; }
+    .short .screen[data-screen="setup-1"] .panel-top { display:none; }
+    .short .screen[data-screen="setup-1"] .divider { margin:5px 0; }
+    .short .screen[data-screen="setup-1"] .toggle-description { display:none; }
+    .short .rule-note { font-size:10px; line-height:1.4; }
+    .short .secret-content { gap:3px; }
+    .short .secret-content .role-label { font-size:8px; line-height:1; }
+    .short .secret-content h2 { font-size:20px; }
+    .short .secret-content p { font-size:10px; line-height:1.3; }
+    .short .result-content { gap:4px; }
+    .short .result-card .label { font-size:8px; }
+    .short .result-card .result-names { font-size:16px; }
+    .short .result-card .result-word { font-size:21px; }
+    @media(max-height:480px) and (orientation:landscape) { :root { --header-height:56px; } .screen { max-width:720px; } .brand-sub { display:none; } .screen[data-screen="setup-1"] .stage-body { flex-direction:row; align-items:start; } .screen[data-screen="setup-1"] .stage-body>* { flex:1; } .toggle-description { display:none; } .screen[data-screen="setup-1"] .panel { padding:8px; } .screen[data-screen="setup-1"] .divider { margin:5px 0; } .splash { display:grid; grid-template-columns:1fr 1fr; align-content:center; column-gap:20px; } .pumpkin-hero { grid-column:1; grid-row:1/4; justify-self:center; width:170px!important; margin:0!important; } .splash-title,.splash-edition,.splash-tagline { grid-column:2; } .splash-title { font-size:34px!important; } .splash-edition { margin:8px 0; } }
+    @media(prefers-reduced-motion:reduce) { *,*::before,*::after { animation:none!important; transition:none!important; } .pumpkin-sculpture,.pumpkin-light { will-change:auto; } }
   </style>
 </head>
 <body>
   <div class="app-shell">
     <header class="topbar">
-      <div class="brand"><svg class="brand-crest" viewBox="0 0 64 80" aria-hidden="true"><path d="M32 2 43 24 36 51 32 73 28 51 21 24Z" fill="currentColor"/><path d="M12 30 32 37 52 30 49 39 35 44 32 58 29 44 15 39Z" fill="#080405" stroke="currentColor" stroke-width="2"/><path d="m32 8-3 22 3 4Z" fill="#ff8b96"/></svg><div><div class="brand-name">IMPOSTOR</div><div class="brand-sub">HALLOWEDDA EDITION</div></div></div>
+      <div class="brand"><svg class="brand-crest" viewBox="0 0 240 220" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M112 55c-8-19 2-33 21-36-4 12-5 24-2 36M130 51c16-18 34-20 49-13-10 13-25 19-44 18"/><path d="M120 64c-39-21-84 3-88 47-5 45 25 76 63 75 18 10 35 10 51 0 40 3 69-30 64-75-4-43-45-68-81-48Z"/><path d="M102 64c-27 20-32 76-14 111m48-111c26 19 31 77 13 111M119 68v24m1 80v15"/><path d="m62 112 32 10-23 11Zm116 0-32 10 23 11ZM109 140l11-16 11 16M77 151l20 7 9-5 14 8 14-8 9 5 20-7-15 21-28 4-28-4Z"/></svg><div><div class="brand-name">IMPOSTOR</div><div class="brand-sub">HALLOWEDDA EDITION</div></div></div>
       <div id="progress" class="progress" role="img" aria-label="Paso 1 de 4"></div>
       <nav class="top-actions" aria-label="Opciones de la partida">
         <button id="sound-button" class="icon-button" data-action="sound" aria-label="Silenciar sonido" aria-pressed="false"></button>
@@ -72,7 +354,7 @@
   const cleanText = value => String(value).replace(/\p{Extended_Pictographic}|\p{Regional_Indicator}|[\u200d\ufe0f\u20e3\u{1f3fb}-\u{1f3ff}]/gu,'').trim().replace(/\s+/g,' ');
   const normalize = value => cleanText(value).normalize('NFD').replace(/[\u0300-\u036f]/g,'').toLocaleLowerCase('es').replace(/[^a-z0-9ñ]+/g,' ').trim().replace(/\s+/g,' ');
   const formatTime = ms => {const s=Math.ceil(ms/1000);return `${String(Math.floor(s/60)).padStart(2,'0')}:${String(s%60).padStart(2,'0')}`;};
-  const duration = () => Math.max(60,settings.players.length*30)*1000;
+  const duration = () => settings.players.length*30000;
   // Small inline vector set also keeps every control recognizable without a CDN.
   const paths = {
     'arrow-right':'<path d="M5 12h14m-6-6 6 6-6 6"/>','arrow-left':'<path d="M19 12H5m6-6-6 6 6 6"/>',
@@ -100,7 +382,34 @@
     'clock':'<circle cx="12" cy="12" r="9"/><path d="M12 6v6l4 2"/>','eye':'<path d="M2 12s4-7 10-7 10 7 10 7-4 7-10 7S2 12 2 12Z"/><circle cx="12" cy="12" r="3"/>'
   };
   const icon = name => `<i data-lucide="${name}" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">${paths[name]||paths.eye}</svg></i>`;
-  const crest = (kind='eye') => `<svg viewBox="0 0 100 110" fill="none" aria-hidden="true"><path d="M50 5 86 23v38c0 22-36 42-36 42S14 83 14 61V23Z" stroke="currentColor" stroke-opacity=".3"/><path d="m50 12 29 15v33c0 17-29 35-29 35S21 77 21 60V27Z" stroke="currentColor" stroke-opacity=".12"/>${kind==='dagger'?'<path d="m50 19 10 21-6 28-4 20-4-20-6-28Z" fill="currentColor"/><path d="m31 46 19 6 19-6-3 9-13 4-3 12-3-12-13-4Z" fill="#190b10" stroke="currentColor"/><path d="M50 25v20" stroke="#ffadb7"/>':kind==='victory'?'<path d="M36 34h28v17a14 14 0 0 1-28 0ZM36 38H26v10c0 7 5 11 12 11m26-21h10v10c0 7-5 11-12 11M50 65v13m-13 2h26" stroke="currentColor" stroke-width="2"/>':'<path d="M27 52s9-13 23-13 23 13 23 13-9 13-23 13-23-13-23-13Z" stroke="currentColor" stroke-width="1.6"/><circle cx="50" cy="52" r="7" stroke="currentColor" stroke-width="1.6"/><path d="M50 25v7m0 40v8M22 52h-6m68 0h-6" stroke="currentColor"/>'}</svg>`;
+  // Bespoke sculpture: matte lobes, smoked facets and illuminated carved openings.
+  const pumpkin = () => `<svg class="pumpkin-sculpture" viewBox="0 0 280 280" fill="none" aria-hidden="true" focusable="false">
+    <defs>
+      <linearGradient id="pumpkin-shell" x1="70" y1="85" x2="217" y2="230" gradientUnits="userSpaceOnUse"><stop stop-color="#232329"/><stop offset=".46" stop-color="#16161a"/><stop offset="1" stop-color="#101013"/></linearGradient>
+      <linearGradient id="pumpkin-edge" x1="81" y1="81" x2="204" y2="238" gradientUnits="userSpaceOnUse"><stop stop-color="#62616b" stop-opacity=".62"/><stop offset=".42" stop-color="#38363e" stop-opacity=".5"/><stop offset="1" stop-color="#ff6b00" stop-opacity=".28"/></linearGradient>
+      <linearGradient id="pumpkin-stem" x1="130" y1="47" x2="151" y2="89" gradientUnits="userSpaceOnUse"><stop stop-color="#48414b"/><stop offset="1" stop-color="#1a191f"/></linearGradient>
+      <radialGradient id="pumpkin-reflection" cx="140" cy="164" r="91" gradientUnits="userSpaceOnUse"><stop stop-color="#ff6b00" stop-opacity=".1"/><stop offset="1" stop-color="#ff6b00" stop-opacity="0"/></radialGradient>
+      <filter id="pumpkin-ember" x="-35%" y="-45%" width="170%" height="190%" color-interpolation-filters="sRGB"><feDropShadow dx="0" dy="0" stdDeviation="4.5" flood-color="#ff6b00" flood-opacity=".65"/></filter>
+    </defs>
+    <path d="M130 89 130 67 139 47 154 43 147 61 148 88Z" fill="url(#pumpkin-stem)" stroke="#625664" stroke-opacity=".6" stroke-width="1.2"/>
+    <path d="m136 76 2-15 7-10" stroke="#9b819e" stroke-opacity=".35" stroke-linecap="round"/>
+    <path d="M140 87C117 73 95 76 79 88 52 91 36 120 38 157 39 199 60 227 91 231 118 244 161 244 189 231 220 227 241 199 242 157 244 120 228 91 201 88 185 76 163 73 140 87Z" fill="url(#pumpkin-shell)" stroke="url(#pumpkin-edge)" stroke-width="1.5"/>
+    <path d="M105 85 83 116 76 163 87 206 104 235C73 230 50 207 46 170 40 128 60 96 79 94Z" fill="#0d0d11" fill-opacity=".55"/>
+    <path d="m175 85 22 31 7 47-11 43-17 29c31-5 54-28 58-65 6-42-14-74-33-76Z" fill="#09090c" fill-opacity=".55"/>
+    <path d="M140 88 117 102 102 149 108 200 126 239h28l18-39 6-51-15-47Z" fill="#1c1c22" fill-opacity=".5"/>
+    <path d="M140 88v151m-35-154-22 31-7 47 11 43 17 29m71-150 22 31 7 47-11 43-17 29" stroke="#a49aa9" stroke-opacity=".09" stroke-width="1.2"/>
+    <path d="M82 91c16-10 30-11 43-5m30 0c13-6 27-5 43 5" stroke="#b6abbc" stroke-opacity=".2" stroke-linecap="round"/>
+    <ellipse cx="140" cy="165" rx="88" ry="72" fill="url(#pumpkin-reflection)"/>
+    <g class="pumpkin-light" filter="url(#pumpkin-ember)" fill="#ff6b00" stroke="#ffac57" stroke-opacity=".5" stroke-width=".7" stroke-linejoin="round">
+      <path d="m78 128 43 17-28 10Z"/>
+      <path d="m202 128-43 17 28 10Z"/>
+      <path d="m140 153-9 17h18Z"/>
+      <path d="m87 180 24 11 12-7 17 10 17-10 12 7 24-11-17 26-17 8h-38l-17-8Z"/>
+    </g>
+    <path d="m80 126 43 17m77-17-43 17m-67 35 21 10 12-7 17 10 17-10 12 7 21-10" stroke="#050506" stroke-width="2.5" stroke-linecap="round"/>
+    <path d="m104 228 23 6h26l23-6" stroke="#ff781f" stroke-opacity=".16" stroke-linecap="round"/>
+  </svg>`;
+  const crest = (kind='eye') => `<svg viewBox="0 0 100 110" fill="none" aria-hidden="true"><path d="M50 5 86 23v38c0 22-36 42-36 42S14 83 14 61V23Z" stroke="currentColor" stroke-opacity=".3"/><path d="m50 12 29 15v33c0 17-29 35-29 35S21 77 21 60V27Z" stroke="currentColor" stroke-opacity=".12"/>${kind==='dagger'?'<path d="m50 19 10 21-6 28-4 20-4-20-6-28Z" fill="currentColor"/><path d="m31 46 19 6 19-6-3 9-13 4-3 12-3-12-13-4Z" fill="#1a1a1e" stroke="currentColor"/><path d="M50 25v20" stroke="#c398fa"/>':kind==='victory'?'<path d="M36 34h28v17a14 14 0 0 1-28 0ZM36 38H26v10c0 7 5 11 12 11m26-21h10v10c0 7-5 11-12 11M50 65v13m-13 2h26" stroke="currentColor" stroke-width="2"/>':'<path d="M27 52s9-13 23-13 23 13 23 13-9 13-23 13-23-13-23-13Z" stroke="currentColor" stroke-width="1.6"/><circle cx="50" cy="52" r="7" stroke="currentColor" stroke-width="1.6"/><path d="M50 25v7m0 40v8M22 52h-6m68 0h-6" stroke="currentColor"/>'}</svg>`;
   let storageFailed=false;
   function loadSettings(){
     const fallback={players:[],impostors:1,hints:false,muted:false,active:['halloween','birthday'],custom:[]};
@@ -113,7 +422,7 @@
       return {players,impostors:raw.impostors===2?2:1,hints:raw.hints===true,muted:raw.muted===true,custom,active};
     }catch{storageFailed=true;return fallback;}
   }
-  let settings=loadSettings(),game=null,view='setup',step=0;
+  let settings=loadSettings(),game=null,view='splash',step=0,entering=false;
   let toastTimeout,timerInterval,holdTimeout,holding=false,pointerId=null,holdKey=null;
   let wakeLock=null,wakeRequest=null,audioCtx=null,audioMaster=null;
   const app=$('#app'),actions=$('#actions'),modal=$('#modal');
@@ -126,10 +435,35 @@
   async function requestWakeLock(){if(!('wakeLock' in navigator)||wakeLock||wakeRequest||document.hidden||!game||view==='result')return;try{wakeRequest=navigator.wakeLock.request('screen');const lock=await wakeRequest;if(!game||view==='result'||document.hidden){await lock.release();return;}wakeLock=lock;lock.addEventListener('release',()=>{if(wakeLock===lock)wakeLock=null;});}catch{}finally{wakeRequest=null;}}
   function releaseWakeLock(){if(wakeLock){wakeLock.release().catch(()=>{});wakeLock=null;}}
   // Unlock audio only from a gesture; reveal and countdown can then play later on iOS.
-  function unlockAudio(){if(settings.muted)return;try{if(!audioCtx){audioCtx=new(window.AudioContext||window.webkitAudioContext)();audioMaster=audioCtx.createGain();audioMaster.gain.value=.65;audioMaster.connect(audioCtx.destination);}if(audioCtx.state==='suspended')audioCtx.resume().catch(()=>{});}catch{}}
+  function unlockAudio(){
+    try {
+      const Audio = window.AudioContext || window.webkitAudioContext;
+      if(!Audio)return Promise.resolve(false);
+      if(!audioCtx || audioCtx.state==='closed'){
+        audioCtx=new Audio();audioMaster=audioCtx.createGain();
+        audioMaster.gain.value=settings.muted?0:.65;audioMaster.connect(audioCtx.destination);
+      }
+      // resume() is invoked directly in the gesture, before any await (iOS Safari).
+      return (audioCtx.state==='running'?Promise.resolve():audioCtx.resume()).then(()=>audioCtx.state==='running').catch(()=>false);
+    }catch{return Promise.resolve(false);}
+  }
+  async function enterParty(){
+    if(entering || view!=='splash')return;
+    entering=true;const button=$('[data-action="enter"]');button.disabled=true;
+    button.setAttribute('aria-busy','true');
+    await unlockAudio();sound('entrance');
+    const splash=$('.splash');
+    if(splash && !document.hidden && !window.matchMedia('(prefers-reduced-motion: reduce)').matches){
+      splash.classList.add('splash-exiting');
+      // Bounded even if Safari suspends animation events during an app switch.
+      await new Promise(resolve=>setTimeout(resolve,200));
+    }
+    step=0;setView('setup');entering=false;
+  }
   function sound(type){if(settings.muted||document.hidden)return;unlockAudio();if(!audioCtx||audioCtx.state!=='running')return;
     const now=audioCtx.currentTime;
     const tone=(freq,delay,length,volume=.1,wave='sine',end=freq)=>{const o=audioCtx.createOscillator(),g=audioCtx.createGain();o.type=wave;o.frequency.setValueAtTime(freq,now+delay);o.frequency.exponentialRampToValueAtTime(end,now+delay+length);g.gain.setValueAtTime(.0001,now+delay);g.gain.exponentialRampToValueAtTime(volume,now+delay+Math.min(.02,length/4));g.gain.exponentialRampToValueAtTime(.0001,now+delay+length);o.connect(g);g.connect(audioMaster);o.start(now+delay);o.stop(now+delay+length+.02);o.onended=()=>{o.disconnect();g.disconnect();};};
+    if(type==='entrance')[164.81,220,329.63].forEach((f,i)=>tone(f,i*.09,.65,.045,'sine'));
     if(type==='click')tone(420,0,.015,.12,'sine',180);
     if(type==='crew-reveal')[110,164.81,220].forEach((f,i)=>tone(f,i*.02,.8,.055));
     if(type==='impostor-reveal')[55,82.41,116.54].forEach((f,i)=>tone(f,i*.03,1.15,.065,'triangle'));
@@ -142,35 +476,39 @@
   function updateSound(){const b=$('#sound-button');b.innerHTML=icon(settings.muted?'volume-x':'volume-2');b.setAttribute('aria-label',settings.muted?'Activar sonido':'Silenciar sonido');b.setAttribute('aria-pressed',String(settings.muted));}
   function setView(next){stopHold();view=next;render();app.focus({preventScroll:true});}
   function heading(kicker,title,description='',center=false){return `<div class="screen-heading ${center?'center-heading':''}"><div class="eyebrow">${kicker}</div><h1>${title}</h1>${description?`<p class="intro">${description}</p>`:''}</div>`;}
-  function screen(content){return `<section class="screen" data-screen="${view==='setup'?`setup-${step}`:view}">${content}</section>`;}
+  function screen(content){return `<section class="screen ${view==='splash'?'splash':''}" data-screen="${view==='setup'?`setup-${step}`:view}">${content}</section>`;}
   function primary(label,action,disabled=false,id=''){return `<button ${id?`id="${id}"`:''} class="primary" data-action="${action}" ${disabled?'disabled':''}>${label}${icon('arrow-right')}</button>`;}
   function render(){
-    app.innerHTML=({setup:setupView,pass:passView,game:gameView,vote:voteView,guess:guessView,result:resultView}[view])();
-    renderActions();updateSound();const n=view==='setup'?step:({pass:0,game:1,vote:2,guess:2,result:3}[view]);
+    app.innerHTML=({splash:splashView,setup:setupView,pass:passView,game:gameView,vote:voteView,guess:guessView,result:resultView}[view])();
+    renderActions();updateSound();const n=view==='setup'?step:({splash:0,pass:0,game:1,vote:2,guess:2,result:3}[view]);
+    $('#progress').hidden=view==='splash';
+    $('[data-action="reset"]').hidden=view==='splash';
     $('#progress').innerHTML=Array.from({length:4},(_,i)=>`<span class="${i===n?'current':i<n?'done':''}"></span>`).join('');
     $('#progress').setAttribute('aria-label',view==='setup'?`Configuración: paso ${step+1} de 4`:`Partida: ${['reparto de cartas','debate','votación','resultado'][n]}`);
     icons();if(view==='pass')bindHold();if(view==='game')updateTimer();
   }
-  function stepError(){if(step===0&&settings.players.length<3)return 'Mínimo 3 jugadores';if(step===1&&settings.players.length<(settings.impostors===2?5:3))return 'Necesitas 5 jugadores para elegir 2 impostores';if(step===2&&!settings.active.length)return 'Elige al menos una categoría';return '';}
+  function stepError(){if(step===0&&settings.players.length<3)return 'Mínimo 3 jugadores';if(step===1&&settings.players.length<(settings.impostors===2?5:3))return '2 impostores: mínimo 5 jugadores';if(step===2&&!settings.active.length)return 'Elige al menos una categoría';return '';}
   function startError(){return settings.players.length<(settings.impostors===2?5:3)?`Necesitas ${settings.impostors===2?5:3} jugadores para este modo.`:!settings.active.length?'Elige al menos una categoría.':'';}
   function renderActions(){let html='';
+    if(view==='splash')html=`${primary('Entrar a la fiesta','enter')}<div class="action-caption"><span>El misterio empieza contigo</span><span>HALLOWEDDA</span></div>`;
     if(view==='setup')html=`<div class="action-row">${step>0?`<button class="secondary back" data-action="back">${icon('arrow-left')}Atrás</button>`:''}${primary(step===3?'Comenzar partida':'Siguiente',step===3?'start':'next',!!(step===3?startError():stepError()),'wizard-next')}</div><div class="action-caption"><span id="wizard-status">${escapeHTML(stepError()||['Tu grupo. Tu coartada.','Las reglas del engaño','Cada tema guarda un secreto','Un teléfono. Muchas sospechas.'][step])}</span><span>0${step+1} / 04</span></div>`;
     if(view==='pass')html=`${primary(game.passIndex===game.players.length-1?'Comenzar debate':'Pasar el teléfono','next-player',!game.seen||holding,'next-player')}<div class="action-caption"><span>Solo tus ojos</span><span>${String(game.passIndex+1).padStart(2,'0')} / ${String(game.players.length).padStart(2,'0')}</span></div>`;
     if(view==='game')html=`${primary('Votar','vote')}<div class="action-caption"><span>Confía en tus sospechas</span><span>${game.players.length} jugadores</span></div>`;
-    if(view==='vote')html=`<div class="button-stack">${primary('Confirmar sospechas','confirm-vote',game.votes.length!==game.impostorIds.length)}<button class="text-button" data-action="back-debate">Volver al debate</button></div>`;
-    if(view==='guess')html=`<div class="button-stack"><button class="primary" type="submit" form="guess-form">Confirmar palabra ${icon('arrow-right')}</button><button class="text-button" data-action="skip-guess">Rendirse y revelar la palabra</button></div>`;
-    if(view==='result')html=`<div class="button-stack">${primary('Otra ronda','start')}<button class="text-button" data-action="setup">Editar jugadores y categorías</button></div>`;
-    actions.innerHTML=html;
+    if(view==='vote')html=`<div class="action-row"><button class="secondary back" data-action="back-debate">Volver</button>${primary('Confirmar voto','confirm-vote',game.votes.length!==game.impostorIds.length)}</div>`;
+    if(view==='guess')html=`<div class="action-row"><button class="secondary back" data-action="skip-guess">Rendirse</button><button class="primary" type="submit" form="guess-form">Confirmar palabra ${icon('arrow-right')}</button></div>`;
+    if(view==='result')html=`<div class="action-row"><button class="secondary back" data-action="setup">Editar grupo</button>${primary('Otra ronda','start')}</div>`;
+    actions.innerHTML=`<div class="bar-inner">${html}</div>`;
   }
+  function splashView(){return screen(`<h1 class="splash-title">IMPOSTOR</h1><p class="splash-edition">HALLOWEDDA EDITION</p><div class="pumpkin-hero">${pumpkin()}</div><p class="splash-tagline">Un teléfono. Muchas sospechas. ¿Quién está mintiendo?</p>`);}
   function setupView(){
-    if(step===0)return screen(`${heading('La mesa de sospechosos','Entre amigos.<br><em>Entre sospechosos.</em>','Todos conocen la palabra. Alguien está fingiendo.')}<div class="stage-body"><section class="panel players-panel"><div class="panel-top"><h2 class="label">Jugadores</h2><span id="player-count" class="count">${String(settings.players.length).padStart(2,'0')} / 20</span></div><form id="player-form" class="add-form"><label class="sr-only" for="player-name">Nombre del jugador</label><input id="player-name" class="field" maxlength="24" placeholder="Nombre de un sospechoso" required autocomplete="off" enterkeyhint="done"><button class="add-button" type="submit" aria-label="Agregar jugador">${icon('plus')}</button></form><div id="players-container" class="players-container scroll-list">${playerList()}</div></section><p id="player-threshold" class="note threshold ${settings.players.length>=3?'ready':''}">${icon(settings.players.length>=3?'check':'users')}${settings.players.length>=3?'La mesa está lista. Puedes agregar más jugadores.':'Mínimo 3 jugadores. Máximo 20 sospechosos.'}</p></div>`);
+    if(step===0)return screen(`${heading('La mesa de sospechosos','Entre amigos.<br><em>Entre sospechosos.</em>','Una palabra secreta. Alguien está fingiendo.')}<div class="stage-body"><section class="panel players-panel"><div class="panel-top"><h2 class="label">Jugadores</h2><span id="player-count" class="count">${String(settings.players.length).padStart(2,'0')} / 20</span></div><form id="player-form" class="add-form"><label class="sr-only" for="player-name">Nombre del jugador</label><input id="player-name" class="field" maxlength="24" placeholder="Nombre de un sospechoso" required autocomplete="off" enterkeyhint="done"><button class="add-button" type="submit" aria-label="Agregar jugador">${icon('plus')}</button></form><div id="players-container" class="players-container scroll-list">${playerList()}</div></section><p id="player-threshold" class="note threshold ${settings.players.length>=3?'ready':''}">${icon(settings.players.length>=3?'check':'users')}${settings.players.length>=3?'La mesa está lista. Puedes agregar más jugadores.':'Mínimo 3 jugadores. Máximo 20 sospechosos.'}</p></div>`);
     if(step===1)return screen(`${heading('Modo de juego','La medida<br><em>del engaño.</em>','Decide cuántos secretos puede soportar tu grupo.')}<div class="stage-body"><section class="panel"><div class="panel-top"><h2 class="label">Impostores</h2></div><div class="segmented" role="group" aria-label="Cantidad de impostores"><button data-action="impostors" data-count="1" aria-pressed="${settings.impostors===1}">${icon('user')}1 impostor</button><button data-action="impostors" data-count="2" aria-pressed="${settings.impostors===2}">${icon('users')}2 impostores</button></div><div class="divider"></div><div class="toggle-row"><div><p id="hints-label" class="toggle-title">Pista para el impostor</p><p id="hints-description" class="toggle-description">Conoce la categoría, nunca la palabra.</p></div><button class="switch" role="switch" data-action="hints" aria-labelledby="hints-label" aria-describedby="hints-description" aria-checked="${settings.hints}"></button></div></section><div class="rule-note">${icon('shield-check')}<span>Con 2 impostores necesitas al menos 5 jugadores. Para ganar, el grupo debe descubrir a ambos.</span></div><div class="mode-art">${crest('dagger')}</div></div>`);
     if(step===2)return screen(`${heading('Elige el misterio','Todo empieza<br><em>con una palabra.</em>','Mezcla temas. Multiplica las sospechas.')}<div class="stage-body"><div class="panel-top category-heading"><h2 class="label">Categorías</h2><span class="count" id="category-count">${settings.active.length} activas</span></div><div class="category-grid scroll-list">${allCategories().map(categoryCard).join('')}</div><button class="custom-add" data-action="custom">${icon('plus')}Crear categoría personalizada</button></div>`);
     return screen(`${heading('Tiempo y confirmación','La tensión<br><em>tiene su tiempo.</em>','Un último vistazo antes de guardar el secreto.')}<div class="stage-body"><section class="panel time-preview"><div class="label">Tiempo de debate</div><div class="preview-time">${formatTime(duration())}</div><p class="subtle">30 segundos por jugador · Puedes agregar más tiempo</p></section><section class="panel summary"><div class="summary-item"><div class="label">Jugadores</div><div class="summary-value">${String(settings.players.length).padStart(2,'0')}</div></div><div class="summary-item"><div class="label">Impostores</div><div class="summary-value">${String(settings.impostors).padStart(2,'0')}</div></div><div class="summary-item summary-themes"><div class="label">${settings.active.length} temas activos</div><p class="theme-preview">${allCategories().filter(c=>settings.active.includes(c.id)).map(c=>escapeHTML(c.name)).join(' · ')}</p><p class="summary-hints">Pista para el impostor: ${settings.hints?'activada':'desactivada'}</p></div></section></div>`);
   }
   function playerList(){return settings.players.length?`<ul class="player-list">${settings.players.map((name,index)=>`<li class="player-row"><span class="player-number">${String(index+1).padStart(2,'0')}</span><span class="avatar">${escapeHTML(name.slice(0,2).toLocaleUpperCase('es'))}</span><span class="player-name">${escapeHTML(name)}</span><button class="icon-button" data-action="remove-player" data-index="${index}" aria-label="Eliminar a ${escapeHTML(name)}">${icon('x')}</button></li>`).join('')}</ul>`:`<div class="empty-players"><div class="empty-crest">${crest()}</div><p>Todavía no hay sospechosos.</p><small>Agrega a tu grupo. Nadie es inocente por defecto.</small></div>`;}
   function refreshPlayers(){const container=$('#players-container');if(container){container.innerHTML=playerList();$('#player-count').textContent=`${String(settings.players.length).padStart(2,'0')} / 20`;const t=$('#player-threshold');t.innerHTML=`${icon(settings.players.length>=3?'check':'users')}${settings.players.length>=3?'La mesa está lista. Puedes agregar más jugadores.':'Mínimo 3 jugadores. Máximo 20 sospechosos.'}`;t.classList.toggle('ready',settings.players.length>=3);}renderActions();icons();}
-  function categoryCard(c){const custom=c.id.startsWith('custom-');return `${custom?'<div class="custom-category">':''}<button class="category" data-action="category" data-id="${c.id}" aria-pressed="${settings.active.includes(c.id)}"><span class="selection-mark">${icon('check')}</span><span class="category-icon">${icon(c.icon)}</span><span class="category-name">${escapeHTML(c.name)}</span><span class="category-size">${c.words.length} palabras</span></button>${custom?`<button class="custom-delete" data-action="delete-category" data-id="${c.id}" aria-label="Eliminar categoría ${escapeHTML(c.name)}">${icon('trash-2')}</button></div>`:''}`;}
+  function categoryCard(c){const custom=c.id.startsWith('custom-');return `${custom?'<div class="custom-category">':''}<button class="category" data-action="category" data-id="${c.id}" aria-pressed="${settings.active.includes(c.id)}"><span class="selection-mark">${icon('check')}</span><span class="category-icon">${icon(c.icon)}</span><span class="category-name">${escapeHTML(c.name)}</span><span class="category-size">${c.words.length} palabras</span></button>${custom?`<button class="custom-delete" data-action="delete-category" data-id="${c.id}" aria-label="Eliminar categoría ${escapeHTML(c.name)}">${icon('trash-2')}Eliminar</button></div>`:''}`;}
   function startGame(){if(startError())return toast(startError());clearInterval(timerInterval);const categories=allCategories().filter(c=>settings.active.includes(c.id)),category=categories[randomIndex(categories.length)],players=settings.players.map((name,id)=>({id,name}));game={players,category,word:category.words[randomIndex(category.words.length)],impostorIds:shuffle(players).slice(0,settings.impostors).map(p=>p.id),hints:settings.hints,passIndex:0,seen:false,remaining:duration(),total:duration(),deadline:null,lastTick:null,votes:[],outcome:null};setView('pass');requestWakeLock();}
   function passView(){return screen(`${heading(`El secreto · ${game.passIndex+1} de ${game.players.length}`,`Pasa el teléfono a<span class="pass-name">${escapeHTML(game.players[game.passIndex].name)}</span>`,'Asegúrate de que nadie más esté mirando.',true)}<div class="stage-body"><div id="secret-card" class="panel secret-card">${hiddenCard()}</div><button id="hold-button" class="hold-button" aria-label="Mantén presionado para ver tu carta"><span>${icon('fingerprint')}<span id="hold-label">Mantén presionado para revelar</span></span></button><p class="security-note">${icon('lock-keyhole')}Tu carta se oculta en cuanto sueltas.</p></div>`);}
   function hiddenCard(){return `<div class="secret-content"><div class="secret-symbol">${crest()}</div><div class="role-label">ACCESO RESERVADO</div><h2>Que nadie mire.</h2><p>Tu lealtad está al otro lado.</p></div>`;}
@@ -178,7 +516,7 @@
   function stopHold(){clearTimeout(holdTimeout);holding=false;pointerId=null;holdKey=null;const button=$('#hold-button');if(button){button.classList.remove('holding');$('#hold-label').textContent='Mantén presionado para revelar';$('#secret-card').classList.remove('impostor');$('#secret-card').innerHTML=hiddenCard();if($('#next-player'))$('#next-player').disabled=!game?.seen;}}
   function bindHold(){const button=$('#hold-button');button.addEventListener('pointerdown',event=>{if(event.button!==0||holding)return;event.preventDefault();button.focus({preventScroll:true});pointerId=event.pointerId;button.setPointerCapture(event.pointerId);beginHold();});button.addEventListener('pointermove',event=>{if(event.pointerId!==pointerId)return;const r=button.getBoundingClientRect();if(event.clientX<r.left||event.clientX>r.right||event.clientY<r.top||event.clientY>r.bottom)stopHold();});['pointerup','pointercancel','lostpointercapture','blur'].forEach(type=>button.addEventListener(type,stopHold));button.addEventListener('contextmenu',event=>event.preventDefault());button.addEventListener('keydown',event=>{if(event.key===' '||event.key==='Enter'){event.preventDefault();if(!event.repeat&&!holding){holdKey=event.key;beginHold();}}});button.addEventListener('keyup',event=>{if(event.key===holdKey){event.preventDefault();stopHold();}});}
   function nextPlayer(){if(!game.seen||holding)return;game.passIndex++;game.seen=false;if(game.passIndex>=game.players.length){setView('game');startTimer();}else setView('pass');}
-  function gameView(){return screen(`${heading('El momento de sospechar','Hablen. Duden.<br><em>Encuentren al impostor.</em>','Den pistas sin decir la palabra. Escuchen cada detalle.',true)}<div class="stage-body"><div class="timer-stage"><div id="timer-ring" class="timer-ring"><svg viewBox="0 0 260 260" aria-hidden="true"><circle class="timer-ticks" cx="130" cy="130" r="120"/><circle class="timer-track" cx="130" cy="130" r="106"/><circle id="timer-progress" class="timer-progress" cx="130" cy="130" r="106" stroke-dasharray="666.018" stroke-dashoffset="0"/></svg><div class="timer-value" role="timer" aria-label="Tiempo restante de debate"><strong id="timer-display">${formatTime(game.remaining)}</strong><small id="timer-label">Para debatir</small></div></div><p id="timer-announcement" class="timer-announcement" aria-live="polite">${game.remaining<=0?'El tiempo terminó. Es hora de votar.':'Una buena coartada también puede ser una mentira.'}</p></div><div class="timer-controls"><button id="timer-toggle" class="secondary" data-action="timer-toggle">${icon('pause')}<span id="timer-toggle-label">Pausar</span></button><button class="secondary" data-action="timer-extend" aria-label="Agregar 30 segundos">${icon('plus')}30 s</button></div></div>`);}
+  function gameView(){return screen(`${heading('El momento de sospechar','Hablen. Duden.<br><em>Encuentren al impostor.</em>','Den pistas sin decir la palabra. Escuchen cada detalle.',true)}<div class="stage-body"><div class="timer-stage"><div id="timer-ring" class="timer-ring"><svg viewBox="0 0 260 260" aria-hidden="true"><circle class="timer-ticks" cx="130" cy="130" r="120"/><circle class="timer-track" cx="130" cy="130" r="106"/><circle id="timer-progress" class="timer-progress" cx="130" cy="130" r="106" stroke-dasharray="666.018" stroke-dashoffset="0"/></svg><div class="timer-value" role="timer" aria-label="Tiempo restante de debate"><strong id="timer-display">${formatTime(game.remaining)}</strong><small id="timer-label">Para debatir</small></div></div><p id="timer-announcement" class="timer-announcement" aria-live="polite">${game.remaining<=0?'El tiempo terminó. Es hora de votar.':'Una buena coartada también puede ser una mentira.'}</p></div><div class="timer-controls"><button id="timer-toggle" class="secondary" data-action="timer-toggle">${icon('pause')}<span id="timer-toggle-label">Pausar</span></button><button class="secondary" data-action="timer-extend" aria-label="Agregar 30 segundos">+30s</button></div></div>`);}
   function startTimer(){if(!game||game.remaining<=0)return;game.deadline=Date.now()+game.remaining;game.lastTick=null;clearInterval(timerInterval);timerInterval=setInterval(updateTimer,100);updateTimer();}
   function pauseTimer(){if(game?.deadline){game.remaining=Math.max(0,game.deadline-Date.now());game.deadline=null;}clearInterval(timerInterval);updateTimer();}
   function updateTimer(){if(!game)return;const wasRunning=!!game.deadline;if(wasRunning){game.remaining=Math.max(0,game.deadline-Date.now());if(game.remaining===0){game.deadline=null;clearInterval(timerInterval);sound('gong');if(view==='game'){$('#timer-announcement').textContent='El tiempo terminó. Es hora de votar.';}}}
@@ -191,11 +529,13 @@
   function voteView(){const count=game.impostorIds.length;return screen(`${heading('El veredicto','¿Quién está<br><em>fingiendo?</em>',`Acuerden su voto y elijan ${count===1?'un sospechoso':'dos sospechosos'}.`)}<div class="stage-body"><div class="vote-grid scroll-list">${game.players.map(p=>`<button class="vote-choice" data-action="suspect" data-id="${p.id}" aria-pressed="${game.votes.includes(p.id)}"><span class="avatar">${escapeHTML(p.name.slice(0,2).toLocaleUpperCase('es'))}</span><span class="vote-name">${escapeHTML(p.name)}</span>${game.votes.includes(p.id)?icon('check'):''}</button>`).join('')}</div><p class="vote-status" aria-live="polite">${game.votes.length} de ${count} ${count===1?'sospechoso seleccionado':'sospechosos seleccionados'}</p><p class="note">${icon('eye')}Si los descubren, tendrán un intento para adivinar la palabra.</p></div>`);}
   const impostorNames=()=>game.players.filter(p=>game.impostorIds.includes(p.id)).map(p=>escapeHTML(p.name)).join(' y ');
   function guessView(){const plural=game.impostorIds.length>1;return screen(`${heading('Última oportunidad',plural?'Los descubrieron.':'Te descubrieron.',`${plural?'Los impostores tienen':'El impostor tiene'} un intento para adivinar la palabra.`,true)}<section class="panel guess-card"><div class="secret-symbol">${crest('dagger')}</div><p class="result-names">${impostorNames()}</p><form id="guess-form"><label for="word-guess">${plural?'Su respuesta en equipo':'Tu respuesta'}</label><input id="word-guess" class="field" maxlength="48" placeholder="¿Cuál era la palabra?" autocomplete="off" autocapitalize="none" spellcheck="false" required enterkeyhint="done"></form></section>`);}
-  function resultView(){const crew=game.outcome==='crew',plural=game.impostorIds.length>1;return screen(`${heading('Misterio resuelto',crew?'Ganaron<br>los tripulantes.':`Gan${plural?'aron<br>los impostores.':'ó<br>el impostor.'}`,crew?'Esta vez, la verdad salió a la luz.':game.outcome==='guessed'?'Una última palabra cambió toda la partida.':'El engaño sobrevivió a todas las miradas.',true)}<section class="panel result-card"><div class="secret-symbol">${crest(crew?'victory':'dagger')}</div><p class="label muted">${plural?'Los impostores eran':'El impostor era'}</p><p class="result-names">${impostorNames()}</p><div class="divider"></div><p class="label muted">La palabra secreta</p><p class="result-word">${escapeHTML(game.word)}</p><p class="subtle">${escapeHTML(game.category.name)}</p></section><p class="result-detail">La mesa votó por ${game.players.filter(p=>game.votes.includes(p.id)).map(p=>escapeHTML(p.name)).join(' y ')}.</p>`);}
-  function finish(outcome){clearInterval(timerInterval);releaseWakeLock();game.deadline=null;game.outcome=outcome;setView('result');sound(outcome==='crew'?'crew-win':'impostor-win');if(window.confetti)window.confetti({particleCount:85,spread:75,origin:{y:.65},colors:['#ff2a3b','#a8111e','#f5f5f7','#b98999'],disableForReducedMotion:true});}
+  function resultView(){const crew=game.outcome==='crew',plural=game.impostorIds.length>1;return screen(`${heading('Misterio resuelto',crew?'Ganaron<br>los tripulantes.':`Gan${plural?'aron<br>los impostores.':'ó<br>el impostor.'}`,crew?'Esta vez, la verdad salió a la luz.':game.outcome==='guessed'?'Una última palabra cambió toda la partida.':'El engaño sobrevivió a todas las miradas.',true)}<section class="panel result-card"><div class="result-content"><div class="secret-symbol">${crest(crew?'victory':'dagger')}</div><p class="label muted">${plural?'Los impostores eran':'El impostor era'}</p><p class="result-names">${impostorNames()}</p><div class="divider"></div><p class="label muted">La palabra secreta</p><p class="result-word">${escapeHTML(game.word)}</p><p class="subtle">${escapeHTML(game.category.name)}</p></div></section><p class="result-detail">La mesa votó por ${game.players.filter(p=>game.votes.includes(p.id)).map(p=>escapeHTML(p.name)).join(' y ')}.</p>`);}
+  function finish(outcome){document.activeElement?.blur();clearInterval(timerInterval);releaseWakeLock();game.deadline=null;game.outcome=outcome;setView('result');sound(outcome==='crew'?'crew-win':'impostor-win');if(window.confetti)window.confetti({particleCount:85,spread:75,origin:{y:.65},colors:['#ff6b00','#8b49c1','#c398fa','#f5f5f7'],zIndex:40,disableForReducedMotion:true});}
   const modalHeader=title=>`<div class="dialog-heading"><h2 id="modal-title">${title}</h2><button class="icon-button" data-action="close-modal" aria-label="Cerrar">${icon('x')}</button></div>`;
-  function openModal(html){stopHold();modal.innerHTML=html;modal.showModal();icons();}
-  function showHelp(){openModal(`${modalHeader('El arte de sospechar')}<ol><li><strong>Reúne al grupo.</strong> Mínimo 3 jugadores para 1 impostor, o 5 para 2.</li><li><strong>Protege tu carta.</strong> Pasa el teléfono. Mantén presionado para ver tu rol y suelta para ocultarlo. Los tripulantes ven la misma palabra; los impostores no.</li><li><strong>Empieza el debate.</strong> Tras la última carta, el tiempo comienza: 30 segundos por jugador, con un mínimo de un minuto. Den pistas sin revelar la palabra. Puedes pausar o agregar 30 segundos.</li><li><strong>Acuerden su voto.</strong> Con 2 impostores deben descubrir a ambos. Si el grupo falla, ganan los impostores.</li><li><strong>Una última oportunidad.</strong> Si los descubren, los impostores pueden ganar adivinando la palabra. Tienen un solo intento, en equipo.</li></ol><div class="divider"></div><p><strong>En tu iPhone:</strong> abre en Safari, toca Compartir y selecciona “Agregar a inicio”.</p><p class="small-print">Los nombres y las categorías se guardan en este dispositivo. Los sonidos se generan en el teléfono. La partida funciona sin conexión una vez abierta; volver a abrir la página sin internet depende de la caché del navegador.</p><button class="primary" data-action="close-modal">Entendido</button>`);}
+  function syncSplashMotion(){document.documentElement.classList.toggle('motion-paused',document.hidden||modal.open);}
+  modal.addEventListener('close',syncSplashMotion);
+  function openModal(html){stopHold();modal.innerHTML=html;if(!modal.open)modal.showModal();syncSplashMotion();icons();}
+  function showHelp(){openModal(`${modalHeader('El arte de sospechar')}<ol><li><strong>Reúne al grupo.</strong> Mínimo 3 jugadores para 1 impostor, o 5 para 2.</li><li><strong>Protege tu carta.</strong> Pasa el teléfono. Mantén presionado para ver tu rol y suelta para ocultarlo. Los tripulantes ven la misma palabra; los impostores no.</li><li><strong>Empieza el debate.</strong> Tras la última carta, el tiempo comienza: 30 segundos por jugador. Den pistas sin revelar la palabra. Puedes pausar o agregar 30 segundos.</li><li><strong>Acuerden su voto.</strong> Con 2 impostores deben descubrir a ambos. Si el grupo falla, ganan los impostores.</li><li><strong>Una última oportunidad.</strong> Si los descubren, los impostores pueden ganar adivinando la palabra. Tienen un solo intento, en equipo.</li></ol><div class="divider"></div><p><strong>En tu iPhone:</strong> abre en Safari, toca Compartir y selecciona “Agregar a inicio”.</p><p class="small-print">Los nombres y las categorías se guardan en este dispositivo. Los sonidos se generan en el teléfono. La partida funciona sin conexión una vez abierta; volver a abrir la página sin internet depende de la caché del navegador.</p><button class="primary" data-action="close-modal">Entendido</button>`);}
   function showCustom(){if(settings.custom.length>=20)return toast('Puedes crear hasta 20 categorías.');openModal(`${modalHeader('Tu propio misterio')}<p>Recuerdos, lugares o secretos que solo tu grupo conoce.</p><form id="category-form"><label for="category-name">Nombre de la categoría</label><input id="category-name" class="field" maxlength="36" required placeholder="Ej. Leyendas de la fiesta" autocomplete="off"><label for="category-words">Palabras separadas por comas o saltos de línea</label><textarea id="category-words" class="field" maxlength="5000" required placeholder="La terraza, El vecino, El karaoke"></textarea><p class="small-print">De 3 a 100 palabras distintas. Hasta 48 caracteres por palabra.</p><p id="category-error" class="error-text" role="alert"></p><button class="primary" type="submit">Guardar categoría ${icon('plus')}</button></form>`);}
   function confirmReset(){openModal(`${modalHeader(view==='setup'?'¿Volver al primer paso?':'¿Terminar la partida?')}<p>${view==='setup'?'Volverás a la lista de jugadores.':'La partida actual termina y sus roles se descartan.'} Tus jugadores, categorías y preferencias se conservan.</p><div class="action-row"><button class="secondary" data-action="close-modal">Cancelar</button><button class="danger" data-action="reset-confirm">${view==='setup'?'Volver':'Terminar'}</button></div>`);}
   document.addEventListener('submit',event=>{
@@ -205,6 +545,7 @@
   });
   document.addEventListener('click',event=>{
     const b=event.target.closest('button[data-action]');if(!b||b.disabled)return;const action=b.dataset.action;
+    if(action==='enter'){enterParty();return;}
     if(action==='sound'){settings.muted=!settings.muted;if(audioMaster)audioMaster.gain.setValueAtTime(settings.muted?0:.65,audioCtx.currentTime);saveSettings();updateSound();icons();if(!settings.muted)sound('click');return;}
     if(!['suspect','confirm-vote','skip-guess'].includes(action))sound('click');
     if(action==='close-modal')return modal.close();
@@ -230,11 +571,26 @@
   });
   document.addEventListener('pointerdown',unlockAudio,{passive:true});document.addEventListener('keydown',unlockAudio);
   window.addEventListener('blur',stopHold);window.addEventListener('pagehide',()=>{stopHold();releaseWakeLock();});window.addEventListener('pointerup',stopHold);window.addEventListener('pointercancel',stopHold);
-  document.addEventListener('visibilitychange',()=>{stopHold();if(!document.hidden){updateTimer();requestWakeLock();}else if(audioCtx?.state==='running')audioCtx.suspend().catch(()=>{});});
+  document.addEventListener('visibilitychange',()=>{syncSplashMotion();stopHold();if(!document.hidden){updateTimer();requestWakeLock();}else if(audioCtx?.state==='running')audioCtx.suspend().catch(()=>{});});
   // Keyboard-aware viewport height without ever enabling document scrolling.
-  function syncViewport(){document.documentElement.style.setProperty('--app-height',`${window.visualViewport?.height||window.innerHeight}px`);}
-  window.visualViewport?.addEventListener('resize',syncViewport);window.addEventListener('resize',syncViewport);syncViewport();
-  function configureAppIcons(){const svg=`<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 180 180"><rect width="180" height="180" rx="38" fill="#080405"/><path d="m90 25 22 42-13 54-9 35-9-35-13-54Z" fill="#ff2a3b"/><path d="m48 76 42 13 42-13-7 19-28 9-7 25-7-25-28-9Z" fill="#080405" stroke="#ff2a3b" stroke-width="3"/><path d="m90 36-5 33 5 10Z" fill="#ffa0aa"/></svg>`,url=`data:image/svg+xml,${encodeURIComponent(svg)}`;$('#favicon').href=url;$('#touch-icon').href=url;const image=new Image();image.onload=()=>{try{const canvas=document.createElement('canvas');canvas.width=canvas.height=180;canvas.getContext('2d').drawImage(image,0,0,180,180);$('#touch-icon').href=canvas.toDataURL('image/png');}catch{}};image.src=url;const manifest={name:'IMPOSTOR: HALLOWEDDA EDITION',short_name:'Impostor',start_url:location.href.split('#')[0].split('?')[0],display:'standalone',background_color:'#080405',theme_color:'#080405',icons:[{src:url,sizes:'any',type:'image/svg+xml',purpose:'any'}]};$('#manifest').href=`data:application/manifest+json,${encodeURIComponent(JSON.stringify(manifest))}`;}
+  function syncViewport(){
+    const root=document.documentElement,v=window.visualViewport;
+    // Ignore pinch zoom: accessibility zoom must not reflow the app around the lens.
+    if(v && Math.abs(v.scale-1)>.02)return;
+    const height=Math.round(v?.height||window.innerHeight),top=Math.round(v?.offsetTop||0);
+    root.style.setProperty('--app-height',`${height}px`);
+    root.style.setProperty('--viewport-top',`${top}px`);
+    const styles=getComputedStyle(root),safeTop=parseFloat(styles.getPropertyValue('--safe-top'))||0,safeBottom=parseFloat(styles.getPropertyValue('--safe-bottom'))||0;
+    const usable=height-safeTop-safeBottom;
+    root.classList.toggle('compact',usable<650);root.classList.toggle('short',usable<510);
+  }
+  window.visualViewport?.addEventListener('resize',syncViewport);window.visualViewport?.addEventListener('scroll',syncViewport);window.addEventListener('resize',syncViewport);syncViewport();
+  function configureAppIcons(){
+    const svg=`<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 240 240"><rect width="240" height="240" rx="52" fill="#09090b"/><g transform="translate(16 26) scale(.86)" fill="none" stroke="#ff6b00" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"><path d="M112 55c-8-19 2-33 21-36-4 12-5 24-2 36M130 51c16-18 34-20 49-13-10 13-25 19-44 18"/><path d="M120 64c-39-21-84 3-88 47-5 45 25 76 63 75 18 10 35 10 51 0 40 3 69-30 64-75-4-43-45-68-81-48Z"/><path d="M102 64c-27 20-32 76-14 111m48-111c26 19 31 77 13 111M119 68v24m1 80v15"/><path d="m62 112 32 10-23 11Zm116 0-32 10 23 11ZM109 140l11-16 11 16M77 151l20 7 9-5 14 8 14-8 9 5 20-7-15 21-28 4-28-4Z"/></g></svg>`,url=`data:image/svg+xml,${encodeURIComponent(svg)}`;
+    $('#favicon').href=url;$('#touch-icon').href=url;
+    const image=new Image();image.onload=()=>{try{const canvas=document.createElement('canvas');canvas.width=canvas.height=180;canvas.getContext('2d').drawImage(image,0,0,180,180);$('#touch-icon').href=canvas.toDataURL('image/png');}catch{}};image.src=url;
+    const manifest={name:'IMPOSTOR: HALLOWEDDA EDITION',short_name:'Impostor',start_url:location.href.split('#')[0].split('?')[0],display:'standalone',background_color:'#09090b',theme_color:'#09090b',icons:[{src:url,sizes:'any',type:'image/svg+xml',purpose:'any'}]};$('#manifest').href=`data:application/manifest+json,${encodeURIComponent(JSON.stringify(manifest))}`;
+  }
   configureAppIcons();render();window.addEventListener('load',icons);if(storageFailed)toast('Almacenamiento no disponible. Puedes jugar durante esta sesión.');
   </script>
 </body>
