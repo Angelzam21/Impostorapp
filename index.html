@@ -9,8 +9,8 @@
   <meta name="mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
   <meta name="apple-mobile-web-app-title" content="Impostor">
-  <meta name="description" content="Una palabra secreta. Un grupo de sospechosos. Un teléfono. IMPOSTOR: HALLOWEDDA EDITION.">
-  <title>IMPOSTOR: HALLOWEDDA EDITION</title>
+  <meta name="description" content="Una palabra secreta. Un grupo de sospechosos. Un teléfono. Impostor: Edda’s Edition 🎂.">
+  <title>Impostor: Edda’s Edition 🎂</title>
   <link id="favicon" rel="icon" type="image/svg+xml">
   <link id="touch-icon" rel="apple-touch-icon" sizes="180x180">
   <link id="manifest" rel="manifest">
@@ -44,7 +44,7 @@
     [hidden] { display:none!important; }
     .sr-only { position:absolute; width:1px; height:1px; padding:0; overflow:hidden; clip:rect(0,0,0,0); white-space:nowrap; border:0; }
     /* The document never scrolls. Only designated lists and sheet bodies scroll. */
-    .app-shell { position:relative; top:var(--viewport-top); height:var(--app-height); max-height:100dvh; max-width:980px; margin:auto; display:flex; flex-direction:column; padding:calc(var(--safe-top) + 8px) max(var(--gutter),var(--safe-right)) calc(var(--safe-bottom) + 12px) max(var(--gutter),var(--safe-left)); }
+    .app-shell { position:relative; top:var(--viewport-top); height:var(--app-height); max-height:100dvh; margin:auto; display:flex; flex-direction:column; padding:calc(var(--safe-top) + 8px) max(var(--gutter),var(--safe-right)) calc(var(--safe-bottom) + 12px) max(var(--gutter),var(--safe-left)); }
     .game-hud { position:relative; z-index:30; flex-shrink:0; align-self:center; display:flex; align-items:center; gap:8px; min-height:44px; max-width:100%; padding:0 4px 0 16px; border-radius:28px; background:#050506; box-shadow:0 6px 20px #0003; }
     .hud-label { font-size:11px; font-weight:650; white-space:nowrap; color:var(--muted); font-variant-numeric:tabular-nums; }
     .hud-lock { color:var(--accent); width:15px!important; height:15px!important; }
@@ -192,7 +192,7 @@
     .timer-ring circle { fill:none; }
     .timer-track { stroke:#ffffff0e; stroke-width:2; }
     .timer-ticks { stroke:#d6b79b30; stroke-width:5; stroke-dasharray:1 11.57; }
-    .timer-progress { stroke:var(--accent); stroke-width:3; stroke-linecap:round; transition:stroke-dashoffset .15s linear; filter:drop-shadow(0 0 5px #ff6b0040); }
+    .timer-progress { stroke:var(--accent); stroke-width:3; stroke-linecap:round;  filter:drop-shadow(0 0 5px #ff6b0040); }
     .timer-value { position:absolute; inset:0; display:flex; flex-direction:column; align-items:center; justify-content:center; }
     .timer-value strong { font-size:64px; font-weight:250; letter-spacing:-3px; font-variant-numeric:tabular-nums; line-height:1.3; }
     .timer-value small { font-size:9px; letter-spacing:2px; text-transform:uppercase; color:var(--muted); }
@@ -216,7 +216,7 @@
     .result-card .subtle { overflow-wrap:anywhere; }
     .result-card .divider { margin:6px 0; }
     .result-detail { font-size:11px; color:var(--muted); text-align:center; max-height:36px; flex-shrink:0; }
-    /* A single bottom sheet owns focus while the underlying game is inert. */
+    /* One adaptive sheet owns focus: bottom sheet on mobile, centered dialog on iPad. */
     .sheet-layer { position:fixed; z-index:60; top:var(--viewport-top); left:0; width:100%; height:var(--app-height); visibility:hidden; pointer-events:none; transition:visibility 0s .42s; }
     .sheet-layer.is-open { visibility:visible; pointer-events:auto; transition-delay:0s; }
     .sheet-backdrop { position:absolute; inset:0; opacity:0; background:#0008; -webkit-backdrop-filter:blur(12px); backdrop-filter:blur(12px); transition:opacity .42s; }
@@ -268,7 +268,7 @@
       .result-card .result-word { font-size:22px; }
     }
     @keyframes enter { from { opacity:0; transform:translate3d(0,7px,0); } to { opacity:1; transform:translate3d(0,0,0); } }
-    @media(min-width:760px) { :root { --gutter:36px; } .screen { padding-top:30px; gap:22px; } }
+    @media(min-width:768px) { :root { --gutter:36px; } .screen { padding-top:30px; gap:22px; } }
     @media(max-width:360px) { :root { --gutter:14px; } .category { padding:12px; } .primary,.secondary { font-size:12px; padding-left:10px; padding-right:10px; } .vote-choice { padding:9px; gap:6px; } .vote-choice .avatar { width:26px; height:30px; } }
     @media(max-height:760px) { .screen { padding-top:20px; gap:14px; } .screen-heading h1 { font-size:30px; } .center-heading h1 { font-size:27px; } .intro { margin-top:8px; } .panel { padding:16px; } .timer-ring { max-height:230px; } .time-preview { padding:12px; } .preview-time { font-size:48px; } .summary { gap:8px; } .summary-value { font-size:20px; } .summary-themes { padding-top:8px; } .pumpkin-hero { width:210px; margin:18px 0; } }
     /* visualViewport updates this state when the iOS keyboard reduces usable height. */
@@ -407,10 +407,137 @@
     .motion-paused .pumpkin-hero::before { animation-play-state:paused; }
     @media(max-width:360px) { .category { padding:12px; min-height:138px; } }
     @media(prefers-reduced-motion:reduce) { .view-exit { visibility:hidden; } *,*::before,*::after { animation:none!important; transition:none!important; } .pumpkin-sculpture,.pumpkin-light { will-change:auto; } .verdict-seal .laurel { stroke-dashoffset:0; } }
+
+    /* Mobile layout stays intact. These additions only rearrange the shared DOM at md. */
+    .participation { display:contents; }
+    .confetti-piece { position:absolute; top:-12px; left:var(--x); width:7px; height:12px; background:var(--color); opacity:0; }
+    .celebration.is-playing { animation:verdict-pulse 2.4s ease-out both; overflow:hidden; }
+    .celebration.is-playing .confetti-piece { animation:confetti-fall 2.3s var(--delay) ease-out both; }
+    @keyframes confetti-fall { 5% { opacity:1; } 100% { opacity:0; transform:translate3d(var(--drift),100dvh,0) rotate(540deg); } }
+    .setup-sidebar,.setup-main { display:contents; }
+    .toast { z-index:70; border:1px solid #ffffff20; background:#29272bf2; border-radius:22px; box-shadow:0 12px 32px #0006; }
+    .toast.is-visible { animation:toast-arrive .28s cubic-bezier(.2,.8,.2,1) both; }
+    .toast.is-leaving { animation:toast-depart .2s ease-in both; }
+    @keyframes toast-arrive { from { opacity:0; transform:translate3d(-50%,-16px,0) scale(.96); } to { opacity:1; transform:translate3d(-50%,0,0) scale(1); } }
+    @keyframes toast-depart { to { opacity:0; transform:translate3d(-50%,-10px,0) scale(.98); } }
+    /* One static material per panel; no per-card blur or animated shadows. */
+    @media(min-width:768px) {
+      :root { --gutter:24px; }
+      .screen,.action-deck,.wizard-viewport { max-width:none; }
+      .app-shell { background:radial-gradient(ellipse at 80% 25%,#ff8d2210,transparent 58%); }
+      .app-shell[data-phase="setup"] .game-hud { align-self:stretch; justify-content:flex-end; background:transparent; box-shadow:none; }
+      .app-shell[data-phase="setup"] .hud-label { margin-right:auto; text-transform:uppercase; letter-spacing:.16em; font-size:10px; }
+      .wizard-viewport { display:flex; flex-direction:column; padding:16px 0 18px; gap:24px; overflow-y:auto; overscroll-behavior:contain; }
+      .tablet-setup-heading { flex-shrink:0; padding-left:6px; }
+      .tablet-setup-heading .chapter { background:transparent; padding:0; margin-bottom:8px; }
+      .tablet-setup-heading h1 { font-size:40px; letter-spacing:-1.4px; }
+      .wizard-viewport .wizard-track { width:100%; flex:1; min-height:540px; height:auto; grid-template-columns:minmax(240px,.85fr) minmax(0,1.65fr); grid-template-rows:minmax(0,1fr); transition:none; will-change:auto; }
+      .setup-sidebar { display:flex; flex-direction:column; min-height:0; gap:20px; padding:20px; border:1px solid #ffffff0e; border-radius:28px; background:linear-gradient(160deg,#242229ee,#17171beb); }
+      .setup-main { display:flex; flex-direction:column; min-width:0; min-height:0; padding:24px; border:1px solid #ffffff12; border-radius:28px; background:radial-gradient(ellipse at 85% 0,#ff9b2e0d,transparent 65%),#17171bbd; -webkit-backdrop-filter:blur(18px); backdrop-filter:blur(18px); }
+      .wizard-step { width:100%; height:auto; min-height:0; }
+      .setup-sidebar .wizard-step[data-step="0"] { flex:1; min-height:200px; }
+      .setup-sidebar .wizard-step[data-step="1"] { flex-shrink:0; padding-top:18px; border-top:1px solid #ffffff12; }
+      .setup-main .wizard-step { height:100%; }
+      .wizard-step[data-step="3"],.wizard-step .screen-heading,.wizard-step .mode-art { display:none; }
+      .wizard-step > .screen { padding:0; gap:0; }
+      .wizard-step .stage-body { flex-direction:column; gap:12px; }
+      .setup-sidebar .panel { padding:0; background:transparent; border-radius:0; }
+      .setup-sidebar .field { background:#0d0d1199; border:1px solid #ffffff0c; }
+      .setup-sidebar .player-row { min-height:50px; }
+      .setup-sidebar .player-toggle { min-height:50px; }
+      .setup-sidebar .roster-hint { font-size:10px; }
+      .setup-sidebar .note { font-size:10px; }
+      .setup-sidebar .segmented { background:#0c0c10; }
+      .setup-sidebar .segmented button { min-height:48px; gap:5px; font-size:12px; }
+      .setup-sidebar .segmented button svg { width:15px; height:15px; }
+      .setup-sidebar .divider { margin:16px 0; }
+      .setup-sidebar .toggle-title { font-size:13px; }
+      .setup-sidebar .toggle-description { font-size:11px; }
+      .wizard-step .rule-note { font-size:10px; line-height:1.5; }
+      .setup-main .category-heading { min-height:32px; margin-bottom:6px; }
+      .setup-main .category-heading .label { font-size:12px; letter-spacing:.12em; }
+      .setup-main .category-grid { gap:12px; padding:4px; }
+      .setup-main .category { position:relative; isolation:isolate; min-height:164px; padding:16px; border:1px solid #ffffff19; border-radius:20px; background:linear-gradient(145deg,#ffffff0d,#ffffff03); box-shadow:inset 0 1px 0 #ffffff0a; transition:transform .18s ease; }
+      .setup-main .category::before { content:""; position:absolute; inset:-1px; border:1px solid #f5a866bb; border-radius:inherit; box-shadow:inset 0 0 24px #f58a3810,0 0 14px #f58a3818; background:linear-gradient(145deg,#f58a381b,#f58a3806); z-index:-1; opacity:0; transition:opacity .18s ease; pointer-events:none; }
+      .setup-main .category[aria-pressed=true]::before { opacity:1; }
+      .setup-main .category-icon { margin-bottom:12px; }
+      .setup-main .category-icon svg { width:28px; height:28px; }
+      .setup-main .category-name { font-size:14px; line-height:1.35; }
+      .setup-main .category-size { font-size:11px; color:#b1abb5; }
+      .setup-main .selection-mark { width:18px; height:18px; }
+      .setup-main .custom-category { background:transparent; }
+      .setup-main .custom-add { min-height:52px; background:#ffffff07; border:1px dashed #ffffff24; border-radius:16px; }
+      .app-shell[data-phase="setup"] .deck-inner { flex-direction:row; align-items:center; justify-content:space-between; gap:20px; }
+      .app-shell[data-phase="setup"] .action-hint { text-align:left; padding-left:6px; }
+      .app-shell[data-phase="setup"] #wizard-next { width:280px; flex-shrink:0; }
+      .gameplay-layout { min-height:0; }
+      .participation { display:flex; flex-direction:column; gap:20px; width:38%; max-height:100%; min-height:0; }
+      .participation .speaker-badge { align-self:stretch; font-size:16px; background:#f58a3810; border:1px solid #f58a3824; padding:16px; }
+      .turn-order { flex-direction:column; gap:18px; min-height:0; border:1px solid #ffffff12; background:linear-gradient(150deg,#25232be6,#16161be6); }
+      .turn-order ol { margin:0; padding-left:28px; font-size:22px; }
+      .turn-order li { padding:8px 0 8px 6px; overflow-wrap:anywhere; }
+      .turn-order li::marker { color:var(--lavender); font-variant-numeric:tabular-nums; }
+      .gameplay-layout .timer-stage { width:54%; height:100%; grid-template-columns:1fr; grid-template-rows:minmax(0,1fr) auto; }
+      .app-shell[data-phase="game"] .timer-ring { width:100%; height:auto; max-height:min(460px,100%); max-width:460px; }
+      .app-shell[data-phase="game"] .timer-value strong { font-size:clamp(78px,10vw,118px); letter-spacing:-5px; font-weight:300; }
+      .timer-value small { font-size:11px; letter-spacing:.2em; }
+      .secret-card { min-height:180px; width:100%; max-width:800px; align-self:center; border:1px solid #ffffff20; border-radius:36px; background:radial-gradient(ellipse at 50% 0,#f6c89912,transparent 65%),linear-gradient(145deg,#29272d,#141419); box-shadow:0 28px 60px -12px #000c,inset 0 1px 0 #ffffff14; }
+      .secret-card.impostor { background:radial-gradient(ellipse at 50% 10%,#a7462433,transparent 80%),linear-gradient(145deg,#292229,#151318); border-color:#f58a3850; }
+      .secret-content { max-width:640px; overflow-y:auto; overscroll-behavior:contain; gap:18px; }
+      .secret-content p { font-size:17px; max-width:520px; }
+      .secret-content .role-label { display:inline-flex; border:1px solid #d6b79b40; border-radius:100px; background:#d6b79b12; padding:8px 16px; font-size:11px; letter-spacing:.16em; flex-shrink:0; }
+      .impostor .role-label { border-color:#f58a3870; background:#f58a381c; }
+      .secret-content .md\:text-5xl { font-size:3rem; line-height:1.1; }
+      .panel.secret-card.md\:p-12 { padding:3rem; }
+      .center-heading .pass-name { font-size:40px; }
+      .app-shell[data-phase="pass"] .action-deck { max-width:800px; }
+      .action-deck .hold-button { padding:48px; min-height:124px; border:1px solid #f5a86650; border-radius:26px; background:linear-gradient(140deg,#322920,#211e22); box-shadow:inset 0 1px 0 #ffffff10; }
+      .action-deck .hold-button > span { font-size:15px; letter-spacing:.06em; text-transform:uppercase; }
+      .action-deck .hold-button svg { width:30px; height:30px; }
+      .screen[data-screen="pass"] > .stage-body { overflow-y:auto; padding:4px 12px 12px; }
+      .toast { top:calc(var(--viewport-top) + var(--safe-top) + 22px); padding:16px 24px; font-size:14px; max-width:min(560px,calc(100% - 48px)); -webkit-backdrop-filter:blur(16px); backdrop-filter:blur(16px); }
+      .sheet { top:50%; bottom:auto; width:calc(100% - 48px); max-height:calc(100% - 48px); max-width:540px; border-radius:28px; padding:24px; opacity:0; transform:translate3d(-50%,calc(-50% + 18px),0) scale(.98); transition:transform .28s cubic-bezier(.2,.8,.2,1),opacity .28s; border:1px solid #ffffff20; background:linear-gradient(145deg,#2b2931fa,#19181efc); box-shadow:0 24px 90px #000a; }
+    }
+    @media(min-width:768px) {
+      .is-open .sheet { opacity:1; transform:translate3d(-50%,-50%,0) scale(1); }
+      .sheet-grabber { display:none; }
+    }
+    @media(min-width:768px) and (max-width:900px) {
+      .wizard-viewport .wizard-track { gap:16px; grid-template-columns:240px minmax(0,1fr); }
+      .setup-sidebar { padding:16px; }
+      .setup-main { padding:16px 12px; }
+      .setup-main .category-grid { gap:8px; }
+      .setup-main .category { padding:12px 10px; min-height:160px; border-radius:16px; }
+      .setup-main .category-name { font-size:12px; }
+      .setup-main .category-size { font-size:10px; }
+    }
+    @media(min-width:768px) and (max-height:650px) {
+      .wizard-viewport { padding-top:12px; gap:16px; }
+      .wizard-viewport .wizard-track { flex:none; height:640px; }
+      .tablet-setup-heading .intro { display:none; }
+      .panel.secret-card.md\:p-12 { padding:24px; }
+      .secret-content { gap:8px; }
+      .secret-content .md\:text-5xl { font-size:36px; }
+      .action-deck .hold-button { padding:24px; min-height:84px; }
+      .app-shell[data-phase="pass"] .deck-inner { flex-direction:column; }
+      .app-shell[data-phase="pass"] .deck-inner > * { flex:none; width:100%; }
+      .app-shell[data-phase="game"] .timer-value strong { font-size:64px; }
+    }
+    @media(min-width:768px) and (hover:hover) and (pointer:fine) {
+      .setup-main .category:hover { transform:translateY(-2px); }
+      .setup-main .category:active { transform:scale(.98); }
+    }
+    @media(prefers-reduced-motion:reduce) { .confetti-piece { display:none; } }
   </style>
+  <!-- Tailwind CSS 3.4.17, compiled utilities only (no Preflight reset).
+       Embedded to keep this single-file game usable without a network connection.
+       Regenerate: @tailwind utilities; content: ['./index.html']; corePlugins:
+       ['display','width','maxWidth','margin','gridTemplateColumns','gap',
+        'flexDirection','alignItems','justifyContent','padding','fontSize','boxShadow','boxShadowColor']. -->
+  <style id="tailwind-utilities">.mx-auto{margin-left:auto;margin-right:auto}.inline{display:inline}.table{display:table}.grid{display:grid}.hidden{display:none}.w-full{width:100%}.max-w-md{max-width:28rem}.p-12{padding:3rem}.text-5xl{font-size:3rem;line-height:1}.shadow{--tw-shadow:0 1px 3px 0 rgba(0,0,0,.1),0 1px 2px -1px rgba(0,0,0,.1);--tw-shadow-colored:0 1px 3px 0 var(--tw-shadow-color),0 1px 2px -1px var(--tw-shadow-color);box-shadow:var(--tw-ring-offset-shadow,0 0 #0000),var(--tw-ring-shadow,0 0 #0000),var(--tw-shadow)}@media (min-width:768px){.md\:block{display:block}.md\:flex{display:flex}.md\:grid{display:grid}.md\:max-w-6xl{max-width:72rem}.md\:grid-cols-2{grid-template-columns:repeat(2,minmax(0,1fr))}.md\:grid-cols-3{grid-template-columns:repeat(3,minmax(0,1fr))}.md\:flex-row{flex-direction:row}.md\:items-center{align-items:center}.md\:justify-around{justify-content:space-around}.md\:gap-6{gap:1.5rem}.md\:p-12{padding:3rem}.md\:text-5xl{font-size:3rem;line-height:1}.md\:shadow-2xl{--tw-shadow:0 25px 50px -12px rgba(0,0,0,.25);--tw-shadow-colored:0 25px 50px -12px var(--tw-shadow-color);box-shadow:var(--tw-ring-offset-shadow,0 0 #0000),var(--tw-ring-shadow,0 0 #0000),var(--tw-shadow)}.md\:shadow-black\/80{--tw-shadow-color:rgba(0,0,0,.8);--tw-shadow:var(--tw-shadow-colored)}}@media (min-width:1024px){.lg\:max-w-7xl{max-width:80rem}}</style>
 </head>
 <body>
-  <div class="app-shell">
+  <div class="app-shell w-full max-w-md md:max-w-6xl lg:max-w-7xl mx-auto">
     <header id="game-hud" class="game-hud" aria-label="Estado de la partida" hidden>
       <span id="hud-lock" class="hud-lock" hidden><i data-lucide="lock-keyhole"></i></span>
       <span id="hud-label" class="hud-label"></span>
@@ -433,10 +560,16 @@
   <div id="edge-light" class="edge-light" aria-hidden="true"></div>
   <div class="privacy-shield" aria-hidden="true"></div>
   <div id="celebration" class="celebration" aria-hidden="true"></div>
-  <div id="toast" class="toast" role="status" hidden></div>
+  <div id="toast" class="toast" role="status" aria-atomic="true" hidden></div>
   <noscript>Activa JavaScript para jugar a IMPOSTOR.</noscript>
   <script>
   'use strict';
+  // Snapshot the initial markup for offline, isolated tests, including file:// use.
+  const testPageSource=(()=>{
+    const markup=document.documentElement.cloneNode(true);
+    markup.querySelectorAll('script[src]').forEach(script=>script.remove());
+    return '<!doctype html>'+markup.outerHTML;
+  })();
   const DEFAULT_CATEGORIES = [
   {
     "id": "halloween",
@@ -695,8 +828,10 @@
       "El balcón",
       "El ascensor"
     ]
-  }
-];
+  },
+  {id:'costumes',name:'Disfraces y Criaturas',description:'Máscaras, monstruos y personajes de Halloween',icon:'skull',words:['Hombre lobo','Momia','Espantapájaros','Máscara','Capa de vampiro','Sombrero de bruja','Maquillaje de zombi','Disfraz de fantasma','Colmillos','Monstruo del pantano','Pirata fantasma','Catrina','Payaso tenebroso','Garras','Frankenstein','Espejo encantado']},
+  {id:'edda',name:'Cumpleaños de Edda',description:'Pastel, regalos y recuerdos de la fiesta',icon:'gift',words:['Pastel de cumpleaños','Velas','Regalos','Piñata','Globos','Fiesta sorpresa','Confeti','Mesa de postres','Foto grupal','Corona de cumpleaños','Tarjeta de felicitación','Lista de invitados','Deseo de cumpleaños','Abrazo','Decoración','Mañanitas']}
+  ];
   // Keep the existing key so saved groups and custom categories migrate in place.
   const STORAGE_KEY = 'el-impostor.settings.v1';
   const $ = selector => document.querySelector(selector);
@@ -705,7 +840,7 @@
   const normalize = value => cleanText(value).normalize('NFD').replace(/[\u0300-\u036f]/g,'').toLocaleLowerCase('es').replace(/[^a-z0-9ñ]+/g,' ').trim().replace(/\s+/g,' ');
   const formatTime = ms => {const s=Math.ceil(ms/1000);return `${String(Math.floor(s/60)).padStart(2,'0')}:${String(s%60).padStart(2,'0')}`;};
   const activePlayers = () => settings.players.filter(player=>player.active);
-  const duration = () => activePlayers().length*30000;
+  const duration = () => 60000;
   // Small inline vector set also keeps every control recognizable without a CDN.
   const paths = {
     'ellipsis':'<circle cx="5" cy="12" r="1"/><circle cx="12" cy="12" r="1"/><circle cx="19" cy="12" r="1"/>',
@@ -764,10 +899,10 @@
   </svg>`;
   const crest = (kind='eye') => `<svg viewBox="0 0 100 110" fill="none" aria-hidden="true"><path d="M50 5 86 23v38c0 22-36 42-36 42S14 83 14 61V23Z" stroke="currentColor" stroke-opacity=".3"/><path d="m50 12 29 15v33c0 17-29 35-29 35S21 77 21 60V27Z" stroke="currentColor" stroke-opacity=".12"/>${kind==='dagger'?'<path d="m50 19 10 21-6 28-4 20-4-20-6-28Z" fill="currentColor"/><path d="m31 46 19 6 19-6-3 9-13 4-3 12-3-12-13-4Z" fill="#1a1a1e" stroke="currentColor"/><path d="M50 25v20" stroke="#d6b79b"/>':kind==='victory'?'<path d="M36 34h28v17a14 14 0 0 1-28 0ZM36 38H26v10c0 7 5 11 12 11m26-21h10v10c0 7-5 11-12 11M50 65v13m-13 2h26" stroke="currentColor" stroke-width="2"/>':'<path d="M27 52s9-13 23-13 23 13 23 13-9 13-23 13-23-13-23-13Z" stroke="currentColor" stroke-width="1.6"/><circle cx="50" cy="52" r="7" stroke="currentColor" stroke-width="1.6"/><path d="M50 25v7m0 40v8M22 52h-6m68 0h-6" stroke="currentColor"/>'}</svg>`;
   let storageFailed=false;
-  function loadSettings(){
+  function loadSettings(storage){
     const fallback={players:[],impostors:1,hints:false,muted:false,active:['halloween','birthday'],custom:[]};
     try{
-      const raw=JSON.parse(localStorage.getItem(STORAGE_KEY));if(!raw||typeof raw!=='object')return fallback;
+      const raw=JSON.parse((storage||localStorage).getItem(STORAGE_KEY));if(!raw||typeof raw!=='object')return fallback;
       const players=Array.isArray(raw.players)?raw.players.filter(p=>typeof p==='string'||(p&&typeof p.name==='string')).map(p=>({name:cleanText(typeof p==='string'?p:p.name).slice(0,24),active:typeof p==='string'||p.active!==false})).filter(p=>normalize(p.name)).filter((p,i,a)=>a.findIndex(x=>normalize(x.name)===normalize(p.name))===i).slice(0,20):[];
       const custom=Array.isArray(raw.custom)?raw.custom.filter(c=>c&&/^custom-[a-z0-9-]+$/.test(c.id)&&typeof c.name==='string'&&Array.isArray(c.words)).slice(0,20).map(c=>({id:c.id,name:cleanText(c.name).slice(0,36),icon:'layers',words:c.words.filter(w=>typeof w==='string').map(w=>cleanText(w).slice(0,48)).filter(w=>normalize(w)).filter((w,i,a)=>a.findIndex(x=>normalize(x)===normalize(w))===i).slice(0,100)})).filter(c=>normalize(c.name)&&c.words.length>=3).filter((c,i,a)=>a.findIndex(x=>x.id===c.id)===i):[];
       const ids=[...DEFAULT_CATEGORIES,...custom].map(c=>c.id);
@@ -780,13 +915,23 @@
   const sessionScore={innocents:0,impostors:0};
   const scoreText=()=>`Marcador: Inocentes ${sessionScore.innocents} — ${sessionScore.impostors} Impostores`;
   const scoreboard=()=>`<p class="scoreboard" data-session-score aria-live="polite">${scoreText()}</p>`;
-  let toastTimeout,timerInterval,holdTimeout,holding=false,pointerId=null,holdKey=null;
-  let wakeLock=null,wakeRequest=null,audioCtx=null,audioMaster=null;
+  let toastTimeout,toastHideTimeout,timerInterval,holdTimeout,holding=false,pointerId=null,holdKey=null,touchId=null,holdBounds=null;
+  let wakeLock=null,wakeRequest=null,audioCtx=null,audioMaster=null,holdTone=null,holdSoundToken=0;
+  let timerAnimation=null,timerAnimationKey='',timerAnimationNode=null,heartbeatAnimation=null;
+  const reducedMotion=window.matchMedia('(prefers-reduced-motion: reduce)');
   const app=$('#app'),actions=$('#actions'),modal=$('#modal');
   const allCategories=()=>[...DEFAULT_CATEGORIES,...settings.custom];
   function saveSettings(){try{localStorage.setItem(STORAGE_KEY,JSON.stringify(settings));}catch{if(!storageFailed)toast('No se pudo guardar. Puedes seguir jugando durante esta sesión.');storageFailed=true;}}
   function icons(){if(window.lucide)window.lucide.createIcons();else document.querySelectorAll('i[data-lucide]:empty').forEach(el=>el.outerHTML=icon(el.dataset.lucide));}
-  function toast(message){clearTimeout(toastTimeout);$('#toast').textContent=message;$('#toast').hidden=false;toastTimeout=setTimeout(()=>$('#toast').hidden=true,3600);}
+  function toast(message){
+    clearTimeout(toastTimeout);clearTimeout(toastHideTimeout);
+    const notice=$('#toast');notice.textContent=message;notice.hidden=false;
+    notice.classList.remove('is-leaving');notice.classList.add('is-visible');
+    toastTimeout=setTimeout(()=>{
+      notice.classList.remove('is-visible');notice.classList.add('is-leaving');
+      toastHideTimeout=setTimeout(()=>{notice.hidden=true;notice.classList.remove('is-leaving');},200);
+    },3600);
+  }
   function randomIndex(length){if(window.crypto?.getRandomValues){const b=new Uint32Array(1),limit=Math.floor(4294967296/length)*length;do{crypto.getRandomValues(b);}while(b[0]>=limit);return b[0]%length;}return Math.floor(Math.random()*length);}
   function shuffle(items){const a=[...items];for(let i=a.length-1;i>0;i--){const j=randomIndex(i+1);[a[i],a[j]]=[a[j],a[i]];}return a;}
   async function requestWakeLock(){if(!('wakeLock' in navigator)||wakeLock||wakeRequest||document.hidden||!game||view==='result')return;try{wakeRequest=navigator.wakeLock.request('screen');const lock=await wakeRequest;if(!game||view==='result'||document.hidden){await lock.release();return;}wakeLock=lock;lock.addEventListener('release',()=>{if(wakeLock===lock)wakeLock=null;});}catch{}finally{wakeRequest=null;}}
@@ -803,6 +948,28 @@
       // resume() is invoked directly in the gesture, before any await (iOS Safari).
       return (audioCtx.state==='running'?Promise.resolve():audioCtx.resume()).then(()=>audioCtx.state==='running').catch(()=>false);
     }catch{return Promise.resolve(false);}
+  }
+  async function startHoldTone(){
+    const token=++holdSoundToken;
+    if(settings.muted||!await unlockAudio()||token!==holdSoundToken||!holding||document.hidden)return;
+    const now=audioCtx.currentTime,gain=audioCtx.createGain();
+    gain.gain.setValueAtTime(.0001,now);gain.gain.exponentialRampToValueAtTime(.025,now+.5);
+    gain.connect(audioMaster);
+    const oscillators=[110,165].map(frequency=>{
+      const oscillator=audioCtx.createOscillator();oscillator.type='sine';
+      oscillator.frequency.setValueAtTime(frequency,now);oscillator.frequency.exponentialRampToValueAtTime(frequency*1.125,now+.65);
+      oscillator.connect(gain);oscillator.start();oscillator.stop(now+12);
+      oscillator.onended=()=>oscillator.disconnect();return oscillator;
+    });
+    const tone={gain,oscillators};holdTone=tone;
+    oscillators[1].onended=()=>{oscillators[1].disconnect();gain.disconnect();if(holdTone===tone)holdTone=null;};
+  }
+  function stopHoldTone(){
+    holdSoundToken++;
+    const tone=holdTone;holdTone=null;if(!tone||!audioCtx)return;
+    const now=audioCtx.currentTime;
+    tone.gain.gain.cancelScheduledValues(now);tone.gain.gain.setTargetAtTime(.0001,now,.012);
+    tone.oscillators.forEach(oscillator=>{try{oscillator.stop(now+.06);}catch{/* Already ended. */}});
   }
   async function enterParty(){
     if(entering || view!=='splash')return;
@@ -848,53 +1015,58 @@
     if(type==='click'||type==='vote')tock();
     if(type==='entrance')chord([130.81,196,261.63]);
     if(type==='crew-reveal')chord([130.81,164.81,196]);
-    if(type==='impostor-reveal'||type==='impostor-win'){
+    if(type==='impostor-reveal'){
       resonance(45,0,2.2,.25,180,.14,38);resonance(46.3,.03,1.9,.13,160,.2,39.1);resonance(90,.08,1.5,.045,260,.08,76);impulse(0,.08,.18,240);
     }
     if(type==='tick'){
-      resonance(76,0,.13,.24,130,.006,43);impulse(0,.05,.035,180);
-      resonance(65,.19,.16,.16,110,.006,38);impulse(.19,.035,.03,160);
+      // Soft final-countdown cue, audible from 10 seconds without a harsh alarm.
+      resonance(523.25,0,.18,.035,1100,.012);
+      resonance(659.25,.12,.22,.025,1300,.012);
     }
     if(type==='gong'){
       impulse(0,.22,.09,1700);
       [1,1.47,2.09,2.56,3.82,5.13].forEach((ratio,i)=>resonance(73.42*ratio,0,3.8-i*.4,.19/(i+1),1800,.005+i*.002,73.42*ratio*.997));
     }
-    if(type==='crew-win'){chord([130.81,164.81,196]);chord([196,261.63,329.63],.2);}
+    if(type==='crew-win'||type==='impostor-win'){chord([261.63,329.63,392]);chord([329.63,392,523.25],.18);chord([392,523.25,659.25],.38);}
   }
   function updateSound(){const b=$('#sound-button');if(!b)return;b.replaceChildren(fragment(`${icon(settings.muted?'volume-x':'volume-2')}<span>${settings.muted?'Activar sonido':'Silenciar sonido'}</span>`));b.setAttribute('aria-label',settings.muted?'Activar sonido':'Silenciar sonido');b.setAttribute('aria-pressed',String(settings.muted));}
-  function setView(next){stopHold();clearHeartbeat();view=next;render();app.focus({preventScroll:true});}
+  function setView(next){stopHold();clearHeartbeat();cancelTimerAnimation();view=next;render();app.focus({preventScroll:true});}
   function haptic(pattern=8){if(!document.hidden)navigator.vibrate?.(pattern);}
-  function clearHeartbeat(){const edge=$('#edge-light');edge.classList.remove('heartbeat');delete edge.dataset.urgent;}
+  function clearHeartbeat(){heartbeatAnimation?.cancel();heartbeatAnimation=null;const edge=$('#edge-light');edge.classList.remove('heartbeat');delete edge.dataset.urgent;}
   function heartbeat(){
     if(view!=='game'||document.hidden||sheetOpen)return;
-    const edge=$('#edge-light');edge.classList.remove('heartbeat');void edge.offsetWidth;edge.classList.add('heartbeat');
+    if(reducedMotion.matches)return;
+    heartbeatAnimation?.cancel();heartbeatAnimation=$('#edge-light').animate([{opacity:0},{opacity:.55,offset:.12},{opacity:.08,offset:.4},{opacity:.35,offset:.55},{opacity:0}],{duration:650,easing:'ease-out'});
   }
   function renderHUD(){
     const shell=$('.app-shell'),hud=$('#game-hud'),setup=view==='setup',pass=view==='pass';
     shell.dataset.phase=view;shell.dataset.outcome=view==='result'?(game.outcome==='crew'?'crew':'impostors'):'';
     const edge=$('#edge-light');edge.dataset.verdict=shell.dataset.outcome;
     hud.hidden=view==='splash';$('#hud-lock').hidden=!pass;$('#hud-private').hidden=!pass;
-    $('#hud-label').textContent=setup?`Paso ${step+1} de 4`:pass?`Jugador ${game.passIndex+1} de ${game.players.length}`:view==='splash'?'':`${game.players.length} jugadores`;
-    const progress=$('#progress');progress.hidden=!setup;
+    $('#hud-label').textContent=setup?(tabletLayout.matches?'Prepara la mesa':`Paso ${step+1} de 4`):pass?`Jugador ${game.passIndex+1} de ${game.players.length}`:view==='splash'?'':`${game.players.length} jugadores`;
+    const progress=$('#progress');progress.hidden=!setup||tabletLayout.matches;
     progress.setAttribute('aria-label',`Configuración: paso ${step+1} de 4`);
     [...progress.children].forEach((dot,i)=>dot.className=i===step?'current':i<step?'done':'');
   }
   function heading(kicker,title,description='',center=false){return `<div class="screen-heading ${center?'center-heading':''}"><div class="chapter">${kicker}</div><h1>${title}</h1>${description?`<p class="intro">${description}</p>`:''}</div>`;}
-  function screen(content){return `<section class="screen ${view==='splash'?'splash':''}" data-screen="${view==='setup'?`setup-${step}`:view}">${content}</section>`;}
+  function screen(content){return `<section class="screen ${view==='splash'?'splash':''}" ${view==='game'?'id="gameplayScreen"':''} data-screen="${view==='setup'?`setup-${step}`:view}">${content}</section>`;}
   function primary(label,action,disabled=false,id=''){return `<button ${id?`id="${id}"`:''} class="primary" data-action="${action}" ${disabled?'disabled':''}>${label}${icon('arrow-right')}</button>`;}
+  const tabletLayout=window.matchMedia('(min-width: 768px)');
+  const holdPrompt=()=>tabletLayout.matches?'Mantén presionado para ver tu carta':'Mantén presionado para revelar';
   let activeLayer=null,wizardLayer=null;
   const fragment = html => {const template=document.createElement('template');template.innerHTML=html;return template.content;};
   function mountWizard(){
     if(wizardLayer)return wizardLayer;
-    wizardLayer=document.createElement('div');wizardLayer.className='view-layer';wizardLayer.dataset.view='setup';
+    wizardLayer=document.createElement('div');wizardLayer.className='view-layer';wizardLayer.dataset.view='setup';wizardLayer.id='setupScreen';
     const current=step;
-    const pages=Array.from({length:4},(_,i)=>{step=i;return `<div class="wizard-step" data-step="${i}">${setupView()}</div>`;}).join('');step=current;
-    wizardLayer.append(fragment(`<div class="wizard-viewport"><div class="wizard-track">${pages}</div></div>`));app.append(wizardLayer);
+    const pages=Array.from({length:4},(_,i)=>{step=i;return `<div class="wizard-step" data-step="${i}">${setupView()}</div>`;});step=current;
+    wizardLayer.append(fragment(`<div class="wizard-viewport"><div class="tablet-setup-heading hidden md:block">${heading("Edda’s Edition 🎂","Preparen <em>el misterio.</em>","Reúne al grupo y elige los temas de esta ronda.")}</div><div class="wizard-track md:grid md:grid-cols-2 md:gap-6"><div class="setup-sidebar" role="group" aria-label="Jugadores y reglas">${pages.slice(0,2).join('')}</div><div class="setup-main" role="group" aria-label="Temas de la partida">${pages[2]}</div>${pages[3]}</div></div>`));app.append(wizardLayer);
     return wizardLayer;
   }
   function syncWizard(){
-    wizardLayer.querySelector('.wizard-track').style.transform=`translate3d(-${step*25}%,0,0)`;
-    wizardLayer.querySelectorAll('.wizard-step').forEach((page,i)=>{page.inert=i!==step;page.setAttribute('aria-hidden',String(i!==step));});
+    wizardLayer.querySelector('#player-name').placeholder=tabletLayout.matches?'Nombre':'Nombre de un sospechoso';
+    wizardLayer.querySelector('.wizard-track').style.transform=tabletLayout.matches?'none':`translate3d(-${step*25}%,0,0)`;
+    wizardLayer.querySelectorAll('.wizard-step').forEach((page,i)=>{const inactive=tabletLayout.matches?i===3:i!==step;page.inert=inactive;page.setAttribute('aria-hidden',String(inactive));});
     const summary=wizardLayer.querySelector('.summary');
     wizardLayer.querySelector('.preview-time').textContent=formatTime(duration());
     summary.querySelectorAll('.summary-value').forEach((el,i)=>el.textContent=String(i?settings.impostors:activePlayers().length).padStart(2,'0'));
@@ -929,58 +1101,159 @@
     renderHUD();renderActions();updateSound();
     icons();if(view==='pass')bindHold();if(view==='game')updateTimer();
   }
+  tabletLayout.addEventListener('change',()=>{
+    stopHold();
+    if(wizardLayer)syncWizard();
+    renderHUD();renderActions();icons();
+    if(view==='pass')bindHold();
+    if(view==='game')updateTimer();
+  });
   function stepError(){if(step===0&&activePlayers().length<3)return 'Mínimo 3 jugadores activos';if(step===1&&activePlayers().length<(settings.impostors===2?5:3))return '2 impostores: mínimo 5 jugadores activos';if(step===2&&!settings.active.length)return 'Elige al menos una categoría';return '';}
   function startError(){return activePlayers().length<(settings.impostors===2?5:3)?`Necesitas ${settings.impostors===2?5:3} jugadores activos para este modo.`:!settings.active.length?'Elige al menos una categoría.':'';}
   function renderActions(){let html='';
     if(view==='splash')html=primary('Entrar a la fiesta','enter');
     if(view==='setup')html=`<p id="wizard-status" class="action-hint" role="status">${escapeHTML(step===3?startError():stepError())}</p><div class="action-row">${step>0?`<button class="secondary back" data-action="back">${icon('arrow-left')}Atrás</button>`:''}${primary(step===3?'Comenzar partida':'Siguiente',step===3?'start':'next',!!(step===3?startError():stepError()),'wizard-next')}</div>`;
-    if(view==='pass')html=`<button id="hold-button" class="hold-button" aria-label="Mantén presionado para ver tu carta"><span>${icon('fingerprint')}<span id="hold-label">Mantén presionado para revelar</span></span></button>${primary(game.passIndex===game.players.length-1?'Comenzar debate':'Pasar el teléfono','next-player',!game.seen||holding,'next-player')}`;
+    if(view==='setup'&&tabletLayout.matches)html=`<p id="wizard-status" class="action-hint" role="status">${escapeHTML(startError()||'60 segundos de debate · Puedes pausar o agregar tiempo')}</p>${primary('Comenzar partida','start',!!startError(),'wizard-next')}`;
+    if(view==='pass')html=`<button id="hold-button" class="hold-button md:p-12" aria-label="Mantén presionado para ver tu carta"><span>${icon('fingerprint')}<span id="hold-label">${holdPrompt()}</span></span></button>${primary(game.passIndex===game.players.length-1?'Comenzar debate':'Pasar el teléfono','next-player',!game.seen||holding,'next-player')}`;
     if(view==='game')html=`<div class="timer-controls"><button id="timer-toggle" class="secondary" data-action="timer-toggle">${icon('pause')}<span>Pausar</span></button><button class="secondary" data-action="timer-extend" aria-label="Agregar 30 segundos">+30s</button></div>${primary('Votar','vote')}`;
     if(view==='vote')html=`<div class="action-row"><button class="secondary back" data-action="back-debate">Volver</button>${primary('Confirmar voto','confirm-vote',game.votes.length!==game.impostorIds.length)}</div>`;
     if(view==='guess')html=`<button class="primary" data-action="guess-correct">${icon('check')}¡Acertó la palabra!</button><button class="secondary" data-action="guess-incorrect">No acertó</button>`;
     if(view==='result')html=`<div class="action-row"><button class="secondary back" data-action="setup">Editar grupo</button>${primary('Otra ronda','start')}</div>`;
     actions.replaceChildren(fragment(`<div class="deck-inner">${html}</div>`));
   }
-  function splashView(){return screen(`<h1 class="splash-title">IMPOSTOR</h1><p class="splash-edition">HALLOWEDDA EDITION</p><div class="pumpkin-hero">${pumpkin()}</div><p class="splash-tagline">Un teléfono. Muchas sospechas. ¿Quién está mintiendo?</p>`);}
+  function splashView(){return screen(`<h1 class="splash-title">IMPOSTOR</h1><p class="splash-edition">Edda’s Edition 🎂</p><div class="pumpkin-hero">${pumpkin()}</div><p class="splash-tagline">Un teléfono. Muchas sospechas. ¿Quién está mintiendo?</p>`);}
   function setupView(){
     if(step===0)return screen(`${heading('La mesa de sospechosos','Entre amigos.<br><em>Entre sospechosos.</em>','Una palabra secreta. Alguien está fingiendo.')}<div class="stage-body"><section class="panel players-panel"><div class="panel-top"><h2 class="label">Banca de amigos</h2><span id="player-count" class="count">${String(settings.players.length).padStart(2,'0')} / 20</span></div><form id="player-form" class="add-form"><label class="sr-only" for="player-name">Nombre del jugador</label><input id="player-name" class="field" maxlength="24" placeholder="Nombre de un sospechoso" required autocomplete="off" enterkeyhint="done"><button class="add-button" type="submit" aria-label="Agregar jugador">${icon('plus')}</button></form><p class="roster-hint subtle">Toca un nombre para activar o descansar.</p><div id="players-container" class="players-container scroll-list">${playerList()}</div></section><p id="player-threshold" class="note threshold ${activePlayers().length>=3?'ready':''}">${icon(activePlayers().length>=3?'check':'users')}${activePlayers().length>=3?`${activePlayers().length} jugadores activos. La mesa está lista.`:`${activePlayers().length} jugadores activos. Necesitas al menos 3.`}</p></div>`);
     if(step===1)return screen(`${heading('Modo de juego','La medida<br><em>del engaño.</em>','Decide cuántos secretos puede soportar tu grupo.')}<div class="stage-body"><section class="panel"><div class="panel-top"><h2 class="label">Impostores</h2></div><div class="segmented" role="group" aria-label="Cantidad de impostores"><button data-action="impostors" data-count="1" aria-pressed="${settings.impostors===1}">${icon('user')}1 impostor</button><button data-action="impostors" data-count="2" aria-pressed="${settings.impostors===2}">${icon('users')}2 impostores</button></div><div class="divider"></div><div class="toggle-row"><div><p id="hints-label" class="toggle-title">Pista para el impostor</p><p id="hints-description" class="toggle-description">Conoce la categoría, nunca la palabra.</p></div><button class="switch" role="switch" data-action="hints" aria-labelledby="hints-label" aria-describedby="hints-description" aria-checked="${settings.hints}"></button></div></section><div class="rule-note">${icon('shield-check')}<span>Con 2 impostores necesitas al menos 5 jugadores. Para ganar, el grupo debe descubrir a ambos.</span></div><div class="mode-art">${crest('dagger')}</div></div>`);
-    if(step===2)return screen(`${heading('Elige el misterio','Todo empieza<br><em>con una palabra.</em>','Mezcla temas. Multiplica las sospechas.')}<div class="stage-body"><div class="panel-top category-heading"><h2 class="label">Categorías</h2><span class="count" id="category-count">${settings.active.length} activas</span></div><div class="category-grid scroll-list">${allCategories().map(categoryCard).join('')}</div><button class="custom-add" data-action="custom">${icon('plus')}Crear categoría personalizada</button></div>`);
-    return screen(`${heading('Tiempo y confirmación','La tensión<br><em>tiene su tiempo.</em>','Un último vistazo antes de guardar el secreto.')}<div class="stage-body"><section class="panel time-preview"><div class="label">Tiempo de debate</div><div class="preview-time">${formatTime(duration())}</div><p class="subtle">30 segundos por jugador · Puedes agregar más tiempo</p></section><section class="panel summary"><div class="summary-item"><div class="label">Jugadores</div><div class="summary-value">${String(activePlayers().length).padStart(2,'0')}</div></div><div class="summary-item"><div class="label">Impostores</div><div class="summary-value">${String(settings.impostors).padStart(2,'0')}</div></div><div class="summary-item summary-themes"><div class="label">${settings.active.length} temas activos</div><p class="theme-preview">${allCategories().filter(c=>settings.active.includes(c.id)).map(c=>escapeHTML(c.name)).join(' · ')}</p><p class="summary-hints">Pista para el impostor: ${settings.hints?'activada':'desactivada'}</p></div></section></div>`);
+    if(step===2)return screen(`${heading('Elige el misterio','Todo empieza<br><em>con una palabra.</em>','Mezcla temas. Multiplica las sospechas.')}<div class="stage-body"><div class="panel-top category-heading"><h2 class="label">Categorías</h2><span class="count" id="category-count">${settings.active.length} activas</span></div><div class="category-grid scroll-list md:grid-cols-3">${allCategories().map(categoryCard).join('')}</div><button class="custom-add" data-action="custom">${icon('plus')}Crear categoría personalizada</button></div>`);
+    return screen(`${heading('Tiempo y confirmación','La tensión<br><em>tiene su tiempo.</em>','Un último vistazo antes de guardar el secreto.')}<div class="stage-body"><section class="panel time-preview"><div class="label">Tiempo de debate</div><div class="preview-time">${formatTime(duration())}</div><p class="subtle">60 segundos · Puedes agregar más tiempo</p></section><section class="panel summary"><div class="summary-item"><div class="label">Jugadores</div><div class="summary-value">${String(activePlayers().length).padStart(2,'0')}</div></div><div class="summary-item"><div class="label">Impostores</div><div class="summary-value">${String(settings.impostors).padStart(2,'0')}</div></div><div class="summary-item summary-themes"><div class="label">${settings.active.length} temas activos</div><p class="theme-preview">${allCategories().filter(c=>settings.active.includes(c.id)).map(c=>escapeHTML(c.name)).join(' · ')}</p><p class="summary-hints">Pista para el impostor: ${settings.hints?'activada':'desactivada'}</p></div></section></div>`);
   }
   function playerList(){return settings.players.length?`<ul class="player-list">${settings.players.map(({name,active},index)=>`<li class="player-row ${active?'':'inactive'}"><button class="player-toggle" data-action="toggle-player" data-index="${index}" aria-pressed="${active}" aria-label="${escapeHTML(name)}: ${active?'activo':'en descanso'}"><span class="player-number">${String(index+1).padStart(2,'0')}</span><span class="avatar">${escapeHTML(name.slice(0,2).toLocaleUpperCase('es'))}</span><span class="player-name">${escapeHTML(name)}${active?'':'<small class="rest-badge">En descanso</small>'}</span></button><button class="icon-button" data-action="remove-player" data-index="${index}" aria-label="Eliminar a ${escapeHTML(name)}">${icon('x')}</button></li>`).join('')}</ul>`:`<div class="empty-players"><div class="empty-crest">${crest()}</div><p>Todavía no hay sospechosos.</p><small>Agrega a tu grupo. Nadie es inocente por defecto.</small></div>`;}
   function refreshPlayers(){const container=$('#players-container');if(container){container.innerHTML=playerList();$('#player-count').textContent=`${String(settings.players.length).padStart(2,'0')} / 20`;const t=$('#player-threshold');t.innerHTML=`${icon(activePlayers().length>=3?'check':'users')}${activePlayers().length>=3?`${activePlayers().length} jugadores activos. La mesa está lista.`:`${activePlayers().length} jugadores activos. Necesitas al menos 3.`}`;t.classList.toggle('ready',activePlayers().length>=3);}if(wizardLayer)syncWizard();renderActions();icons();}
   function categoryCard(c){const custom=c.id.startsWith('custom-');return `${custom?'<div class="custom-category">':''}<button class="category" data-action="category" data-id="${c.id}" aria-pressed="${settings.active.includes(c.id)}"><span class="selection-mark">${icon('check')}</span><span class="category-icon">${icon(c.icon)}</span><span class="category-name">${escapeHTML(c.name)}</span><span class="category-size">${escapeHTML(c.description||`${c.words.length} secretos de tu grupo`)}</span></button>${custom?`<button class="custom-delete" data-action="delete-category" data-id="${c.id}" aria-label="Eliminar categoría ${escapeHTML(c.name)}">${icon('trash-2')}Eliminar</button></div>`:''}`;}
   function startGame(){if(startError())return toast(startError());clearInterval(timerInterval);const categories=allCategories().filter(c=>settings.active.includes(c.id)),category=categories[randomIndex(categories.length)],players=activePlayers().map(({name},id)=>({id,name}));game={players,category,word:category.words[randomIndex(category.words.length)],impostorIds:shuffle(players).slice(0,settings.impostors).map(p=>p.id),hints:settings.hints,passIndex:0,seen:false,remaining:duration(),total:duration(),deadline:null,lastTick:null,votes:[],outcome:null,firstSpeaker:null};setView('pass');requestWakeLock();}
-  function passView(){return screen(`${heading(`El secreto · ${game.passIndex+1} de ${game.players.length}`,`Pasa el teléfono a<span class="pass-name">${escapeHTML(game.players[game.passIndex].name)}</span>`,'Asegúrate de que nadie más esté mirando.',true)}<div class="stage-body"><div id="secret-card" class="panel secret-card">${hiddenCard()}</div><p class="security-note">${icon('lock-keyhole')}Tu carta se oculta en cuanto sueltas.</p></div>`);}
-  function hiddenCard(){return `<div class="secret-content"><div class="secret-symbol">${crest()}</div><div class="role-label">ACCESO RESERVADO</div><h2>Que nadie mire.</h2><p>Tu lealtad está al otro lado.</p></div>`;}
+  function passView(){return screen(`${heading(`El secreto · ${game.passIndex+1} de ${game.players.length}`,`Pasa el teléfono a<span class="pass-name">${escapeHTML(game.players[game.passIndex].name)}</span>`,'Asegúrate de que nadie más esté mirando.',true)}<div class="stage-body"><div id="secret-card" class="panel secret-card md:p-12 md:shadow-2xl md:shadow-black/80">${hiddenCard()}</div><p class="security-note">${icon('lock-keyhole')}Tu carta se oculta en cuanto sueltas.</p></div>`);}
+  function hiddenCard(){return `<div class="secret-content"><div class="secret-symbol">${crest()}</div><div class="role-label">ACCESO RESERVADO</div><h2 class="md:text-5xl">Que nadie mire.</h2><p>Tu lealtad está al otro lado.</p></div>`;}
   function revealedCard(player){
     const impostor=game.impostorIds.includes(player.id);
     const partner=impostor&&game.impostorIds.length===2?game.players.find(p=>p.id!==player.id&&game.impostorIds.includes(p.id)):null;
-    return `<div class="secret-content"><div class="secret-symbol">${crest(impostor?'dagger':'eye')}</div><div class="role-label">${impostor?'ACCESO RESERVADO':'ERES INOCENTE'}</div><h2>${impostor?'¡Eres el impostor!':escapeHTML(game.word)}</h2>${impostor?`${partner?`<p class="partner-name">Tu cómplice es: <strong>${escapeHTML(partner.name)}</strong></p>`:''}<p>${partner?'Escuchen, improvisen y no dejen rastro.':'No conoces la palabra. Escucha, improvisa y no dejes rastro.'}</p>${game.hints?`<p>Tu pista: ${escapeHTML(game.category.name)}</p>`:''}`:`<p>Conoces la palabra secreta</p><p>${escapeHTML(game.category.name)}</p>`}</div>`;
+    return `<div class="secret-content"><div class="secret-symbol">${crest(impostor?'dagger':'eye')}</div><div class="role-label">${impostor?'ERES IMPOSTOR':'ERES INOCENTE'}</div><h2 class="md:text-5xl">${impostor?'¡Eres el impostor!':escapeHTML(game.word)}</h2>${impostor?`${partner?`<p class="partner-name">Tu cómplice es: <strong>${escapeHTML(partner.name)}</strong></p>`:''}<p>${partner?'Escuchen, improvisen y no dejen rastro.':'No conoces la palabra. Escucha, improvisa y no dejes rastro.'}</p>${game.hints?`<p>Tu pista: ${escapeHTML(game.category.name)}</p>`:''}`:`<p>Conoces la palabra secreta</p><p>${escapeHTML(game.category.name)}</p>`}</div>`;
   }
-  function beginHold(){if(holding||view!=='pass'||document.hidden||sheetOpen)return;unlockAudio();holding=true;document.documentElement.classList.add('secret-open');$('#next-player').classList.remove('handoff-ready');$('#hold-button').classList.add('holding');$('#hold-label').textContent='Un instante… sigue presionando';$('#next-player').disabled=true;holdTimeout=setTimeout(()=>{if(!holding||view!=='pass'||document.hidden)return;const player=game.players[game.passIndex],impostor=game.impostorIds.includes(player.id),card=$('#secret-card');card.classList.toggle('impostor',impostor);sound(impostor?'impostor-reveal':'crew-reveal');card.innerHTML=revealedCard(player);game.seen=true;$('#hold-label').textContent='Memoriza. Suelta para ocultar.';},650);}
+  function beginHold(){
+    if(holding||view!=='pass'||document.hidden||sheetOpen)return;
+    holding=true;startHoldTone();haptic();
+    document.documentElement.classList.add('secret-open');
+    $('#next-player').classList.remove('handoff-ready');$('#hold-button').classList.add('holding');
+    $('#hold-label').textContent='Un instante… sigue presionando';$('#next-player').disabled=true;
+    holdTimeout=setTimeout(()=>{
+      if(!holding||view!=='pass'||document.hidden||sheetOpen)return;
+      const player=game.players[game.passIndex],impostor=game.impostorIds.includes(player.id),card=$('#secret-card');
+      card.classList.toggle('impostor',impostor);sound(impostor?'impostor-reveal':'crew-reveal');
+      card.replaceChildren(fragment(revealedCard(player)));game.seen=true;
+      $('#hold-label').textContent='Memoriza. Suelta para ocultar.';
+    },650);
+  }
   function stopHold(){
-    const wasHolding=holding;clearTimeout(holdTimeout);holding=false;pointerId=null;holdKey=null;
+    const wasHolding=holding,capturedPointer=pointerId;
+    clearTimeout(holdTimeout);holding=false;pointerId=null;holdKey=null;touchId=null;holdBounds=null;stopHoldTone();
     document.documentElement.classList.remove('secret-open');
-    const button=$('#hold-button');
-    if(button){button.classList.remove('holding');$('#hold-label').textContent='Mantén presionado para revelar';$('#secret-card').classList.remove('impostor');$('#secret-card').replaceChildren(fragment(hiddenCard()));
+    const button=$('#hold-button'),card=$('#secret-card');
+    if(button?.hasPointerCapture(capturedPointer))button.releasePointerCapture(capturedPointer);
+    // Blur can fire while the outgoing screen is losing its live IDs.
+    if(button&&card){
+      button.classList.remove('holding');$('#hold-label').textContent=holdPrompt();
+      card.classList.remove('impostor');
+      if(wasHolding)card.replaceChildren(fragment(hiddenCard()));
       const next=$('#next-player');if(next){next.disabled=!game?.seen;if(wasHolding&&game?.seen){next.classList.add('handoff-ready');haptic();}}
     }
   }
-  function bindHold(){const button=$('#hold-button');button.addEventListener('pointerdown',event=>{if(event.button!==0||holding)return;event.preventDefault();button.focus({preventScroll:true});pointerId=event.pointerId;button.setPointerCapture(event.pointerId);beginHold();});button.addEventListener('pointermove',event=>{if(event.pointerId!==pointerId)return;const r=button.getBoundingClientRect();if(event.clientX<r.left||event.clientX>r.right||event.clientY<r.top||event.clientY>r.bottom)stopHold();});['pointerup','pointercancel','lostpointercapture','blur'].forEach(type=>button.addEventListener(type,stopHold));button.addEventListener('contextmenu',event=>event.preventDefault());button.addEventListener('keydown',event=>{if(event.key===' '||event.key==='Enter'){event.preventDefault();if(!event.repeat&&!holding){holdKey=event.key;beginHold();}}});button.addEventListener('keyup',event=>{if(event.key===holdKey){event.preventDefault();stopHold();}});}
+  function insideHold(x,y){
+    return holdBounds&&x>=Math.max(0,holdBounds.left)&&x<=Math.min(innerWidth,holdBounds.right)&&y>=Math.max(0,holdBounds.top)&&y<=Math.min(innerHeight,holdBounds.bottom);
+  }
+  function bindHold(){
+    const button=$('#hold-button');
+    // Touch owns finger input; Pointer Events own mouse, Pencil and fallback touch.
+    // This avoids two gates/two tones from iPadOS's paired pointer/touch events.
+    button.addEventListener('touchstart',event=>{
+      event.preventDefault();
+      if(event.touches.length!==1){stopHold();return;}
+      if(holding)return;
+      button.focus({preventScroll:true});touchId=event.changedTouches[0].identifier;
+      holdBounds=button.getBoundingClientRect();beginHold();
+    },{passive:false});
+    button.addEventListener('touchmove',event=>{
+      if(touchId===null)return;event.preventDefault();
+      const touch=[...event.touches].find(point=>point.identifier===touchId);
+      if(!touch||!insideHold(touch.clientX,touch.clientY))stopHold();
+    },{passive:false});
+    ['touchend','touchcancel'].forEach(type=>button.addEventListener(type,stopHold,{passive:true}));
+    button.addEventListener('pointerdown',event=>{
+      if(event.pointerType==='touch'&&'ontouchstart' in window)return;
+      if(event.button!==0||!event.isPrimary||holding)return;
+      event.preventDefault();button.focus({preventScroll:true});pointerId=event.pointerId;
+      holdBounds=button.getBoundingClientRect();button.setPointerCapture(event.pointerId);beginHold();
+    });
+    button.addEventListener('pointermove',event=>{if(event.pointerId===pointerId&&!insideHold(event.clientX,event.clientY))stopHold();});
+    ['pointerup','pointercancel','lostpointercapture','blur'].forEach(type=>button.addEventListener(type,stopHold));
+    button.addEventListener('contextmenu',event=>event.preventDefault());
+    button.addEventListener('keydown',event=>{
+      if(event.key===' '||event.key==='Enter'){
+        event.preventDefault();if(!event.repeat&&!holding){holdKey=event.key;beginHold();}
+      }
+    });
+    button.addEventListener('keyup',event=>{if(event.key===holdKey)stopHold();});
+  }
   function nextPlayer(){if(!game.seen||holding)return;game.passIndex++;game.seen=false;if(game.passIndex>=game.players.length){game.firstSpeaker=game.players[randomIndex(game.players.length)];setView('game');startTimer();}else setView('pass');}
-  function gameView(){return screen(`${heading('El momento de sospechar','Hablen. Duden.<br><em>Encuentren al impostor.</em>','Den pistas sin decir la palabra. Escuchen cada detalle.',true)}<div class="stage-body"><p class="speaker-badge">${icon('crown')}<span>Arranca dando pista: <strong>${escapeHTML(game.firstSpeaker.name)}</strong></span></p><div class="timer-stage"><div id="timer-ring" class="timer-ring"><svg viewBox="0 0 260 260" aria-hidden="true"><circle class="timer-ticks" cx="130" cy="130" r="120"/><circle class="timer-track" cx="130" cy="130" r="106"/><circle id="timer-progress" class="timer-progress" cx="130" cy="130" r="106" stroke-dasharray="666.018" stroke-dashoffset="0"/></svg><div class="timer-value" role="timer" aria-label="Tiempo restante de debate"><strong id="timer-display">${formatTime(game.remaining)}</strong><small id="timer-label">Para debatir</small></div></div><p id="timer-announcement" class="timer-announcement" aria-live="polite">${game.remaining<=0?'El tiempo terminó. Es hora de votar.':'Una buena coartada también puede ser una mentira.'}</p></div></div>`);}
+  function speakingOrder(){
+    const first=game.players.findIndex(player=>player.id===game.firstSpeaker.id);
+    return [...game.players.slice(first),...game.players.slice(0,first)];
+  }
+  function gameView(){return screen(`${heading('El momento de sospechar','Hablen. Duden.<br><em>Encuentren al impostor.</em>','Den pistas sin decir la palabra. Escuchen cada detalle.',true)}<div class="stage-body gameplay-layout md:flex md:flex-row md:items-center md:justify-around md:gap-6"><div class="participation"><p class="speaker-badge">${icon('crown')}<span>Arranca dando pista: <strong>${escapeHTML(game.firstSpeaker.name)}</strong></span></p><section class="turn-order hidden md:flex panel" aria-labelledby="turn-order-title"><h2 id="turn-order-title" class="label">Orden de participación</h2><ol class="scroll-list">${speakingOrder().map(player=>`<li>${escapeHTML(player.name)}</li>`).join('')}</ol><p class="subtle">Sigan este orden para dar sus pistas.</p></section></div><div class="timer-stage"><div id="timer-ring" class="timer-ring"><svg viewBox="0 0 260 260" aria-hidden="true"><circle class="timer-ticks" cx="130" cy="130" r="120"/><circle class="timer-track" cx="130" cy="130" r="106"/><circle id="timer-progress" class="timer-progress" cx="130" cy="130" r="106" stroke-dasharray="666.018" stroke-dashoffset="0"/></svg><div class="timer-value" role="timer" aria-label="Tiempo restante de debate"><strong id="timer-display">${formatTime(game.remaining)}</strong><small id="timer-label">Para debatir</small></div></div><p id="timer-announcement" class="timer-announcement" aria-live="polite">${game.remaining<=0?'El tiempo terminó. Es hora de votar.':'Una buena coartada también puede ser una mentira.'}</p></div></div>`);}
   function startTimer(){if(!game||game.remaining<=0)return;game.deadline=Date.now()+game.remaining;game.lastTick=null;clearInterval(timerInterval);timerInterval=setInterval(updateTimer,100);updateTimer();}
   function pauseTimer(){if(game?.deadline){game.remaining=Math.max(0,game.deadline-Date.now());game.deadline=null;}clearInterval(timerInterval);updateTimer();}
-  function updateTimer(){if(!game)return;const wasRunning=!!game.deadline;if(wasRunning){game.remaining=Math.max(0,game.deadline-Date.now());if(game.remaining===0){game.deadline=null;clearInterval(timerInterval);sound('gong');if(view==='game'){$('#timer-announcement').textContent='El tiempo terminó. Es hora de votar.';}}}
-    const seconds=Math.ceil(game.remaining/1000);if(wasRunning&&seconds>0&&seconds<=10&&game.lastTick!==seconds){game.lastTick=seconds;sound('tick');heartbeat();}
+  function cancelTimerAnimation(){
+    timerAnimation?.cancel();timerAnimation=null;timerAnimationKey='';timerAnimationNode=null;
+  }
+  function paintTimerProgress(){
+    const ring=$('#timer-progress');if(!ring)return;
+    const offset=666.018*(1-Math.min(1,game.remaining/game.total));
+    const animated=game.deadline&&!document.hidden&&!sheetOpen&&!reducedMotion.matches;
+    const key=animated?`${game.deadline}:${game.total}`:'static';
+    if(timerAnimationKey!==key||timerAnimationNode!==ring){
+      cancelTimerAnimation();timerAnimationKey=key;timerAnimationNode=ring;
+      if(animated){
+        // The browser schedules frames at the display's refresh rate; no JS frame loop.
+        timerAnimation=ring.animate([{strokeDashoffset:String(offset)},{strokeDashoffset:'666.018'}],{duration:game.remaining,easing:'linear',fill:'forwards'});
+      }
+    }
+    if(!animated)ring.style.strokeDashoffset=String(offset);
+  }
+  function updateTimer(){
+    if(!game)return;
+    const wasRunning=!!game.deadline;
+    if(wasRunning){
+      game.remaining=Math.max(0,game.deadline-Date.now());
+      if(game.remaining===0){
+        game.deadline=null;clearInterval(timerInterval);sound('gong');
+        if(view==='game')$('#timer-announcement').textContent='El tiempo terminó. Es hora de votar.';
+      }
+    }
+    const seconds=Math.ceil(game.remaining/1000);
+    if(wasRunning&&seconds>0&&seconds<=10&&game.lastTick!==seconds){game.lastTick=seconds;sound('tick');heartbeat();}
     const urgent=view==='game'&&!!game.deadline&&seconds>0&&seconds<=10&&!document.hidden&&!sheetOpen;
     if(!urgent)clearHeartbeat();else $('#edge-light').dataset.urgent='true';
     if(view!=='game'||!$('#timer-display'))return;
-    $('#timer-display').textContent=formatTime(game.remaining);$('#timer-progress').style.strokeDashoffset=666.018*(1-Math.min(1,game.remaining/game.total));$('#timer-label').textContent=seconds===0?'Es hora de votar':game.deadline?'Para debatir':'En pausa';$('#timer-ring').classList.toggle('urgent',seconds<=10&&seconds>0);
-    const state=game.deadline?'running':'paused',button=$('#timer-toggle');if(button.dataset.state!==state){button.dataset.state=state;button.innerHTML=`${icon(game.deadline?'pause':'play')}<span>${game.deadline?'Pausar':'Continuar'}</span>`;icons();}button.disabled=seconds===0;
+    const display=$('#timer-display'),label=$('#timer-label'),time=formatTime(game.remaining);
+    const caption=seconds===0?'Es hora de votar':game.deadline?'Para debatir':'En pausa';
+    // Clock accuracy stays independent of rendering. Text only changes once per second.
+    if(display.textContent!==time)display.textContent=time;
+    if(label.textContent!==caption)label.textContent=caption;
+    paintTimerProgress();$('#timer-ring').classList.toggle('urgent',seconds<=10&&seconds>0);
+    const state=game.deadline?'running':'paused',button=$('#timer-toggle');
+    if(button.dataset.state!==state){button.dataset.state=state;button.innerHTML=`${icon(game.deadline?'pause':'play')}<span>${game.deadline?'Pausar':'Continuar'}</span>`;icons();}
+    button.disabled=seconds===0;
   }
+  reducedMotion.addEventListener('change',()=>{cancelTimerAnimation();updateTimer();});
   function extendTimer(){updateTimer();const expired=game.remaining<=0;game.remaining+=30000;game.total+=30000;game.lastTick=null;if(game.deadline)game.deadline+=30000;$('#timer-announcement').textContent='30 segundos más. El secreto sigue en juego.';if(expired)startTimer();else updateTimer();}
   function voteView(){const count=game.impostorIds.length;return screen(`${heading('El veredicto','¿Quién está<br><em>fingiendo?</em>',`Acuerden su voto y elijan ${count===1?'un sospechoso':'dos sospechosos'}.`)}<div class="stage-body"><div class="vote-grid scroll-list">${game.players.map(p=>`<button class="vote-choice" data-action="suspect" data-id="${p.id}" aria-pressed="${game.votes.includes(p.id)}"><span class="avatar">${escapeHTML(p.name.slice(0,2).toLocaleUpperCase('es'))}</span><span class="vote-name">${escapeHTML(p.name)}</span><span class="vote-check" ${game.votes.includes(p.id)?'':'hidden'}>${icon('check')}</span></button>`).join('')}</div><p class="vote-status" aria-live="polite">${game.votes.length} de ${count} ${count===1?'sospechoso seleccionado':'sospechosos seleccionados'}</p><p class="note">${icon('eye')}Si los descubren, tendrán un intento para adivinar la palabra.</p></div>`);}
   const impostorNames=()=>game.players.filter(p=>game.impostorIds.includes(p.id)).map(p=>escapeHTML(p.name)).join(' y ');
@@ -992,7 +1265,7 @@
     sessionScore[outcome==='crew'?'innocents':'impostors']++;
     concealJudgeWord();
     document.activeElement?.blur();clearInterval(timerInterval);releaseWakeLock();game.deadline=null;game.outcome=outcome;setView('result');sound(outcome==='crew'?'crew-win':'impostor-win');
-    haptic([18,35,24]);const pulse=$('#celebration');pulse.dataset.verdict=outcome==='crew'?'crew':'impostors';pulse.classList.remove('is-playing');void pulse.offsetWidth;pulse.classList.add('is-playing');
+    haptic([18,35,24]);const pulse=$('#celebration');pulse.dataset.verdict=outcome==='crew'?'crew':'impostors';pulse.replaceChildren(fragment(Array.from({length:36},(_,i)=>`<span class="confetti-piece" style="--x:${(i*47)%100}%;--color:${['#f58a38','#d6b79b','#a889c9'][i%3]};--delay:${(i%6)*.04}s;--drift:${(i%9-4)*18}px"></span>`).join('')));pulse.classList.remove('is-playing');void pulse.offsetWidth;pulse.classList.add('is-playing');
     activeLayer.querySelector('.result-card').classList.add('verdict-shake');
   }
   const modalHeader=title=>`<div class="sheet-heading"><h2 id="modal-title">${title}</h2><button class="icon-button" data-action="close-modal" aria-label="Cerrar">${icon('x')}</button></div>`;
@@ -1022,7 +1295,7 @@
     else if(!event.shiftKey&&(document.activeElement===last||document.activeElement===modal)){event.preventDefault();first.focus();}
   });
   modal.addEventListener('pointerdown',event=>{
-    if(event.button!==0||!event.target.closest('.sheet-grabber,.sheet-heading')||event.target.closest('button'))return;
+    if(tabletLayout.matches||event.button!==0||!event.target.closest('.sheet-grabber,.sheet-heading')||event.target.closest('button'))return;
     sheetDrag={id:event.pointerId,y:event.clientY,start:performance.now(),distance:0};modal.setPointerCapture(event.pointerId);modal.style.transition='none';
   });
   modal.addEventListener('pointermove',event=>{
@@ -1038,7 +1311,7 @@
   function showOptions(){
     openModal(`${modalHeader('Opciones de la partida')}${scoreboard()}<div class="options-list"><button id="sound-button" class="secondary" data-action="sound" aria-pressed="${settings.muted}"></button><button class="secondary" data-action="help">${icon('circle-help')}Cómo jugar</button><button class="secondary" data-action="reset-score">${icon('rotate-ccw')}Reiniciar marcador</button><button class="secondary" data-action="reset">${icon('rotate-ccw')}${view==='setup'?'Volver al primer paso':'Terminar la partida'}</button></div>`);updateSound();icons();
   }
-  function showHelp(){openModal(`${modalHeader('El arte de sospechar')}<ol><li><strong>Reúne al grupo.</strong> Mínimo 3 jugadores para 1 impostor, o 5 para 2. Toca un nombre en la banca para activarlo o dejarlo en descanso sin borrarlo.</li><li><strong>Protege tu carta.</strong> Pasa el teléfono. Mantén presionado para ver tu rol y suelta para ocultarlo. Los inocentes ven la misma palabra; los impostores no. Con 2 impostores, cada uno conoce a su cómplice.</li><li><strong>Empieza el debate.</strong> Tras la última carta, el tiempo comienza: 30 segundos por jugador activo. La corona indica quién empieza. Den pistas sin revelar la palabra. Puedes pausar o agregar 30 segundos.</li><li><strong>Acuerden su voto.</strong> Con 2 impostores deben descubrir a ambos. Si el grupo falla, ganan los impostores.</li><li><strong>Una última oportunidad.</strong> Si los descubren, los impostores pueden ganar adivinando la palabra. Tienen un solo intento en voz alta, en equipo si son dos. La mesa decide si acertaron; pueden consultar la palabra después de escuchar su respuesta.</li></ol><div class="divider"></div><p><strong>En tu iPhone:</strong> abre en Safari, toca Compartir y selecciona “Agregar a inicio”.</p><p class="small-print">Los nombres y las categorías se guardan en este dispositivo. Los sonidos se generan en el teléfono. La partida funciona sin conexión una vez abierta; volver a abrir la página sin internet depende de la caché del navegador.</p><button class="primary" data-action="close-modal">Entendido</button>`);}
+  function showHelp(){openModal(`${modalHeader('El arte de sospechar')}<ol><li><strong>Reúne al grupo.</strong> Mínimo 3 jugadores para 1 impostor, o 5 para 2. Toca un nombre en la banca para activarlo o dejarlo en descanso sin borrarlo.</li><li><strong>Protege tu carta.</strong> Pasa el teléfono. Mantén presionado para ver tu rol y suelta para ocultarlo. Los inocentes ven la misma palabra; los impostores no. Con 2 impostores, cada uno conoce a su cómplice.</li><li><strong>Empieza el debate.</strong> Tras la última carta, el tiempo comienza: 60 segundos para toda la mesa. La corona indica quién empieza. Den pistas sin revelar la palabra. Puedes pausar o agregar 30 segundos.</li><li><strong>Acuerden su voto.</strong> Con 2 impostores deben descubrir a ambos. Si el grupo falla, ganan los impostores.</li><li><strong>Una última oportunidad.</strong> Si los descubren, los impostores pueden ganar adivinando la palabra. Tienen un solo intento en voz alta, en equipo si son dos. La mesa decide si acertaron; pueden consultar la palabra después de escuchar su respuesta.</li></ol><div class="divider"></div><p><strong>En tu iPhone:</strong> abre en Safari, toca Compartir y selecciona “Agregar a inicio”.</p><p class="small-print">Los nombres y las categorías se guardan en este dispositivo. Los sonidos se generan en el teléfono. La partida funciona sin conexión una vez abierta; volver a abrir la página sin internet depende de la caché del navegador.</p><button class="primary" data-action="close-modal">Entendido</button>`);}
   function showCustom(){if(settings.custom.length>=20)return toast('Puedes crear hasta 20 categorías.');openModal(`${modalHeader('Tu propio misterio')}<p>Recuerdos, lugares o secretos que solo tu grupo conoce.</p><form id="category-form"><label for="category-name">Nombre de la categoría</label><input id="category-name" class="field" maxlength="36" required placeholder="Ej. Leyendas de la fiesta" autocomplete="off"><label for="category-words">Palabras separadas por comas o saltos de línea</label><textarea id="category-words" class="field" maxlength="5000" required placeholder="La terraza, El vecino, El karaoke"></textarea><p class="small-print">De 3 a 100 palabras distintas. Hasta 48 caracteres por palabra.</p><p id="category-error" class="error-text" role="alert"></p><button class="primary" type="submit">Guardar categoría ${icon('plus')}</button></form>`);}
   function confirmReset(){openModal(`${modalHeader(view==='setup'?'¿Volver al primer paso?':'¿Terminar la partida?')}<p>${view==='setup'?'Volverás a la lista de jugadores.':'La partida actual termina y sus roles se descartan.'} Tus jugadores, categorías y preferencias se conservan.</p><div class="action-row"><button class="secondary" data-action="close-modal">Cancelar</button><button class="danger" data-action="reset-confirm">${view==='setup'?'Volver':'Terminar'}</button></div>`);}
   document.addEventListener('submit',event=>{
@@ -1048,7 +1321,7 @@
   document.addEventListener('click',event=>{
     const b=event.target.closest('button[data-action]');if(!b||b.disabled)return;const action=b.dataset.action;haptic();
     if(action==='enter'){enterParty();return;}
-    if(action==='sound'){settings.muted=!settings.muted;if(audioMaster)audioMaster.gain.setValueAtTime(settings.muted?0:.65,audioCtx.currentTime);saveSettings();updateSound();icons();if(!settings.muted)sound('click');return;}
+    if(action==='sound'){settings.muted=!settings.muted;if(settings.muted)stopHoldTone();if(audioMaster)audioMaster.gain.setValueAtTime(settings.muted?0:.65,audioCtx.currentTime);saveSettings();updateSound();icons();if(!settings.muted)sound('click');return;}
     if(!['suspect','confirm-vote','guess-correct','guess-incorrect'].includes(action))sound('click');
     if(action==='close-modal')return closeModal();
     if(action==='options')return showOptions();
@@ -1079,12 +1352,15 @@
   document.addEventListener('pointerdown',unlockAudio,{passive:true});document.addEventListener('keydown',unlockAudio);
   function concealJudgeWord(){const word=$('#judge-word'),button=$('[data-action="reveal-word"]');if(word){word.hidden=true;word.textContent='';}if(button){button.setAttribute('aria-expanded','false');button.querySelector('span').textContent='Ver palabra secreta';}}
   window.addEventListener('blur',()=>{stopHold();concealJudgeWord();});window.addEventListener('pagehide',()=>{stopHold();concealJudgeWord();releaseWakeLock();});window.addEventListener('pointerup',stopHold);window.addEventListener('pointercancel',stopHold);
-  document.addEventListener('visibilitychange',()=>{syncSplashMotion();stopHold();concealJudgeWord();clearHeartbeat();if(!document.hidden){updateTimer();requestWakeLock();}else if(audioCtx?.state==='running')audioCtx.suspend().catch(()=>{});});
+  ['touchend','touchcancel'].forEach(type=>window.addEventListener(type,stopHold,{passive:true}));
+  document.addEventListener('touchstart',event=>{if(holding&&event.touches.length>1)stopHold();},{capture:true,passive:true});
+  document.addEventListener('visibilitychange',()=>{syncSplashMotion();stopHold();concealJudgeWord();clearHeartbeat();cancelTimerAnimation();if(!document.hidden){updateTimer();requestWakeLock();}else if(audioCtx?.state==='running')audioCtx.suspend().catch(()=>{});});
   // Keyboard-aware viewport height without ever enabling document scrolling.
   function syncViewport(){
     const root=document.documentElement,v=window.visualViewport;
     // Ignore pinch zoom: accessibility zoom must not reflow the app around the lens.
     if(v && Math.abs(v.scale-1)>.02)return;
+    if(holding)stopHold();
     const height=Math.round(v?.height||window.innerHeight),top=Math.round(v?.offsetTop||0);
     root.style.setProperty('--app-height',`${height}px`);
     root.style.setProperty('--viewport-top',`${top}px`);
@@ -1101,7 +1377,7 @@
     const url=`data:image/svg+xml,${encodeURIComponent(svg)}`;
     $('#favicon').href=url;$('#touch-icon').href=url;
     const start=new URL(location.href);start.hash='';start.search='';
-    const manifest={id:start.href,name:'IMPOSTOR: HALLOWEDDA EDITION',short_name:'Impostor',lang:'es-419',description:'Una palabra secreta. Un grupo de sospechosos. Un teléfono.',start_url:start.href,scope:new URL('.',start).href,display:'standalone',background_color:'#09090b',theme_color:'#09090b',icons:[{src:url,sizes:'any',type:'image/svg+xml',purpose:'any'}]};
+    const manifest={id:start.href,name:'Impostor: Edda’s Edition 🎂',short_name:'Impostor',lang:'es-419',description:'Una palabra secreta. Un grupo de sospechosos. Un teléfono.',start_url:start.href,scope:new URL('.',start).href,display:'standalone',background_color:'#09090b',theme_color:'#09090b',icons:[{src:url,sizes:'any',type:'image/svg+xml',purpose:'any'}]};
     const updateManifest=()=>{$('#manifest').href=`data:application/manifest+json;charset=utf-8,${encodeURIComponent(JSON.stringify(manifest))}`;};
     updateManifest();
     const image=new Image();
@@ -1119,8 +1395,126 @@
     };
     image.src=url;
   }
-  if(!storageFailed)saveSettings();
-  configureAppIcons();render();window.addEventListener('load',icons);if(storageFailed)toast('Almacenamiento no disponible. Puedes jugar durante esta sesión.');
+  const isolatedTestFrame=window.frameElement?.dataset.impostorTests==='true';
+  if(!isolatedTestFrame&&!storageFailed)saveSettings();
+  if(!isolatedTestFrame)configureAppIcons();render();window.addEventListener('load',icons);if(storageFailed)toast('Almacenamiento no disponible. Puedes jugar durante esta sesión.');
+  /** Console entry point: await runTests(). Tests use a disposable, same-origin frame.
+   * No live roster, score, random roles, clock or localStorage is changed.
+   * A virtual clock makes the full 60-second countdown deterministic and instant.
+   */
+  async function runTests(){
+    if(!isolatedTestFrame){
+      const frame=document.createElement('iframe');
+      frame.hidden=true;frame.dataset.impostorTests='true';frame.setAttribute('aria-hidden','true');
+      frame.setAttribute('allow',"screen-wake-lock 'none'");
+      try{
+        const results=await new Promise((resolve,reject)=>{
+          const timeout=setTimeout(()=>reject(new Error('No se pudo cargar el entorno de pruebas.')),15000);
+          frame.onload=async()=>{
+            clearTimeout(timeout);
+            try{resolve(await frame.contentWindow.runTests());}catch(error){reject(error);}
+          };
+          frame.onerror=()=>{clearTimeout(timeout);reject(new Error('Error al cargar las pruebas.'));};
+          frame.srcdoc=testPageSource;document.body.append(frame);
+        });
+        console.table(results);
+        const failures=results.filter(result=>!result.ok);
+        if(failures.length)throw new Error(`${failures.length} prueba(s) fallaron. Revisa la tabla.`);
+        console.info(`${results.length} pruebas correctas. Tu partida y tus datos se conservaron.`);
+        return results;
+      }finally{frame.remove();}
+    }
+    const results=[];
+    const assert=(condition,message)=>{if(!condition)throw new Error(message);};
+    const test=(name,check)=>{try{check();results.push({prueba:name,ok:true,detalle:'Correcto'});}catch(error){results.push({prueba:name,ok:false,detalle:error.message});}};
+    // The fixture covers legacy player strings, inactive players, escaping and duplicates.
+    const fixture={players:['Edda','Ángel',{name:'Luz',active:true},'Nico','Sol',{name:'En descanso',active:false},'Edda','<Ana>'],impostors:1,hints:false,muted:true,active:['halloween','birthday'],custom:[]};
+    const memoryStorage={getItem:()=>JSON.stringify(fixture)};
+    const original={now:Date.now,setInterval:window.setInterval,clearInterval:window.clearInterval,randomIndex,requestWakeLock};
+    let now=1000000,intervalId=0;
+    const intervals=new Map();
+    Date.now=()=>now;
+    window.setInterval=(callback,delay)=>{const id=++intervalId;intervals.set(id,{callback,delay,next:now+delay});return id;};
+    window.clearInterval=id=>intervals.delete(id);
+    requestWakeLock=async()=>{};
+    const advance=ms=>{
+      const end=now+ms;
+      while(true){
+        const next=[...intervals.entries()].filter(([,timer])=>timer.next<=end).sort((a,b)=>a[1].next-b[1].next)[0];
+        if(!next)break;
+        now=next[1].next;next[1].next+=next[1].delay;next[1].callback();
+      }
+      now=end;
+    };
+    try{
+      settings=loadSettings(memoryStorage);setView('setup');
+      test('Carga y renderizado de jugadores',()=>{
+        assert(settings.players.length===7,'La carga debe eliminar duplicados sin perder jugadores.');
+        assert(activePlayers().length===6,'Un jugador en descanso no debe participar.');
+        const rows=[...wizardLayer.querySelectorAll('.player-row')];
+        assert(rows.length===settings.players.length,'La lista renderizada no coincide con los datos.');
+        rows.forEach((row,index)=>assert(row.querySelector('.player-name').firstChild.textContent===settings.players[index].name,'Nombre renderizado incorrectamente.'));
+        assert(!wizardLayer.querySelector('ana'),'Un nombre no debe interpretarse como HTML.');
+        assert(loadSettings(memoryStorage).players[0].name==='Edda','La recarga perdió los jugadores.');
+      });
+      test('Ocho categorías y selección válida',()=>{
+        assert(DEFAULT_CATEGORIES.length===8,'Deben existir ocho categorías.');
+        assert(new Set(DEFAULT_CATEGORIES.map(category=>category.id)).size===8,'Hay IDs de categoría duplicados.');
+        assert(wizardLayer.querySelectorAll('[data-action="category"]').length===8,'Faltan categorías renderizadas.');
+        assert(!startError(),'La configuración válida no permite iniciar.');
+      });
+      test('Roles válidos con uno y dos impostores',()=>{
+        for(const count of [1,2]){
+          settings.impostors=count;startGame();
+          assert(game.players.length===6,'Debe usar solo jugadores activos.');
+          assert(game.impostorIds.length===count&&new Set(game.impostorIds).size===count,'Cantidad de impostores inválida.');
+          assert(game.impostorIds.every(id=>game.players.some(player=>player.id===id)),'Se asignó un rol fuera de la mesa.');
+          assert(game.category.words.includes(game.word),'Palabra ajena a la categoría elegida.');
+          assert($('#next-player').disabled&&!game.seen,'No debe avanzar antes de ver la carta.');
+          assert(!$('#secret-card').textContent.includes(game.word),'La carta expone la palabra antes de mantener presionado.');
+        }
+      });
+      test('La asignación depende del azar',()=>{
+        settings.impostors=1;
+        // Deterministic random-source boundaries avoid a flaky probability test.
+        randomIndex=()=>0;startGame();const first=game.impostorIds[0];
+        randomIndex=length=>length-1;startGame();
+        assert(game.impostorIds[0]!==first,'La asignación ignora la fuente aleatoria.');
+        randomIndex=original.randomIndex;
+      });
+      test('Debate de 60 segundos: inicio y avance',()=>{
+        game.passIndex=game.players.length-1;game.seen=true;nextPlayer();
+        assert(view==='game'&&game.remaining===60000&&game.total===60000,'El debate debe iniciar en 60 segundos.');
+        assert($('#timer-display').textContent==='01:00','Tiempo inicial incorrecto.');
+        assert(intervals.size===1,'Debe haber un solo intervalo activo.');
+        advance(15000);
+        assert(game.remaining===45000&&$('#timer-display').textContent==='00:45','El reloj no avanza correctamente.');
+        assert(speakingOrder()[0].id===game.firstSpeaker.id,'El orden no comienza por el jugador sorteado.');
+      });
+      test('Pausa, reanudación y extensión del debate',()=>{
+        pauseTimer();const remaining=game.remaining;advance(5000);
+        assert(game.remaining===remaining&&!game.deadline&&intervals.size===0,'El reloj avanza durante la pausa.');
+        assert($('#timer-label').textContent==='En pausa','La pausa no se refleja en pantalla.');
+        startTimer();startTimer();
+        assert(intervals.size===1,'Reanudar duplica el intervalo.');
+        advance(5000);assert(game.remaining===40000,'Reanudar perdió el tiempo restante.');
+        extendTimer();assert(game.remaining===70000&&game.total===90000,'La extensión debe agregar 30 segundos.');
+      });
+      test('Fin del debate y reinicio tras agregar tiempo',()=>{
+        advance(70000);
+        assert(game.remaining===0&&!game.deadline&&intervals.size===0,'El temporizador no se detuvo en cero.');
+        assert($('#timer-display').textContent==='00:00'&&$('#timer-toggle').disabled,'Estado final incorrecto.');
+        assert($('#timer-announcement').textContent.includes('Es hora de votar'),'Falta el aviso de votación.');
+        advance(5000);assert(game.remaining===0,'El tiempo se volvió negativo.');
+        extendTimer();assert(game.remaining===30000&&intervals.size===1,'No se puede extender un debate terminado.');
+        pauseTimer();
+      });
+    }finally{
+      intervals.clear();Date.now=original.now;window.setInterval=original.setInterval;window.clearInterval=original.clearInterval;
+      randomIndex=original.randomIndex;requestWakeLock=original.requestWakeLock;
+    }
+    return results;
+  }
   </script>
 </body>
 </html>
