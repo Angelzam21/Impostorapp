@@ -9,8 +9,8 @@
   <meta name="mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
   <meta name="apple-mobile-web-app-title" content="Impostor">
-  <meta name="description" content="Una palabra secreta. Un grupo de sospechosos. Un teléfono. Impostor: Edda’s Edition 🎂.">
-  <title>Impostor: Edda’s Edition 🎂</title>
+  <meta name="description" content="Una palabra secreta. Un grupo de sospechosos. Un teléfono. IMPOSTOR: HALLOWEDDA EDITION.">
+  <title>IMPOSTOR: HALLOWEDDA EDITION</title>
   <link id="favicon" rel="icon" type="image/svg+xml">
   <link id="touch-icon" rel="apple-touch-icon" sizes="180x180">
   <link id="manifest" rel="manifest">
@@ -20,6 +20,10 @@
     :root {
       --bg: #09090b; --surface: #121215; --accent: #ff6b00;
       --purple: #996443; --lavender: #d6b79b; --text: #f5f5f7; --muted: #aaa4a0;
+      --panel-material: linear-gradient(150deg,#25232be6,#16161be6);
+      --card-material: linear-gradient(145deg,#ffffff0d,#ffffff03);
+      --secret-material: radial-gradient(ellipse at 50% 0,#f6c89912,transparent 65%),linear-gradient(145deg,#29272d,#141419);
+      --impostor-material: radial-gradient(ellipse at 50% 10%,#a7462433,transparent 80%),linear-gradient(145deg,#292229,#151318);
       --line: rgba(255,255,255,.09); --glow-line: rgba(255,107,0,.25);
       --safe-top: env(safe-area-inset-top,0px); --safe-bottom: env(safe-area-inset-bottom,0px);
       --safe-left: env(safe-area-inset-left,0px); --safe-right: env(safe-area-inset-right,0px);
@@ -410,10 +414,12 @@
 
     /* Mobile layout stays intact. These additions only rearrange the shared DOM at md. */
     .participation { display:contents; }
-    .confetti-piece { position:absolute; top:-12px; left:var(--x); width:7px; height:12px; background:var(--color); opacity:0; }
-    .celebration.is-playing { animation:verdict-pulse 2.4s ease-out both; overflow:hidden; }
-    .celebration.is-playing .confetti-piece { animation:confetti-fall 2.3s var(--delay) ease-out both; }
-    @keyframes confetti-fall { 5% { opacity:1; } 100% { opacity:0; transform:translate3d(var(--drift),100dvh,0) rotate(540deg); } }
+    /* One visual language at every width; sizing and arrangement stay responsive. */
+    .panel { background:var(--panel-material); }
+    .category { background:var(--card-material); box-shadow:inset 0 0 0 1px #ffffff19; }
+    .category[aria-pressed=true] { background:linear-gradient(145deg,#f58a3820,#f58a3808); box-shadow:inset 0 0 0 1px #f5a866bb; }
+    .secret-card { background:var(--secret-material); box-shadow:inset 0 0 0 1px #ffffff20,0 16px 32px -16px #000c; }
+    .secret-card.impostor { background:var(--impostor-material); }
     .setup-sidebar,.setup-main { display:contents; }
     .toast { z-index:70; border:1px solid #ffffff20; background:#29272bf2; border-radius:22px; box-shadow:0 12px 32px #0006; }
     .toast.is-visible { animation:toast-arrive .28s cubic-bezier(.2,.8,.2,1) both; }
@@ -457,8 +463,9 @@
       .setup-main .category-heading { min-height:32px; margin-bottom:6px; }
       .setup-main .category-heading .label { font-size:12px; letter-spacing:.12em; }
       .setup-main .category-grid { gap:12px; padding:4px; }
-      .setup-main .category { position:relative; isolation:isolate; min-height:164px; padding:16px; border:1px solid #ffffff19; border-radius:20px; background:linear-gradient(145deg,#ffffff0d,#ffffff03); box-shadow:inset 0 1px 0 #ffffff0a; transition:transform .18s ease; }
+      .setup-main .category { position:relative; isolation:isolate; min-height:164px; padding:16px; border:1px solid #ffffff19; border-radius:20px; background:var(--card-material); box-shadow:inset 0 1px 0 #ffffff0a; transition:transform .18s ease; }
       .setup-main .category::before { content:""; position:absolute; inset:-1px; border:1px solid #f5a866bb; border-radius:inherit; box-shadow:inset 0 0 24px #f58a3810,0 0 14px #f58a3818; background:linear-gradient(145deg,#f58a381b,#f58a3806); z-index:-1; opacity:0; transition:opacity .18s ease; pointer-events:none; }
+      .setup-main .category[aria-pressed=true] { background:var(--card-material); box-shadow:inset 0 1px 0 #ffffff0a; }
       .setup-main .category[aria-pressed=true]::before { opacity:1; }
       .setup-main .category-icon { margin-bottom:12px; }
       .setup-main .category-icon svg { width:28px; height:28px; }
@@ -473,7 +480,7 @@
       .gameplay-layout { min-height:0; }
       .participation { display:flex; flex-direction:column; gap:20px; width:38%; max-height:100%; min-height:0; }
       .participation .speaker-badge { align-self:stretch; font-size:16px; background:#f58a3810; border:1px solid #f58a3824; padding:16px; }
-      .turn-order { flex-direction:column; gap:18px; min-height:0; border:1px solid #ffffff12; background:linear-gradient(150deg,#25232be6,#16161be6); }
+      .turn-order { flex-direction:column; gap:18px; min-height:0; border:1px solid #ffffff12; background:var(--panel-material); }
       .turn-order ol { margin:0; padding-left:28px; font-size:22px; }
       .turn-order li { padding:8px 0 8px 6px; overflow-wrap:anywhere; }
       .turn-order li::marker { color:var(--lavender); font-variant-numeric:tabular-nums; }
@@ -481,8 +488,8 @@
       .app-shell[data-phase="game"] .timer-ring { width:100%; height:auto; max-height:min(460px,100%); max-width:460px; }
       .app-shell[data-phase="game"] .timer-value strong { font-size:clamp(78px,10vw,118px); letter-spacing:-5px; font-weight:300; }
       .timer-value small { font-size:11px; letter-spacing:.2em; }
-      .secret-card { min-height:180px; width:100%; max-width:800px; align-self:center; border:1px solid #ffffff20; border-radius:36px; background:radial-gradient(ellipse at 50% 0,#f6c89912,transparent 65%),linear-gradient(145deg,#29272d,#141419); box-shadow:0 28px 60px -12px #000c,inset 0 1px 0 #ffffff14; }
-      .secret-card.impostor { background:radial-gradient(ellipse at 50% 10%,#a7462433,transparent 80%),linear-gradient(145deg,#292229,#151318); border-color:#f58a3850; }
+      .secret-card { min-height:180px; width:100%; max-width:800px; align-self:center; border:1px solid #ffffff20; border-radius:36px; background:var(--secret-material); box-shadow:0 28px 60px -12px #000c,inset 0 1px 0 #ffffff14; }
+      .secret-card.impostor { background:var(--impostor-material); border-color:#f58a3850; }
       .secret-content { max-width:640px; overflow-y:auto; overscroll-behavior:contain; gap:18px; }
       .secret-content p { font-size:17px; max-width:520px; }
       .secret-content .role-label { display:inline-flex; border:1px solid #d6b79b40; border-radius:100px; background:#d6b79b12; padding:8px 16px; font-size:11px; letter-spacing:.16em; flex-shrink:0; }
@@ -527,7 +534,6 @@
       .setup-main .category:hover { transform:translateY(-2px); }
       .setup-main .category:active { transform:scale(.98); }
     }
-    @media(prefers-reduced-motion:reduce) { .confetti-piece { display:none; } }
   </style>
   <!-- Tailwind CSS 3.4.17, compiled utilities only (no Preflight reset).
        Embedded to keep this single-file game usable without a network connection.
@@ -828,10 +834,8 @@
       "El balcón",
       "El ascensor"
     ]
-  },
-  {id:'costumes',name:'Disfraces y Criaturas',description:'Máscaras, monstruos y personajes de Halloween',icon:'skull',words:['Hombre lobo','Momia','Espantapájaros','Máscara','Capa de vampiro','Sombrero de bruja','Maquillaje de zombi','Disfraz de fantasma','Colmillos','Monstruo del pantano','Pirata fantasma','Catrina','Payaso tenebroso','Garras','Frankenstein','Espejo encantado']},
-  {id:'edda',name:'Cumpleaños de Edda',description:'Pastel, regalos y recuerdos de la fiesta',icon:'gift',words:['Pastel de cumpleaños','Velas','Regalos','Piñata','Globos','Fiesta sorpresa','Confeti','Mesa de postres','Foto grupal','Corona de cumpleaños','Tarjeta de felicitación','Lista de invitados','Deseo de cumpleaños','Abrazo','Decoración','Mañanitas']}
-  ];
+  }
+];
   // Keep the existing key so saved groups and custom categories migrate in place.
   const STORAGE_KEY = 'el-impostor.settings.v1';
   const $ = selector => document.querySelector(selector);
@@ -840,7 +844,9 @@
   const normalize = value => cleanText(value).normalize('NFD').replace(/[\u0300-\u036f]/g,'').toLocaleLowerCase('es').replace(/[^a-z0-9ñ]+/g,' ').trim().replace(/\s+/g,' ');
   const formatTime = ms => {const s=Math.ceil(ms/1000);return `${String(Math.floor(s/60)).padStart(2,'0')}:${String(s%60).padStart(2,'0')}`;};
   const activePlayers = () => settings.players.filter(player=>player.active);
-  const duration = () => 60000;
+  // Game rules and content are shared; breakpoints only change presentation.
+  const duration = () => activePlayers().length*30000;
+  const debateHint = () => `${formatTime(duration())} de debate · 30 segundos por jugador`;
   // Small inline vector set also keeps every control recognizable without a CDN.
   const paths = {
     'ellipsis':'<circle cx="5" cy="12" r="1"/><circle cx="12" cy="12" r="1"/><circle cx="19" cy="12" r="1"/>',
@@ -906,7 +912,7 @@
       const players=Array.isArray(raw.players)?raw.players.filter(p=>typeof p==='string'||(p&&typeof p.name==='string')).map(p=>({name:cleanText(typeof p==='string'?p:p.name).slice(0,24),active:typeof p==='string'||p.active!==false})).filter(p=>normalize(p.name)).filter((p,i,a)=>a.findIndex(x=>normalize(x.name)===normalize(p.name))===i).slice(0,20):[];
       const custom=Array.isArray(raw.custom)?raw.custom.filter(c=>c&&/^custom-[a-z0-9-]+$/.test(c.id)&&typeof c.name==='string'&&Array.isArray(c.words)).slice(0,20).map(c=>({id:c.id,name:cleanText(c.name).slice(0,36),icon:'layers',words:c.words.filter(w=>typeof w==='string').map(w=>cleanText(w).slice(0,48)).filter(w=>normalize(w)).filter((w,i,a)=>a.findIndex(x=>normalize(x)===normalize(w))===i).slice(0,100)})).filter(c=>normalize(c.name)&&c.words.length>=3).filter((c,i,a)=>a.findIndex(x=>x.id===c.id)===i):[];
       const ids=[...DEFAULT_CATEGORIES,...custom].map(c=>c.id);
-      const migrated={secrets:'food',places:'travel',nightlife:'birthday',sports:'birthday',mystery:'halloween'};
+      const migrated={costumes:'halloween',edda:'birthday',secrets:'food',places:'travel',nightlife:'birthday',sports:'birthday',mystery:'halloween'};
       const active=Array.isArray(raw.active)?[...new Set(raw.active.map(id=>migrated[id]||id).filter(id=>ids.includes(id)))]:fallback.active;
       return {players,impostors:raw.impostors===2?2:1,hints:raw.hints===true,muted:raw.muted===true,custom,active};
     }catch{storageFailed=true;return fallback;}
@@ -1015,19 +1021,18 @@
     if(type==='click'||type==='vote')tock();
     if(type==='entrance')chord([130.81,196,261.63]);
     if(type==='crew-reveal')chord([130.81,164.81,196]);
-    if(type==='impostor-reveal'){
+    if(type==='impostor-reveal'||type==='impostor-win'){
       resonance(45,0,2.2,.25,180,.14,38);resonance(46.3,.03,1.9,.13,160,.2,39.1);resonance(90,.08,1.5,.045,260,.08,76);impulse(0,.08,.18,240);
     }
     if(type==='tick'){
-      // Soft final-countdown cue, audible from 10 seconds without a harsh alarm.
-      resonance(523.25,0,.18,.035,1100,.012);
-      resonance(659.25,.12,.22,.025,1300,.012);
+      resonance(76,0,.13,.24,130,.006,43);impulse(0,.05,.035,180);
+      resonance(65,.19,.16,.16,110,.006,38);impulse(.19,.035,.03,160);
     }
     if(type==='gong'){
       impulse(0,.22,.09,1700);
       [1,1.47,2.09,2.56,3.82,5.13].forEach((ratio,i)=>resonance(73.42*ratio,0,3.8-i*.4,.19/(i+1),1800,.005+i*.002,73.42*ratio*.997));
     }
-    if(type==='crew-win'||type==='impostor-win'){chord([261.63,329.63,392]);chord([329.63,392,523.25],.18);chord([392,523.25,659.25],.38);}
+    if(type==='crew-win'){chord([130.81,164.81,196]);chord([196,261.63,329.63],.2);}
   }
   function updateSound(){const b=$('#sound-button');if(!b)return;b.replaceChildren(fragment(`${icon(settings.muted?'volume-x':'volume-2')}<span>${settings.muted?'Activar sonido':'Silenciar sonido'}</span>`));b.setAttribute('aria-label',settings.muted?'Activar sonido':'Silenciar sonido');b.setAttribute('aria-pressed',String(settings.muted));}
   function setView(next){stopHold();clearHeartbeat();cancelTimerAnimation();view=next;render();app.focus({preventScroll:true});}
@@ -1052,7 +1057,7 @@
   function screen(content){return `<section class="screen ${view==='splash'?'splash':''}" ${view==='game'?'id="gameplayScreen"':''} data-screen="${view==='setup'?`setup-${step}`:view}">${content}</section>`;}
   function primary(label,action,disabled=false,id=''){return `<button ${id?`id="${id}"`:''} class="primary" data-action="${action}" ${disabled?'disabled':''}>${label}${icon('arrow-right')}</button>`;}
   const tabletLayout=window.matchMedia('(min-width: 768px)');
-  const holdPrompt=()=>tabletLayout.matches?'Mantén presionado para ver tu carta':'Mantén presionado para revelar';
+  const holdPrompt=()=> 'Mantén presionado para revelar';
   let activeLayer=null,wizardLayer=null;
   const fragment = html => {const template=document.createElement('template');template.innerHTML=html;return template.content;};
   function mountWizard(){
@@ -1060,11 +1065,11 @@
     wizardLayer=document.createElement('div');wizardLayer.className='view-layer';wizardLayer.dataset.view='setup';wizardLayer.id='setupScreen';
     const current=step;
     const pages=Array.from({length:4},(_,i)=>{step=i;return `<div class="wizard-step" data-step="${i}">${setupView()}</div>`;});step=current;
-    wizardLayer.append(fragment(`<div class="wizard-viewport"><div class="tablet-setup-heading hidden md:block">${heading("Edda’s Edition 🎂","Preparen <em>el misterio.</em>","Reúne al grupo y elige los temas de esta ronda.")}</div><div class="wizard-track md:grid md:grid-cols-2 md:gap-6"><div class="setup-sidebar" role="group" aria-label="Jugadores y reglas">${pages.slice(0,2).join('')}</div><div class="setup-main" role="group" aria-label="Temas de la partida">${pages[2]}</div>${pages[3]}</div></div>`));app.append(wizardLayer);
+    wizardLayer.append(fragment(`<div class="wizard-viewport"><div class="tablet-setup-heading hidden md:block">${heading("HALLOWEDDA EDITION","Preparen <em>el misterio.</em>","Reúne al grupo y elige los temas de esta ronda.")}</div><div class="wizard-track md:grid md:grid-cols-2 md:gap-6"><div class="setup-sidebar" role="group" aria-label="Jugadores y reglas">${pages.slice(0,2).join('')}</div><div class="setup-main" role="group" aria-label="Temas de la partida">${pages[2]}</div>${pages[3]}</div></div>`));app.append(wizardLayer);
     return wizardLayer;
   }
   function syncWizard(){
-    wizardLayer.querySelector('#player-name').placeholder=tabletLayout.matches?'Nombre':'Nombre de un sospechoso';
+    wizardLayer.querySelector('#player-name').placeholder='Nombre';
     wizardLayer.querySelector('.wizard-track').style.transform=tabletLayout.matches?'none':`translate3d(-${step*25}%,0,0)`;
     wizardLayer.querySelectorAll('.wizard-step').forEach((page,i)=>{const inactive=tabletLayout.matches?i===3:i!==step;page.inert=inactive;page.setAttribute('aria-hidden',String(inactive));});
     const summary=wizardLayer.querySelector('.summary');
@@ -1113,7 +1118,7 @@
   function renderActions(){let html='';
     if(view==='splash')html=primary('Entrar a la fiesta','enter');
     if(view==='setup')html=`<p id="wizard-status" class="action-hint" role="status">${escapeHTML(step===3?startError():stepError())}</p><div class="action-row">${step>0?`<button class="secondary back" data-action="back">${icon('arrow-left')}Atrás</button>`:''}${primary(step===3?'Comenzar partida':'Siguiente',step===3?'start':'next',!!(step===3?startError():stepError()),'wizard-next')}</div>`;
-    if(view==='setup'&&tabletLayout.matches)html=`<p id="wizard-status" class="action-hint" role="status">${escapeHTML(startError()||'60 segundos de debate · Puedes pausar o agregar tiempo')}</p>${primary('Comenzar partida','start',!!startError(),'wizard-next')}`;
+    if(view==='setup'&&tabletLayout.matches)html=`<p id="wizard-status" class="action-hint" role="status">${escapeHTML(startError()||debateHint())}</p>${primary('Comenzar partida','start',!!startError(),'wizard-next')}`;
     if(view==='pass')html=`<button id="hold-button" class="hold-button md:p-12" aria-label="Mantén presionado para ver tu carta"><span>${icon('fingerprint')}<span id="hold-label">${holdPrompt()}</span></span></button>${primary(game.passIndex===game.players.length-1?'Comenzar debate':'Pasar el teléfono','next-player',!game.seen||holding,'next-player')}`;
     if(view==='game')html=`<div class="timer-controls"><button id="timer-toggle" class="secondary" data-action="timer-toggle">${icon('pause')}<span>Pausar</span></button><button class="secondary" data-action="timer-extend" aria-label="Agregar 30 segundos">+30s</button></div>${primary('Votar','vote')}`;
     if(view==='vote')html=`<div class="action-row"><button class="secondary back" data-action="back-debate">Volver</button>${primary('Confirmar voto','confirm-vote',game.votes.length!==game.impostorIds.length)}</div>`;
@@ -1121,12 +1126,12 @@
     if(view==='result')html=`<div class="action-row"><button class="secondary back" data-action="setup">Editar grupo</button>${primary('Otra ronda','start')}</div>`;
     actions.replaceChildren(fragment(`<div class="deck-inner">${html}</div>`));
   }
-  function splashView(){return screen(`<h1 class="splash-title">IMPOSTOR</h1><p class="splash-edition">Edda’s Edition 🎂</p><div class="pumpkin-hero">${pumpkin()}</div><p class="splash-tagline">Un teléfono. Muchas sospechas. ¿Quién está mintiendo?</p>`);}
+  function splashView(){return screen(`<h1 class="splash-title">IMPOSTOR</h1><p class="splash-edition">HALLOWEDDA EDITION</p><div class="pumpkin-hero">${pumpkin()}</div><p class="splash-tagline">Un teléfono. Muchas sospechas. ¿Quién está mintiendo?</p>`);}
   function setupView(){
     if(step===0)return screen(`${heading('La mesa de sospechosos','Entre amigos.<br><em>Entre sospechosos.</em>','Una palabra secreta. Alguien está fingiendo.')}<div class="stage-body"><section class="panel players-panel"><div class="panel-top"><h2 class="label">Banca de amigos</h2><span id="player-count" class="count">${String(settings.players.length).padStart(2,'0')} / 20</span></div><form id="player-form" class="add-form"><label class="sr-only" for="player-name">Nombre del jugador</label><input id="player-name" class="field" maxlength="24" placeholder="Nombre de un sospechoso" required autocomplete="off" enterkeyhint="done"><button class="add-button" type="submit" aria-label="Agregar jugador">${icon('plus')}</button></form><p class="roster-hint subtle">Toca un nombre para activar o descansar.</p><div id="players-container" class="players-container scroll-list">${playerList()}</div></section><p id="player-threshold" class="note threshold ${activePlayers().length>=3?'ready':''}">${icon(activePlayers().length>=3?'check':'users')}${activePlayers().length>=3?`${activePlayers().length} jugadores activos. La mesa está lista.`:`${activePlayers().length} jugadores activos. Necesitas al menos 3.`}</p></div>`);
     if(step===1)return screen(`${heading('Modo de juego','La medida<br><em>del engaño.</em>','Decide cuántos secretos puede soportar tu grupo.')}<div class="stage-body"><section class="panel"><div class="panel-top"><h2 class="label">Impostores</h2></div><div class="segmented" role="group" aria-label="Cantidad de impostores"><button data-action="impostors" data-count="1" aria-pressed="${settings.impostors===1}">${icon('user')}1 impostor</button><button data-action="impostors" data-count="2" aria-pressed="${settings.impostors===2}">${icon('users')}2 impostores</button></div><div class="divider"></div><div class="toggle-row"><div><p id="hints-label" class="toggle-title">Pista para el impostor</p><p id="hints-description" class="toggle-description">Conoce la categoría, nunca la palabra.</p></div><button class="switch" role="switch" data-action="hints" aria-labelledby="hints-label" aria-describedby="hints-description" aria-checked="${settings.hints}"></button></div></section><div class="rule-note">${icon('shield-check')}<span>Con 2 impostores necesitas al menos 5 jugadores. Para ganar, el grupo debe descubrir a ambos.</span></div><div class="mode-art">${crest('dagger')}</div></div>`);
     if(step===2)return screen(`${heading('Elige el misterio','Todo empieza<br><em>con una palabra.</em>','Mezcla temas. Multiplica las sospechas.')}<div class="stage-body"><div class="panel-top category-heading"><h2 class="label">Categorías</h2><span class="count" id="category-count">${settings.active.length} activas</span></div><div class="category-grid scroll-list md:grid-cols-3">${allCategories().map(categoryCard).join('')}</div><button class="custom-add" data-action="custom">${icon('plus')}Crear categoría personalizada</button></div>`);
-    return screen(`${heading('Tiempo y confirmación','La tensión<br><em>tiene su tiempo.</em>','Un último vistazo antes de guardar el secreto.')}<div class="stage-body"><section class="panel time-preview"><div class="label">Tiempo de debate</div><div class="preview-time">${formatTime(duration())}</div><p class="subtle">60 segundos · Puedes agregar más tiempo</p></section><section class="panel summary"><div class="summary-item"><div class="label">Jugadores</div><div class="summary-value">${String(activePlayers().length).padStart(2,'0')}</div></div><div class="summary-item"><div class="label">Impostores</div><div class="summary-value">${String(settings.impostors).padStart(2,'0')}</div></div><div class="summary-item summary-themes"><div class="label">${settings.active.length} temas activos</div><p class="theme-preview">${allCategories().filter(c=>settings.active.includes(c.id)).map(c=>escapeHTML(c.name)).join(' · ')}</p><p class="summary-hints">Pista para el impostor: ${settings.hints?'activada':'desactivada'}</p></div></section></div>`);
+    return screen(`${heading('Tiempo y confirmación','La tensión<br><em>tiene su tiempo.</em>','Un último vistazo antes de guardar el secreto.')}<div class="stage-body"><section class="panel time-preview"><div class="label">Tiempo de debate</div><div class="preview-time">${formatTime(duration())}</div><p class="subtle">30 segundos por jugador · Puedes agregar más tiempo</p></section><section class="panel summary"><div class="summary-item"><div class="label">Jugadores</div><div class="summary-value">${String(activePlayers().length).padStart(2,'0')}</div></div><div class="summary-item"><div class="label">Impostores</div><div class="summary-value">${String(settings.impostors).padStart(2,'0')}</div></div><div class="summary-item summary-themes"><div class="label">${settings.active.length} temas activos</div><p class="theme-preview">${allCategories().filter(c=>settings.active.includes(c.id)).map(c=>escapeHTML(c.name)).join(' · ')}</p><p class="summary-hints">Pista para el impostor: ${settings.hints?'activada':'desactivada'}</p></div></section></div>`);
   }
   function playerList(){return settings.players.length?`<ul class="player-list">${settings.players.map(({name,active},index)=>`<li class="player-row ${active?'':'inactive'}"><button class="player-toggle" data-action="toggle-player" data-index="${index}" aria-pressed="${active}" aria-label="${escapeHTML(name)}: ${active?'activo':'en descanso'}"><span class="player-number">${String(index+1).padStart(2,'0')}</span><span class="avatar">${escapeHTML(name.slice(0,2).toLocaleUpperCase('es'))}</span><span class="player-name">${escapeHTML(name)}${active?'':'<small class="rest-badge">En descanso</small>'}</span></button><button class="icon-button" data-action="remove-player" data-index="${index}" aria-label="Eliminar a ${escapeHTML(name)}">${icon('x')}</button></li>`).join('')}</ul>`:`<div class="empty-players"><div class="empty-crest">${crest()}</div><p>Todavía no hay sospechosos.</p><small>Agrega a tu grupo. Nadie es inocente por defecto.</small></div>`;}
   function refreshPlayers(){const container=$('#players-container');if(container){container.innerHTML=playerList();$('#player-count').textContent=`${String(settings.players.length).padStart(2,'0')} / 20`;const t=$('#player-threshold');t.innerHTML=`${icon(activePlayers().length>=3?'check':'users')}${activePlayers().length>=3?`${activePlayers().length} jugadores activos. La mesa está lista.`:`${activePlayers().length} jugadores activos. Necesitas al menos 3.`}`;t.classList.toggle('ready',activePlayers().length>=3);}if(wizardLayer)syncWizard();renderActions();icons();}
@@ -1137,7 +1142,7 @@
   function revealedCard(player){
     const impostor=game.impostorIds.includes(player.id);
     const partner=impostor&&game.impostorIds.length===2?game.players.find(p=>p.id!==player.id&&game.impostorIds.includes(p.id)):null;
-    return `<div class="secret-content"><div class="secret-symbol">${crest(impostor?'dagger':'eye')}</div><div class="role-label">${impostor?'ERES IMPOSTOR':'ERES INOCENTE'}</div><h2 class="md:text-5xl">${impostor?'¡Eres el impostor!':escapeHTML(game.word)}</h2>${impostor?`${partner?`<p class="partner-name">Tu cómplice es: <strong>${escapeHTML(partner.name)}</strong></p>`:''}<p>${partner?'Escuchen, improvisen y no dejen rastro.':'No conoces la palabra. Escucha, improvisa y no dejes rastro.'}</p>${game.hints?`<p>Tu pista: ${escapeHTML(game.category.name)}</p>`:''}`:`<p>Conoces la palabra secreta</p><p>${escapeHTML(game.category.name)}</p>`}</div>`;
+    return `<div class="secret-content"><div class="secret-symbol">${crest(impostor?'dagger':'eye')}</div><div class="role-label">${impostor?'ACCESO RESERVADO':'ERES INOCENTE'}</div><h2 class="md:text-5xl">${impostor?'¡Eres el impostor!':escapeHTML(game.word)}</h2>${impostor?`${partner?`<p class="partner-name">Tu cómplice es: <strong>${escapeHTML(partner.name)}</strong></p>`:''}<p>${partner?'Escuchen, improvisen y no dejen rastro.':'No conoces la palabra. Escucha, improvisa y no dejes rastro.'}</p>${game.hints?`<p>Tu pista: ${escapeHTML(game.category.name)}</p>`:''}`:`<p>Conoces la palabra secreta</p><p>${escapeHTML(game.category.name)}</p>`}</div>`;
   }
   function beginHold(){
     if(holding||view!=='pass'||document.hidden||sheetOpen)return;
@@ -1265,7 +1270,7 @@
     sessionScore[outcome==='crew'?'innocents':'impostors']++;
     concealJudgeWord();
     document.activeElement?.blur();clearInterval(timerInterval);releaseWakeLock();game.deadline=null;game.outcome=outcome;setView('result');sound(outcome==='crew'?'crew-win':'impostor-win');
-    haptic([18,35,24]);const pulse=$('#celebration');pulse.dataset.verdict=outcome==='crew'?'crew':'impostors';pulse.replaceChildren(fragment(Array.from({length:36},(_,i)=>`<span class="confetti-piece" style="--x:${(i*47)%100}%;--color:${['#f58a38','#d6b79b','#a889c9'][i%3]};--delay:${(i%6)*.04}s;--drift:${(i%9-4)*18}px"></span>`).join('')));pulse.classList.remove('is-playing');void pulse.offsetWidth;pulse.classList.add('is-playing');
+    haptic([18,35,24]);const pulse=$('#celebration');pulse.dataset.verdict=outcome==='crew'?'crew':'impostors';pulse.classList.remove('is-playing');void pulse.offsetWidth;pulse.classList.add('is-playing');
     activeLayer.querySelector('.result-card').classList.add('verdict-shake');
   }
   const modalHeader=title=>`<div class="sheet-heading"><h2 id="modal-title">${title}</h2><button class="icon-button" data-action="close-modal" aria-label="Cerrar">${icon('x')}</button></div>`;
@@ -1311,7 +1316,7 @@
   function showOptions(){
     openModal(`${modalHeader('Opciones de la partida')}${scoreboard()}<div class="options-list"><button id="sound-button" class="secondary" data-action="sound" aria-pressed="${settings.muted}"></button><button class="secondary" data-action="help">${icon('circle-help')}Cómo jugar</button><button class="secondary" data-action="reset-score">${icon('rotate-ccw')}Reiniciar marcador</button><button class="secondary" data-action="reset">${icon('rotate-ccw')}${view==='setup'?'Volver al primer paso':'Terminar la partida'}</button></div>`);updateSound();icons();
   }
-  function showHelp(){openModal(`${modalHeader('El arte de sospechar')}<ol><li><strong>Reúne al grupo.</strong> Mínimo 3 jugadores para 1 impostor, o 5 para 2. Toca un nombre en la banca para activarlo o dejarlo en descanso sin borrarlo.</li><li><strong>Protege tu carta.</strong> Pasa el teléfono. Mantén presionado para ver tu rol y suelta para ocultarlo. Los inocentes ven la misma palabra; los impostores no. Con 2 impostores, cada uno conoce a su cómplice.</li><li><strong>Empieza el debate.</strong> Tras la última carta, el tiempo comienza: 60 segundos para toda la mesa. La corona indica quién empieza. Den pistas sin revelar la palabra. Puedes pausar o agregar 30 segundos.</li><li><strong>Acuerden su voto.</strong> Con 2 impostores deben descubrir a ambos. Si el grupo falla, ganan los impostores.</li><li><strong>Una última oportunidad.</strong> Si los descubren, los impostores pueden ganar adivinando la palabra. Tienen un solo intento en voz alta, en equipo si son dos. La mesa decide si acertaron; pueden consultar la palabra después de escuchar su respuesta.</li></ol><div class="divider"></div><p><strong>En tu iPhone:</strong> abre en Safari, toca Compartir y selecciona “Agregar a inicio”.</p><p class="small-print">Los nombres y las categorías se guardan en este dispositivo. Los sonidos se generan en el teléfono. La partida funciona sin conexión una vez abierta; volver a abrir la página sin internet depende de la caché del navegador.</p><button class="primary" data-action="close-modal">Entendido</button>`);}
+  function showHelp(){openModal(`${modalHeader('El arte de sospechar')}<ol><li><strong>Reúne al grupo.</strong> Mínimo 3 jugadores para 1 impostor, o 5 para 2. Toca un nombre en la banca para activarlo o dejarlo en descanso sin borrarlo.</li><li><strong>Protege tu carta.</strong> Pasa el teléfono. Mantén presionado para ver tu rol y suelta para ocultarlo. Los inocentes ven la misma palabra; los impostores no. Con 2 impostores, cada uno conoce a su cómplice.</li><li><strong>Empieza el debate.</strong> Tras la última carta, el tiempo comienza: 30 segundos por jugador activo. La corona indica quién empieza. Den pistas sin revelar la palabra. Puedes pausar o agregar 30 segundos.</li><li><strong>Acuerden su voto.</strong> Con 2 impostores deben descubrir a ambos. Si el grupo falla, ganan los impostores.</li><li><strong>Una última oportunidad.</strong> Si los descubren, los impostores pueden ganar adivinando la palabra. Tienen un solo intento en voz alta, en equipo si son dos. La mesa decide si acertaron; pueden consultar la palabra después de escuchar su respuesta.</li></ol><div class="divider"></div><p><strong>En tu iPhone:</strong> abre en Safari, toca Compartir y selecciona “Agregar a inicio”.</p><p class="small-print">Los nombres y las categorías se guardan en este dispositivo. Los sonidos se generan en el teléfono. La partida funciona sin conexión una vez abierta; volver a abrir la página sin internet depende de la caché del navegador.</p><button class="primary" data-action="close-modal">Entendido</button>`);}
   function showCustom(){if(settings.custom.length>=20)return toast('Puedes crear hasta 20 categorías.');openModal(`${modalHeader('Tu propio misterio')}<p>Recuerdos, lugares o secretos que solo tu grupo conoce.</p><form id="category-form"><label for="category-name">Nombre de la categoría</label><input id="category-name" class="field" maxlength="36" required placeholder="Ej. Leyendas de la fiesta" autocomplete="off"><label for="category-words">Palabras separadas por comas o saltos de línea</label><textarea id="category-words" class="field" maxlength="5000" required placeholder="La terraza, El vecino, El karaoke"></textarea><p class="small-print">De 3 a 100 palabras distintas. Hasta 48 caracteres por palabra.</p><p id="category-error" class="error-text" role="alert"></p><button class="primary" type="submit">Guardar categoría ${icon('plus')}</button></form>`);}
   function confirmReset(){openModal(`${modalHeader(view==='setup'?'¿Volver al primer paso?':'¿Terminar la partida?')}<p>${view==='setup'?'Volverás a la lista de jugadores.':'La partida actual termina y sus roles se descartan.'} Tus jugadores, categorías y preferencias se conservan.</p><div class="action-row"><button class="secondary" data-action="close-modal">Cancelar</button><button class="danger" data-action="reset-confirm">${view==='setup'?'Volver':'Terminar'}</button></div>`);}
   document.addEventListener('submit',event=>{
@@ -1377,7 +1382,7 @@
     const url=`data:image/svg+xml,${encodeURIComponent(svg)}`;
     $('#favicon').href=url;$('#touch-icon').href=url;
     const start=new URL(location.href);start.hash='';start.search='';
-    const manifest={id:start.href,name:'Impostor: Edda’s Edition 🎂',short_name:'Impostor',lang:'es-419',description:'Una palabra secreta. Un grupo de sospechosos. Un teléfono.',start_url:start.href,scope:new URL('.',start).href,display:'standalone',background_color:'#09090b',theme_color:'#09090b',icons:[{src:url,sizes:'any',type:'image/svg+xml',purpose:'any'}]};
+    const manifest={id:start.href,name:'IMPOSTOR: HALLOWEDDA EDITION',short_name:'Impostor',lang:'es-419',description:'Una palabra secreta. Un grupo de sospechosos. Un teléfono.',start_url:start.href,scope:new URL('.',start).href,display:'standalone',background_color:'#09090b',theme_color:'#09090b',icons:[{src:url,sizes:'any',type:'image/svg+xml',purpose:'any'}]};
     const updateManifest=()=>{$('#manifest').href=`data:application/manifest+json;charset=utf-8,${encodeURIComponent(JSON.stringify(manifest))}`;};
     updateManifest();
     const image=new Image();
@@ -1457,11 +1462,13 @@
         assert(!wizardLayer.querySelector('ana'),'Un nombre no debe interpretarse como HTML.');
         assert(loadSettings(memoryStorage).players[0].name==='Edda','La recarga perdió los jugadores.');
       });
-      test('Ocho categorías y selección válida',()=>{
-        assert(DEFAULT_CATEGORIES.length===8,'Deben existir ocho categorías.');
-        assert(new Set(DEFAULT_CATEGORIES.map(category=>category.id)).size===8,'Hay IDs de categoría duplicados.');
-        assert(wizardLayer.querySelectorAll('[data-action="category"]').length===8,'Faltan categorías renderizadas.');
+      test('Seis categorías originales y selección guardada',()=>{
+        assert(DEFAULT_CATEGORIES.length===6,'Deben existir las seis categorías originales.');
+        assert(new Set(DEFAULT_CATEGORIES.map(category=>category.id)).size===6,'Hay IDs de categoría duplicados.');
+        assert(wizardLayer.querySelectorAll('[data-action="category"]').length===6,'Faltan categorías renderizadas.');
         assert(!startError(),'La configuración válida no permite iniciar.');
+        const migrated=loadSettings({getItem:()=>JSON.stringify({...fixture,active:['costumes','edda']})});
+        assert(migrated.active.join(',')==='halloween,birthday','La migración perdió la selección guardada.');
       });
       test('Roles válidos con uno y dos impostores',()=>{
         for(const count of [1,2]){
@@ -1482,13 +1489,13 @@
         assert(game.impostorIds[0]!==first,'La asignación ignora la fuente aleatoria.');
         randomIndex=original.randomIndex;
       });
-      test('Debate de 60 segundos: inicio y avance',()=>{
+      test('Debate de 30 segundos por jugador: inicio y avance',()=>{
         game.passIndex=game.players.length-1;game.seen=true;nextPlayer();
-        assert(view==='game'&&game.remaining===60000&&game.total===60000,'El debate debe iniciar en 60 segundos.');
-        assert($('#timer-display').textContent==='01:00','Tiempo inicial incorrecto.');
+        assert(view==='game'&&game.remaining===180000&&game.total===180000,'Seis jugadores activos deben tener tres minutos.');
+        assert($('#timer-display').textContent==='03:00','Tiempo inicial incorrecto.');
         assert(intervals.size===1,'Debe haber un solo intervalo activo.');
         advance(15000);
-        assert(game.remaining===45000&&$('#timer-display').textContent==='00:45','El reloj no avanza correctamente.');
+        assert(game.remaining===165000&&$('#timer-display').textContent==='02:45','El reloj no avanza correctamente.');
         assert(speakingOrder()[0].id===game.firstSpeaker.id,'El orden no comienza por el jugador sorteado.');
       });
       test('Pausa, reanudación y extensión del debate',()=>{
@@ -1497,11 +1504,11 @@
         assert($('#timer-label').textContent==='En pausa','La pausa no se refleja en pantalla.');
         startTimer();startTimer();
         assert(intervals.size===1,'Reanudar duplica el intervalo.');
-        advance(5000);assert(game.remaining===40000,'Reanudar perdió el tiempo restante.');
-        extendTimer();assert(game.remaining===70000&&game.total===90000,'La extensión debe agregar 30 segundos.');
+        advance(5000);assert(game.remaining===160000,'Reanudar perdió el tiempo restante.');
+        extendTimer();assert(game.remaining===190000&&game.total===210000,'La extensión debe agregar 30 segundos.');
       });
       test('Fin del debate y reinicio tras agregar tiempo',()=>{
-        advance(70000);
+        advance(190000);
         assert(game.remaining===0&&!game.deadline&&intervals.size===0,'El temporizador no se detuvo en cero.');
         assert($('#timer-display').textContent==='00:00'&&$('#timer-toggle').disabled,'Estado final incorrecto.');
         assert($('#timer-announcement').textContent.includes('Es hora de votar'),'Falta el aviso de votación.');
