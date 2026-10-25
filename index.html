@@ -97,7 +97,6 @@
     .player-name { flex:1; min-width:0; overflow-wrap:anywhere; font-size:14px; }
     .player-row .icon-button svg { width:16px; height:16px; }
     .empty-players { margin:auto; text-align:center; padding:12px 0; flex-shrink:0; }
-    .empty-crest { width:64px; height:74px; color:var(--purple); margin:0 auto 10px; }
     .empty-players p { color:#e1d9e9; font-size:13px; }
     .empty-players small { display:block; color:var(--muted); font-size:11px; margin-top:6px; }
     .note { font-size:11px; color:var(--muted); display:flex; align-items:center; gap:8px; flex-shrink:0; }
@@ -132,8 +131,6 @@
     .switch[aria-checked=true]::after { transform:translateX(20px); }
     .rule-note { display:flex; align-items:flex-start; gap:10px; color:var(--muted); font-size:12px; line-height:1.7; padding:4px; flex-shrink:0; }
     .rule-note svg { width:18px; height:18px; margin-top:2px; color:var(--lavender); }
-    .mode-art { flex:1; min-height:0; display:grid; place-items:center; opacity:.5; }
-    .mode-art svg { max-height:130px; height:100%; width:100px; color:var(--purple); }
     .category-heading { margin:0; }
     .category-grid { grid-auto-rows:max-content; flex:1; display:grid; grid-template-columns:minmax(0,1fr) minmax(0,1fr); gap:10px; align-content:start; padding:3px; }
     .category { text-align:left; background:var(--surface); border:0; border-radius:16px; padding:15px; min-height:114px; width:100%; min-width:0; display:grid; grid-template-columns:1fr 18px; align-content:start; gap:5px; }
@@ -168,13 +165,11 @@
     .pass-name { color:var(--accent); display:block; margin-top:6px; }
     .secret-card { container:secret / size; flex:1; min-height:0; display:flex; align-items:center; justify-content:center; position:relative; text-align:center; background:var(--surface); }
     .secret-content { width:100%; max-height:100%; display:flex; flex-direction:column; align-items:center; gap:10px; }
-    .secret-symbol { height:70px; width:70px; color:var(--lavender); flex-shrink:0; }
-    .secret-symbol svg { width:100%; height:100%; }
     .secret-content h2 { font-size:clamp(23px,5vw,32px); line-height:1.15; letter-spacing:-.8px; overflow-wrap:anywhere; max-width:100%; text-wrap:balance; }
     .secret-content p { font-size:12px; color:var(--muted); max-width:330px; overflow-wrap:anywhere; }
     .role-label { font-size:9px; letter-spacing:2px; font-weight:750; color:var(--lavender); }
     .secret-card.impostor { background:radial-gradient(ellipse at 50% 100%,#5d281a66,transparent 75%),var(--surface); }
-    .impostor .secret-symbol,.impostor .role-label { color:var(--accent); }
+    .impostor .role-label { color:var(--accent); }
     .hold-button { position:relative; overflow:hidden; width:100%; min-height:56px; border-radius:13px; background:#28221e; border:0; touch-action:none; -webkit-touch-callout:none; flex-shrink:0; }
     .hold-button:active { transform:none; }
     .hold-button::before { content:""; position:absolute; inset:0; background:#ff6b0025; transform:scaleX(0); transform-origin:left; }
@@ -211,11 +206,9 @@
     .vote-choice>.lucide,.vote-choice>i { width:15px; height:15px; color:var(--accent); }
     .vote-status { font-size:11px; color:var(--muted); text-align:center; flex-shrink:0; }
     .guess-card { display:flex; flex-direction:column; justify-content:flex-start; gap:16px; flex:1; min-height:0; text-align:center; }
-    .guess-card .secret-symbol { margin:0 auto; }
     .result-names { font-size:21px; font-weight:650; overflow-wrap:anywhere; max-height:84px; color:var(--lavender); flex-shrink:0; }
     .result-card { container:result / size; text-align:center; min-height:0; display:flex; flex-direction:column; flex:1; }
     .result-content { display:flex; flex-direction:column; gap:9px; flex-shrink:0; margin:auto 0; }
-    .result-card .secret-symbol { height:54px; width:54px; margin:0 auto 4px; color:var(--accent); }
     .result-word { font-size:clamp(24px,5vw,34px); font-weight:700; line-height:1.2; letter-spacing:-1px; overflow-wrap:anywhere; }
     .result-card .subtle { overflow-wrap:anywhere; }
     .result-card .divider { margin:6px 0; }
@@ -262,12 +255,10 @@
     @keyframes splash-exit { to { opacity:0; transform:translate3d(0,-8px,0); } }
     /* Fit private cards to their actual available space, including long custom words. */
     @container secret (max-height:280px) {
-      .secret-content .secret-symbol { display:none; }
       .secret-content { gap:7px; }
       .secret-content h2 { font-size:22px; }
     }
     @container result (max-height:400px) {
-      .result-card .secret-symbol { display:none; }
       .result-card .result-names { font-size:18px; max-height:54px; }
       .result-card .result-word { font-size:22px; }
     }
@@ -277,12 +268,12 @@
     @media(max-height:760px) { .screen { padding-top:20px; gap:14px; } .screen-heading h1 { font-size:30px; } .center-heading h1 { font-size:27px; } .intro { margin-top:8px; } .panel { padding:16px; } .timer-ring { max-height:230px; } .time-preview { padding:12px; } .preview-time { font-size:48px; } .summary { gap:8px; } .summary-value { font-size:20px; } .summary-themes { padding-top:8px; } .pumpkin-hero { width:210px; margin:18px 0; } }
     /* visualViewport updates this state when the iOS keyboard reduces usable height. */
     .compact .screen { padding:12px 0; gap:10px; }
-    .compact .screen-heading .intro,.compact .chapter,.compact .mode-art,.compact .security-note,.compact .summary-hints { display:none; }
+    .compact .screen-heading .intro,.compact .chapter,.compact .security-note,.compact .summary-hints { display:none; }
     .compact .screen-heading h1 { font-size:24px; }
     .compact .panel { padding:12px; }
     .compact .panel-top { margin-bottom:8px; }
     .compact .stage-body { gap:8px; }
-    .compact .empty-crest,.compact .empty-players small { display:none; }
+    .compact .empty-players small { display:none; }
     .compact .empty-players { padding:8px 0; }
     .compact .rule-note { font-size:11px; padding:0; }
     .compact .segmented button { min-height:48px; }
@@ -295,7 +286,6 @@
     .compact .summary-value { font-size:17px; }
     .compact .theme-preview { max-height:30px; font-size:11px; }
     .compact .secret-content { gap:5px; }
-    .compact .secret-content .secret-symbol,.compact .guess-card .secret-symbol,.compact .result-card .secret-symbol { display:none; }
     .compact .secret-content h2 { font-size:22px; }
     .compact .secret-content p { font-size:11px; }
     .compact .pass-name { margin-top:3px; }
@@ -374,7 +364,6 @@
     .edge-light[data-verdict="crew"] { --edge-color:238,164,64; opacity:.65; }
     .edge-light[data-verdict="impostors"] { --edge-color:139,18,30; opacity:.8; }
     .celebration[data-verdict="impostors"] { background:radial-gradient(ellipse at 50% 58%,#8b121e55,transparent 72%); }
-    .app-shell[data-outcome="impostors"] .verdict-seal { color:#d36a60; }
     .handoff-ready { animation:handoff-breathe .85s ease-out; }
     @keyframes edge-heartbeat { 0%,100% { opacity:0; } 6% { opacity:.85; } 23% { opacity:.12; } 35% { opacity:.65; } 66% { opacity:0; } }
     @keyframes handoff-breathe { 0%,100% { filter:brightness(1); } 30% { filter:brightness(1.25); box-shadow:inset 0 2px 0 #ffc18a55,0 4px 0 #8c401a,0 0 28px #f58a3855; } }
@@ -391,26 +380,15 @@
     @media(prefers-reduced-motion:reduce) { .edge-light.heartbeat { animation:none; } .edge-light[data-urgent="true"] { opacity:.3; } }
     .celebration { position:fixed; inset:0; z-index:45; pointer-events:none; opacity:0; background:radial-gradient(ellipse at 50% 58%,#ffae5238,transparent 72%); }
     .celebration.is-playing { animation:verdict-pulse 1.1s ease-out both; }
-    .verdict-seal { width:100px; height:100px; margin:0 auto 8px; position:relative; color:#e8a95e; flex-shrink:0; }
-    .verdict-seal > svg { width:100%; height:100%; overflow:visible; animation:seal-stamp .85s cubic-bezier(.2,.8,.2,1) both; }
-    .verdict-seal .laurel { stroke-dasharray:200; stroke-dashoffset:200; animation:laurel-draw 1s .15s ease forwards; }
-    .verdict-seal .seal-core { transform-origin:60px 60px; animation:seal-core .8s ease both; }
-    .ember { position:absolute; top:56%; left:50%; width:3px; height:3px; border-radius:50%; background:#ffb65c; box-shadow:0 0 9px #ff7b29; opacity:0; animation:ember-rise 1.7s var(--delay) ease-out both; }
     .verdict-shake { animation:shake .48s ease-out; }
     @keyframes candlelight { 0%,100% { opacity:.65; transform:scale(.97); } 50% { opacity:1; transform:scale(1.04); } }
     @keyframes view-arrive { from { opacity:0; transform:translate3d(22px,0,0); } to { opacity:1; transform:translate3d(0,0,0); } }
     @keyframes view-depart { to { opacity:0; transform:translate3d(-16px,0,0); } }
     @keyframes verdict-pulse { 0% { opacity:0; } 18% { opacity:.8; } 100% { opacity:0; } }
-    @keyframes seal-stamp { 0% { opacity:0; transform:scale(1.3) rotate(-12deg); } 45% { opacity:1; transform:scale(.94) rotate(2deg); } 100% { transform:scale(1) rotate(0); } }
-    @keyframes seal-core { 0% { opacity:0; transform:scale(.6); } 100% { opacity:1; transform:scale(1); } }
-    @keyframes laurel-draw { to { stroke-dashoffset:0; } }
-    @keyframes ember-rise { 15% { opacity:1; } 100% { opacity:0; transform:translate3d(var(--drift),-90px,0) scale(.3); } }
     @keyframes shake { 0%,100% { transform:translate3d(0,0,0); } 20% { transform:translate3d(-3px,1px,0); } 40% { transform:translate3d(3px,-1px,0); } 60% { transform:translate3d(-2px,0,0); } 80% { transform:translate3d(1px,0,0); } }
-    .compact .verdict-seal { width:66px; height:66px; margin-bottom:0; }
-    .short .verdict-seal { width:40px; height:40px; }
     .motion-paused .pumpkin-hero::before { animation-play-state:paused; }
     @media(max-width:360px) { .category { padding:12px; min-height:138px; } }
-    @media(prefers-reduced-motion:reduce) { .view-exit { visibility:hidden; } *,*::before,*::after { animation:none!important; transition:none!important; } .pumpkin-sculpture,.pumpkin-light { will-change:auto; } .verdict-seal .laurel { stroke-dashoffset:0; } }
+    @media(prefers-reduced-motion:reduce) { .view-exit { visibility:hidden; } *,*::before,*::after { animation:none!important; transition:none!important; } .pumpkin-sculpture,.pumpkin-light { will-change:auto; } }
 
     /* Mobile layout stays intact. These additions only rearrange the shared DOM at md. */
     .participation { display:contents; }
@@ -444,7 +422,7 @@
       .setup-sidebar .wizard-step[data-step="0"] { flex:1; min-height:200px; }
       .setup-sidebar .wizard-step[data-step="1"] { flex-shrink:0; padding-top:18px; border-top:1px solid #ffffff12; }
       .setup-main .wizard-step { height:100%; }
-      .wizard-step[data-step="3"],.wizard-step .screen-heading,.wizard-step .mode-art { display:none; }
+      .wizard-step[data-step="3"],.wizard-step .screen-heading { display:none; }
       .wizard-step > .screen { padding:0; gap:0; }
       .wizard-step .stage-body { flex-direction:column; gap:12px; }
       .setup-sidebar .panel { padding:0; background:transparent; border-radius:0; }
@@ -558,7 +536,6 @@
     .pass-controls #next-player:disabled { visibility:hidden; }
     .pass-focus .secret-card { position:absolute; bottom:calc(100% + 18px); left:0; width:100%; max-width:none; max-height:calc(var(--app-height) / 2 - 88px); min-height:0; padding:18px; border-radius:24px; overflow:auto; container-type:normal; }
     .pass-focus .secret-content { gap:8px; }
-    .pass-focus .secret-symbol { width:40px; height:40px; }
     .pass-focus .secret-content h2 { font-size:28px; }
     .pass-focus:has(.secret-card:not([hidden])) > .pass-name,
     .pass-focus:has(.secret-card:not([hidden])) > .pass-eyebrow { visibility:hidden; }
@@ -602,7 +579,6 @@
       .pass-controls { top:calc(100% + 12px); gap:8px; }
       .pass-controls .hold-button,.pass-controls .primary { min-height:44px; padding:10px; }
       .pass-focus .secret-card { bottom:calc(100% + 8px); max-height:calc(var(--app-height) / 2 - 56px); padding:10px; }
-      .pass-focus .secret-symbol { display:none; }
     }
     @media(max-height:380px) {
       .pass-controls.card-seen { flex-direction:row; width:100%; }
@@ -928,7 +904,7 @@
     'volume-2':'<path d="m11 4-6 5H2v6h3l6 5ZM15 8a6 6 0 0 1 0 8m3-11a10 10 0 0 1 0 14"/>',
     'volume-x':'<path d="m11 4-6 5H2v6h3l6 5ZM16 9l6 6m0-6-6 6"/>',
     'lock-keyhole':'<rect x="5" y="10" width="14" height="11" rx="2"/><path d="M8 10V7a4 4 0 0 1 8 0v3m-4 4v3"/>',
-    'shield-check':'<path d="m12 2 9 4v6c0 5-9 10-9 10S3 17 3 12V6Zm-5 10 3 3 6-6"/>',
+    'info':'<circle cx="12" cy="12" r="10"/><path d="M12 16v-4m0-4h.01"/>',
     'fingerprint':'<path d="M4 9a8 8 0 0 1 16 0m-13 3V9a5 5 0 0 1 10 0v5m-7 6c2-4 2-8 2-11m3 12c2-2 4-5 4-8M4 13c0 3-1 4-2 5m5-3c0 3-1 5-2 6"/>',
     'skull':'<path d="M6 17a9 9 0 1 1 12 0v5H6Z"/><circle cx="8" cy="11" r="1.5"/><circle cx="16" cy="11" r="1.5"/><path d="m11 16 1-2 1 2m-3 3v3m4-3v3"/>',
     'gift':'<rect x="3" y="8" width="18" height="4" rx="1"/><path d="M5 12v9h14v-9M12 8v13m0-13C3 8 5 1 8 3Zm0 0c9 0 7-7 4-5Z"/>',
@@ -972,7 +948,6 @@
     <path d="m80 126 43 17m77-17-43 17m-67 35 21 10 12-7 17 10 17-10 12 7 21-10" stroke="#050506" stroke-width="2.5" stroke-linecap="round"/>
     <path d="m104 228 23 6h26l23-6" stroke="#ff781f" stroke-opacity=".16" stroke-linecap="round"/>
   </svg>`;
-  const crest = (kind='eye') => `<svg viewBox="0 0 100 110" fill="none" aria-hidden="true"><path d="M50 5 86 23v38c0 22-36 42-36 42S14 83 14 61V23Z" stroke="currentColor" stroke-opacity=".3"/><path d="m50 12 29 15v33c0 17-29 35-29 35S21 77 21 60V27Z" stroke="currentColor" stroke-opacity=".12"/>${kind==='dagger'?'<path d="m50 19 10 21-6 28-4 20-4-20-6-28Z" fill="currentColor"/><path d="m31 46 19 6 19-6-3 9-13 4-3 12-3-12-13-4Z" fill="#1a1a1e" stroke="currentColor"/><path d="M50 25v20" stroke="#d6b79b"/>':kind==='victory'?'<path d="M36 34h28v17a14 14 0 0 1-28 0ZM36 38H26v10c0 7 5 11 12 11m26-21h10v10c0 7-5 11-12 11M50 65v13m-13 2h26" stroke="currentColor" stroke-width="2"/>':'<path d="M27 52s9-13 23-13 23 13 23 13-9 13-23 13-23-13-23-13Z" stroke="currentColor" stroke-width="1.6"/><circle cx="50" cy="52" r="7" stroke="currentColor" stroke-width="1.6"/><path d="M50 25v7m0 40v8M22 52h-6m68 0h-6" stroke="currentColor"/>'}</svg>`;
   let storageFailed=false;
   function loadSettings(storage){
     const fallback={players:[],impostors:1,hints:false,muted:false,active:['halloween','birthday'],custom:[]};
@@ -1205,20 +1180,20 @@
   function splashView(){return screen(`<h1 class="splash-title">IMPOSTOR</h1><p class="splash-edition">HALLOWEDDA EDITION</p><div class="pumpkin-hero">${pumpkin()}</div><p class="splash-tagline">Un teléfono. Muchas sospechas. ¿Quién está mintiendo?</p>`);}
   function setupView(){
     if(step===0)return screen(`${heading('La mesa de sospechosos','Entre amigos.<br><em>Entre sospechosos.</em>','Una palabra secreta. Alguien está fingiendo.')}<div class="stage-body"><section class="panel players-panel"><div class="panel-top"><h2 class="label">Banca de amigos</h2><span id="player-count" class="count">${String(settings.players.length).padStart(2,'0')} / 20</span></div><form id="player-form" class="add-form"><label class="sr-only" for="player-name">Nombre del jugador</label><input id="player-name" class="field" maxlength="24" placeholder="Nombre de un sospechoso" required autocomplete="off" enterkeyhint="done"><button class="add-button" type="submit" aria-label="Agregar jugador">${icon('plus')}</button></form><p class="roster-hint subtle">Toca un nombre para activar o descansar.</p><div id="players-container" class="players-container scroll-list">${playerList()}</div></section><p id="player-threshold" class="note threshold ${activePlayers().length>=3?'ready':''}">${icon(activePlayers().length>=3?'check':'users')}${activePlayers().length>=3?`${activePlayers().length} jugadores activos. La mesa está lista.`:`${activePlayers().length} jugadores activos. Necesitas al menos 3.`}</p></div>`);
-    if(step===1)return screen(`${heading('Modo de juego','La medida<br><em>del engaño.</em>','Decide cuántos secretos puede soportar tu grupo.')}<div class="stage-body"><section class="panel"><div class="panel-top"><h2 class="label">Impostores</h2></div><div class="segmented" role="group" aria-label="Cantidad de impostores"><button data-action="impostors" data-count="1" aria-pressed="${settings.impostors===1}">${icon('user')}1 impostor</button><button data-action="impostors" data-count="2" aria-pressed="${settings.impostors===2}">${icon('users')}2 impostores</button></div><div class="divider"></div><div class="toggle-row"><div><p id="hints-label" class="toggle-title">Pista para el impostor</p><p id="hints-description" class="toggle-description">Conoce la categoría, nunca la palabra.</p></div><button class="switch" role="switch" data-action="hints" aria-labelledby="hints-label" aria-describedby="hints-description" aria-checked="${settings.hints}"></button></div></section><div class="rule-note">${icon('shield-check')}<span>Con 2 impostores necesitas al menos 5 jugadores. Para ganar, el grupo debe descubrir a ambos.</span></div><div class="mode-art">${crest('dagger')}</div></div>`);
+    if(step===1)return screen(`${heading('Modo de juego','La medida<br><em>del engaño.</em>','Decide cuántos secretos puede soportar tu grupo.')}<div class="stage-body"><section class="panel"><div class="panel-top"><h2 class="label">Impostores</h2></div><div class="segmented" role="group" aria-label="Cantidad de impostores"><button data-action="impostors" data-count="1" aria-pressed="${settings.impostors===1}">${icon('user')}1 impostor</button><button data-action="impostors" data-count="2" aria-pressed="${settings.impostors===2}">${icon('users')}2 impostores</button></div><div class="divider"></div><div class="toggle-row"><div><p id="hints-label" class="toggle-title">Pista para el impostor</p><p id="hints-description" class="toggle-description">Conoce la categoría, nunca la palabra.</p></div><button class="switch" role="switch" data-action="hints" aria-labelledby="hints-label" aria-describedby="hints-description" aria-checked="${settings.hints}"></button></div></section><div class="rule-note">${icon('info')}<span>Con 2 impostores necesitas al menos 5 jugadores. Para ganar, el grupo debe descubrir a ambos.</span></div></div>`);
     if(step===2)return screen(`${heading('Elige el misterio','Todo empieza<br><em>con una palabra.</em>','Mezcla temas. Multiplica las sospechas.')}<div class="stage-body"><div class="panel-top category-heading"><h2 class="label">Categorías</h2><span class="count" id="category-count">${settings.active.length} activas</span></div><div class="category-grid scroll-list md:grid-cols-3">${allCategories().map(categoryCard).join('')}</div><button class="custom-add" data-action="custom">${icon('plus')}Crear categoría personalizada</button></div>`);
     return screen(`${heading('Tiempo y confirmación','La tensión<br><em>tiene su tiempo.</em>','Un último vistazo antes de guardar el secreto.')}<div class="stage-body"><section class="panel time-preview"><div class="label">Tiempo de debate</div><div class="preview-time">${formatTime(duration())}</div><p class="subtle">30 segundos por jugador · Puedes agregar más tiempo</p></section><section class="panel summary"><div class="summary-item"><div class="label">Jugadores</div><div class="summary-value">${String(activePlayers().length).padStart(2,'0')}</div></div><div class="summary-item"><div class="label">Impostores</div><div class="summary-value">${String(settings.impostors).padStart(2,'0')}</div></div><div class="summary-item summary-themes"><div class="label">${settings.active.length} temas activos</div><p class="theme-preview">${allCategories().filter(c=>settings.active.includes(c.id)).map(c=>escapeHTML(c.name)).join(' · ')}</p><p class="summary-hints">Pista para el impostor: ${settings.hints?'activada':'desactivada'}</p></div></section></div>`);
   }
-  function playerList(){return settings.players.length?`<ul class="player-list">${settings.players.map(({name,active},index)=>`<li class="player-row ${active?'':'inactive'}"><button class="player-toggle" data-action="toggle-player" data-index="${index}" aria-pressed="${active}" aria-label="${escapeHTML(name)}: ${active?'activo':'en descanso'}"><span class="player-number">${String(index+1).padStart(2,'0')}</span><span class="avatar">${escapeHTML(name.slice(0,2).toLocaleUpperCase('es'))}</span><span class="player-name">${escapeHTML(name)}${active?'':'<small class="rest-badge">En descanso</small>'}</span></button><button class="icon-button" data-action="remove-player" data-index="${index}" aria-label="Eliminar a ${escapeHTML(name)}">${icon('x')}</button></li>`).join('')}</ul>`:`<div class="empty-players"><div class="empty-crest">${crest()}</div><p>Todavía no hay sospechosos.</p><small>Agrega a tu grupo. Nadie es inocente por defecto.</small></div>`;}
+  function playerList(){return settings.players.length?`<ul class="player-list">${settings.players.map(({name,active},index)=>`<li class="player-row ${active?'':'inactive'}"><button class="player-toggle" data-action="toggle-player" data-index="${index}" aria-pressed="${active}" aria-label="${escapeHTML(name)}: ${active?'activo':'en descanso'}"><span class="player-number">${String(index+1).padStart(2,'0')}</span><span class="avatar">${escapeHTML(name.slice(0,2).toLocaleUpperCase('es'))}</span><span class="player-name">${escapeHTML(name)}${active?'':'<small class="rest-badge">En descanso</small>'}</span></button><button class="icon-button" data-action="remove-player" data-index="${index}" aria-label="Eliminar a ${escapeHTML(name)}">${icon('x')}</button></li>`).join('')}</ul>`:`<div class="empty-players"><p>Todavía no hay sospechosos.</p><small>Agrega a tu grupo. Nadie es inocente por defecto.</small></div>`;}
   function refreshPlayers(){const container=$('#players-container');if(container){container.innerHTML=playerList();$('#player-count').textContent=`${String(settings.players.length).padStart(2,'0')} / 20`;const t=$('#player-threshold');t.innerHTML=`${icon(activePlayers().length>=3?'check':'users')}${activePlayers().length>=3?`${activePlayers().length} jugadores activos. La mesa está lista.`:`${activePlayers().length} jugadores activos. Necesitas al menos 3.`}`;t.classList.toggle('ready',activePlayers().length>=3);}if(wizardLayer)syncWizard();renderActions();icons();}
   function categoryCard(c){const custom=c.id.startsWith('custom-');return `${custom?'<div class="custom-category">':''}<button class="category" data-action="category" data-id="${c.id}" aria-pressed="${settings.active.includes(c.id)}"><span class="selection-mark">${icon('check')}</span><span class="category-icon">${icon(c.icon)}</span><span class="category-name">${escapeHTML(c.name)}</span><span class="category-size">${escapeHTML(c.description||`${c.words.length} secretos de tu grupo`)}</span></button>${custom?`<button class="custom-delete" data-action="delete-category" data-id="${c.id}" aria-label="Eliminar categoría ${escapeHTML(c.name)}">${icon('trash-2')}Eliminar</button></div>`:''}`;}
   function startGame(){if(startError())return toast(startError());clearInterval(timerInterval);const categories=allCategories().filter(c=>settings.active.includes(c.id)),category=categories[randomIndex(categories.length)],players=activePlayers().map(({name},id)=>({id,name}));game={players,category,word:category.words[randomIndex(category.words.length)],impostorIds:shuffle(players).slice(0,settings.impostors).map(p=>p.id),hints:settings.hints,passIndex:0,seen:false,remaining:duration(),total:duration(),deadline:null,lastTick:null,votes:[],ballots:[],voterIndex:0,selectedVote:null,eligibleIds:players.map(p=>p.id),lockedIds:[],tiedIds:[],tally:[],voteRound:1,revealIndex:0,revealStage:null,outcome:null,firstSpeaker:null};setView('pass');requestWakeLock();}
   function passView(){return screen(`<div class="pass-focus"><p class="pass-eyebrow text-xs font-semibold text-neutral-400 tracking-widest">Pasa el teléfono a</p><h1 class="pass-name text-4xl md:text-6xl font-extrabold text-white">${escapeHTML(game.players[game.passIndex].name)}</h1><div class="pass-controls"><div id="secret-card" class="panel secret-card" hidden></div><button id="hold-button" class="hold-button" aria-label="Mantener para ver carta. Suelta para ocultarla." aria-controls="secret-card"><span>${icon('fingerprint')}<span id="hold-label">${holdPrompt()}</span></span></button>${primary(game.passIndex===game.players.length-1?'Comenzar debate':'Pasar el teléfono','next-player',!game.seen,'next-player')}</div></div>`);}
-  function hiddenCard(){return `<div class="secret-content"><div class="secret-symbol">${crest()}</div><div class="role-label">ACCESO RESERVADO</div><h2 class="md:text-5xl">Que nadie mire.</h2><p>Tu lealtad está al otro lado.</p></div>`;}
+  function hiddenCard(){return `<div class="secret-content"><div class="role-label">ACCESO RESERVADO</div><h2 class="md:text-5xl">Que nadie mire.</h2><p>Tu lealtad está al otro lado.</p></div>`;}
   function revealedCard(player){
     const impostor=game.impostorIds.includes(player.id);
     const partner=impostor&&game.impostorIds.length===2?game.players.find(p=>p.id!==player.id&&game.impostorIds.includes(p.id)):null;
-    return `<div class="secret-content"><div class="secret-symbol">${crest(impostor?'dagger':'eye')}</div><div class="role-label">${impostor?'ACCESO RESERVADO':'ERES INOCENTE'}</div><h2 class="md:text-5xl">${impostor?'¡Eres el impostor!':escapeHTML(game.word)}</h2>${impostor?`${partner?`<p class="partner-name">Tu cómplice es: <strong>${escapeHTML(partner.name)}</strong></p>`:''}<p>${partner?'Escuchen, improvisen y no dejen rastro.':'No conoces la palabra. Escucha, improvisa y no dejes rastro.'}</p>${game.hints?`<p>Tu pista: ${escapeHTML(game.category.name)}</p>`:''}`:`<p>Conoces la palabra secreta</p><p>${escapeHTML(game.category.name)}</p>`}</div>`;
+    return `<div class="secret-content"><div class="role-label">${impostor?'ACCESO RESERVADO':'ERES INOCENTE'}</div><h2 class="md:text-5xl">${impostor?'¡Eres el impostor!':escapeHTML(game.word)}</h2>${impostor?`${partner?`<p class="partner-name">Tu cómplice es: <strong>${escapeHTML(partner.name)}</strong></p>`:''}<p>${partner?'Escuchen, improvisen y no dejen rastro.':'No conoces la palabra. Escucha, improvisa y no dejes rastro.'}</p>${game.hints?`<p>Tu pista: ${escapeHTML(game.category.name)}</p>`:''}`:`<p>Conoces la palabra secreta</p><p>${escapeHTML(game.category.name)}</p>`}</div>`;
   }
   function beginHold(){
     if(holding||view!=='pass'||document.hidden||sheetOpen)return;
@@ -1436,9 +1411,8 @@
     else finish('impostors');
   }
   const impostorNames=()=>game.players.filter(p=>game.impostorIds.includes(p.id)).map(p=>escapeHTML(p.name)).join(' y ');
-  function guessView(){const plural=game.impostorIds.length>1;return screen(`${heading('Última oportunidad',plural?'Los descubrieron.':'Te descubrieron.',`${plural?'Los impostores tienen':'El impostor tiene'} un intento para adivinar la palabra.`,true)}<section class="panel guess-card scroll-list"><div class="guess-content"><div class="secret-symbol">${crest('dagger')}</div><p class="result-names">${impostorNames()}</p><p class="verbal-prompt">${plural?'Los impostores deben acordar una respuesta y decirla':'El impostor debe decir su respuesta'} en voz alta a la mesa ahora.</p><p class="subtle">Después de escuchar la respuesta, la mesa decide.</p><button class="secondary word-reveal" data-action="reveal-word" aria-expanded="false" aria-controls="judge-word">${icon('eye')}<span>Ver palabra secreta</span></button><p id="judge-word" class="result-word" hidden></p></div></section>`);}
-  function resultView(){const crew=game.outcome==='crew',plural=game.impostorIds.length>1;return screen(`${heading('Misterio resuelto',crew?'¡Ganaron los inocentes!':`Gan${plural?'aron<br>los impostores.':'ó<br>el impostor.'}`,crew?'Esta vez, la verdad salió a la luz.':game.outcome==='guessed'?'Una última palabra cambió toda la partida.':'El engaño sobrevivió a todas las miradas.',true)}<section class="panel result-card"><div class="result-content">${verdictSeal(crew)}<p class="label muted">${plural?'Los impostores eran':'El impostor era'}</p><p class="result-names">${impostorNames()}</p><div class="divider"></div><p class="label muted">La palabra secreta</p><p class="result-word">${escapeHTML(game.word)}</p><p class="subtle">${escapeHTML(game.category.name)}</p></div></section>${scoreboard()}<p class="result-detail">La mesa votó por ${game.players.filter(p=>game.votes.includes(p.id)).map(p=>escapeHTML(p.name)).join(' y ')}.</p>`);}
-  function verdictSeal(crew){return `<div class="verdict-seal"><svg viewBox="0 0 120 120" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><g class="laurel" stroke-linecap="round" stroke-linejoin="round"><path d="M53 103C18 91 13 54 31 26M67 103c35-12 40-49 22-77M29 36l-9-2 2 13 6 4M23 55l-10-1 5 13 7 2M27 74l-10 2 9 11 8-1M37 91l-8 5 12 7 8-5M91 36l9-2-2 13-6 4M97 55l10-1-5 13-7 2M93 74l10 2-9 11-8-1M83 91l8 5-12 7-8-5"/></g><g class="seal-core"><path d="m60 17 25 12v30c0 19-25 34-25 34S35 78 35 59V29Z" fill="#e8a95e0a"/>${crew?'<path d="m46 55 10 10 19-23" stroke-width="3"/>':'<path d="m60 34 8 26-8 13-8-13Zm-13 29h26M60 73v9"/>'}<path d="m60 3 2 5 5 2-5 2-2 5-2-5-5-2 5-2Z" fill="currentColor" stroke="none"/></g></svg>${Array.from({length:9},(_,i)=>`<span class="ember" style="--delay:${i*.08+.2}s;--drift:${(i-4)*15}px"></span>`).join('')}</div>`;}
+  function guessView(){const plural=game.impostorIds.length>1;return screen(`${heading('Última oportunidad',plural?'Los descubrieron.':'Te descubrieron.',`${plural?'Los impostores tienen':'El impostor tiene'} un intento para adivinar la palabra.`,true)}<section class="panel guess-card scroll-list"><div class="guess-content"><p class="result-names">${impostorNames()}</p><p class="verbal-prompt">${plural?'Los impostores deben acordar una respuesta y decirla':'El impostor debe decir su respuesta'} en voz alta a la mesa ahora.</p><p class="subtle">Después de escuchar la respuesta, la mesa decide.</p><button class="secondary word-reveal" data-action="reveal-word" aria-expanded="false" aria-controls="judge-word">${icon('eye')}<span>Ver palabra secreta</span></button><p id="judge-word" class="result-word" hidden></p></div></section>`);}
+  function resultView(){const crew=game.outcome==='crew',plural=game.impostorIds.length>1;return screen(`${heading('Misterio resuelto',crew?'¡Ganaron los inocentes!':`Gan${plural?'aron<br>los impostores.':'ó<br>el impostor.'}`,crew?'Esta vez, la verdad salió a la luz.':game.outcome==='guessed'?'Una última palabra cambió toda la partida.':'El engaño sobrevivió a todas las miradas.',true)}<section class="panel result-card"><div class="result-content"><p class="label muted">${plural?'Los impostores eran':'El impostor era'}</p><p class="result-names">${impostorNames()}</p><div class="divider"></div><p class="label muted">La palabra secreta</p><p class="result-word">${escapeHTML(game.word)}</p><p class="subtle">${escapeHTML(game.category.name)}</p></div></section>${scoreboard()}<p class="result-detail">La mesa votó por ${game.players.filter(p=>game.votes.includes(p.id)).map(p=>escapeHTML(p.name)).join(' y ')}.</p>`);}
   function finish(outcome){
     if(!game||game.outcome||!['crew','impostors','guessed'].includes(outcome))return;
     sessionScore[outcome==='crew'?'innocents':'impostors']++;
