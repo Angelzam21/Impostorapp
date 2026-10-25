@@ -541,9 +541,78 @@
        ['display','width','maxWidth','margin','gridTemplateColumns','gap',
         'flexDirection','alignItems','justifyContent','padding','fontSize','boxShadow','boxShadowColor']. -->
   <style id="tailwind-utilities">.mx-auto{margin-left:auto;margin-right:auto}.inline{display:inline}.table{display:table}.grid{display:grid}.hidden{display:none}.w-full{width:100%}.max-w-md{max-width:28rem}.p-12{padding:3rem}.text-5xl{font-size:3rem;line-height:1}.shadow{--tw-shadow:0 1px 3px 0 rgba(0,0,0,.1),0 1px 2px -1px rgba(0,0,0,.1);--tw-shadow-colored:0 1px 3px 0 var(--tw-shadow-color),0 1px 2px -1px var(--tw-shadow-color);box-shadow:var(--tw-ring-offset-shadow,0 0 #0000),var(--tw-ring-shadow,0 0 #0000),var(--tw-shadow)}@media (min-width:768px){.md\:block{display:block}.md\:flex{display:flex}.md\:grid{display:grid}.md\:max-w-6xl{max-width:72rem}.md\:grid-cols-2{grid-template-columns:repeat(2,minmax(0,1fr))}.md\:grid-cols-3{grid-template-columns:repeat(3,minmax(0,1fr))}.md\:flex-row{flex-direction:row}.md\:items-center{align-items:center}.md\:justify-around{justify-content:space-around}.md\:gap-6{gap:1.5rem}.md\:p-12{padding:3rem}.md\:text-5xl{font-size:3rem;line-height:1}.md\:shadow-2xl{--tw-shadow:0 25px 50px -12px rgba(0,0,0,.25);--tw-shadow-colored:0 25px 50px -12px var(--tw-shadow-color);box-shadow:var(--tw-ring-offset-shadow,0 0 #0000),var(--tw-ring-shadow,0 0 #0000),var(--tw-shadow)}.md\:shadow-black\/80{--tw-shadow-color:rgba(0,0,0,.8);--tw-shadow:var(--tw-shadow-colored)}}@media (min-width:1024px){.lg\:max-w-7xl{max-width:80rem}}</style>
+
+  <style id="individual-voting-ux">
+    /* Shared phone/tabletop width, with no external utility dependency. */
+    @media(min-width:768px) { .app-shell.md\:max-w-5xl { max-width:64rem; } }
+    .app-shell[data-phase="pass"] .main-stage { position:static; }
+    .app-shell[data-phase="pass"] .action-deck { display:none; }
+    .view-layer[data-view="pass"] { position:absolute; inset:0; }
+    .screen[data-screen="pass"] { position:relative; height:100%; max-width:none; padding:0 var(--gutter); display:grid; grid-template-rows:1fr auto 1fr; gap:0; animation:none; }
+    .pass-focus { grid-row:2; position:relative; text-align:center; min-width:0; }
+    .pass-eyebrow { position:absolute; bottom:calc(100% + 18px); width:100%; font-size:12px; font-weight:600; color:#a3a3a3; letter-spacing:.1em; text-transform:uppercase; }
+    .pass-focus .pass-name { margin:0; font-size:36px; line-height:1.1; font-weight:800; color:#fff; letter-spacing:-.025em; overflow-wrap:anywhere; }
+    .pass-controls { position:absolute; top:calc(100% + 24px); left:50%; transform:translateX(-50%); width:min(100%,360px); display:flex; flex-direction:column; gap:12px; }
+    .pass-controls .hold-button { min-height:60px; border:1px solid #ffffff35; padding:14px; background:#27272a; }
+    .pass-controls .primary { min-height:52px; }
+    .pass-controls #next-player:disabled { visibility:hidden; }
+    .pass-focus .secret-card { position:absolute; bottom:calc(100% + 18px); left:0; width:100%; max-width:none; max-height:calc(var(--app-height) / 2 - 88px); min-height:0; padding:18px; border-radius:24px; overflow:auto; container-type:normal; }
+    .pass-focus .secret-content { gap:8px; }
+    .pass-focus .secret-symbol { width:40px; height:40px; }
+    .pass-focus .secret-content h2 { font-size:28px; }
+    .pass-focus:has(.secret-card:not([hidden])) > .pass-name,
+    .pass-focus:has(.secret-card:not([hidden])) > .pass-eyebrow { visibility:hidden; }
+    .vote-choice { border:2px solid transparent; min-height:76px; background:#202024; }
+    .vote-choice[aria-pressed=true] { border-color:#f5a866; background:#3b281b; }
+    .vote-name { font-size:16px; }
+    .vote-choice:disabled { opacity:.4; }
+    .vote-heading h1 { font-size:26px; line-height:1.2; overflow-wrap:anywhere; }
+    .vote-heading .chapter { margin-bottom:8px; }
+    .vote-summary-list { list-style:none; margin:0; padding:4px; display:flex; flex-direction:column; gap:14px; }
+    .vote-summary-row { padding:14px; border:1px solid #ffffff20; border-radius:16px; background:var(--surface); }
+    .vote-summary-row p { font-size:16px; overflow-wrap:anywhere; }
+    .vote-bar { margin-top:10px; height:8px; border-radius:8px; background:#ffffff12; overflow:hidden; }
+    .vote-bar span { display:block; height:100%; border-radius:inherit; background:#f5a866; }
+    .reveal-active body::after { content:""; position:fixed; inset:0; background:rgb(0 0 0 / .95); z-index:40; }
+    .app-shell[data-phase="suspense"] { z-index:50; background:transparent; }
+    .screen[data-screen="suspense"] { justify-content:center; text-align:center; }
+    .dramatic-content { max-height:100%; overflow-y:auto; padding:20px 4px; }
+    .processing-copy { font-size:18px; color:#d4d4d4; letter-spacing:.08em; }
+    .dramatic-name { font-size:28px; line-height:1.4; font-weight:600; overflow-wrap:anywhere; animation:dramatic-appear .7s ease-out both; }
+    .dramatic-name strong { display:block; color:#fff; }
+    .dramatic-verdict { font-size:30px; line-height:1.25; margin-top:28px; color:#f5a866; animation:dramatic-appear .6s ease-out both; }
+    @keyframes dramatic-appear { from { opacity:0; transform:translateY(10px); } to { opacity:1; transform:translateY(0); } }
+    /* The recipient owns the largest type scale. */
+    .splash .splash-title,.timer-value strong,.app-shell[data-phase="game"] .timer-value strong,.preview-time { font-size:34px; letter-spacing:-1px; }
+    @media(min-width:768px) {
+      .pass-focus .pass-name { font-size:60px; }
+      .pass-controls { width:400px; }
+      .pass-controls .hold-button { min-height:72px; }
+      .pass-focus .secret-card { left:50%; transform:translateX(-50%); max-width:640px; padding:24px; }
+      .pass-focus .secret-content h2 { font-size:40px; }
+      .vote-grid { grid-template-columns:repeat(3,minmax(0,1fr)); gap:16px; }
+      .vote-choice { min-height:96px; padding:18px; }
+      .vote-heading h1 { font-size:40px; }
+      .dramatic-name { font-size:40px; }
+      .dramatic-verdict { font-size:48px; }
+      .splash .splash-title,.timer-value strong,.app-shell[data-phase="game"] .timer-value strong,.preview-time { font-size:56px; }
+    }
+    @media(max-height:510px) {
+      .pass-eyebrow { bottom:calc(100% + 10px); }
+      .pass-controls { top:calc(100% + 12px); gap:8px; }
+      .pass-controls .hold-button,.pass-controls .primary { min-height:44px; padding:10px; }
+      .pass-focus .secret-card { bottom:calc(100% + 8px); max-height:calc(var(--app-height) / 2 - 56px); padding:10px; }
+      .pass-focus .secret-symbol { display:none; }
+    }
+    @media(max-height:380px) {
+      .pass-controls.card-seen { flex-direction:row; width:100%; }
+      .pass-controls.card-seen > button { flex:1; min-width:0; }
+    }
+    @media(prefers-reduced-motion:reduce) { .dramatic-name,.dramatic-verdict { animation:none; } }
+  </style>
 </head>
 <body>
-  <div class="app-shell w-full max-w-md md:max-w-6xl lg:max-w-7xl mx-auto">
+  <div class="app-shell w-full max-w-md md:max-w-5xl mx-auto">
     <header id="game-hud" class="game-hud" aria-label="Estado de la partida" hidden>
       <span id="hud-lock" class="hud-lock" hidden><i data-lucide="lock-keyhole"></i></span>
       <span id="hud-label" class="hud-label"></span>
@@ -924,6 +993,8 @@
   let toastTimeout,toastHideTimeout,timerInterval,holdTimeout,holding=false,pointerId=null,holdKey=null,touchId=null,holdBounds=null;
   let wakeLock=null,wakeRequest=null,audioCtx=null,audioMaster=null,holdTone=null,holdSoundToken=0;
   let timerAnimation=null,timerAnimationKey='',timerAnimationNode=null,heartbeatAnimation=null;
+  let revealTimeout=null,revealBeatTimeout=null,revealRemaining=0,revealStarted=0,revealElapsed=0,revealStep=null;
+  const revealSounds=new Set();
   const reducedMotion=window.matchMedia('(prefers-reduced-motion: reduce)');
   const app=$('#app'),actions=$('#actions'),modal=$('#modal');
   const allCategories=()=>[...DEFAULT_CATEGORIES,...settings.custom];
@@ -1035,7 +1106,7 @@
     if(type==='crew-win'){chord([130.81,164.81,196]);chord([196,261.63,329.63],.2);}
   }
   function updateSound(){const b=$('#sound-button');if(!b)return;b.replaceChildren(fragment(`${icon(settings.muted?'volume-x':'volume-2')}<span>${settings.muted?'Activar sonido':'Silenciar sonido'}</span>`));b.setAttribute('aria-label',settings.muted?'Activar sonido':'Silenciar sonido');b.setAttribute('aria-pressed',String(settings.muted));}
-  function setView(next){stopHold();clearHeartbeat();cancelTimerAnimation();view=next;render();app.focus({preventScroll:true});}
+  function setView(next){if(view==='suspense'&&next!=='suspense')cancelReveal();stopHold();clearHeartbeat();cancelTimerAnimation();view=next;render();app.focus({preventScroll:true});}
   function haptic(pattern=8){if(!document.hidden)navigator.vibrate?.(pattern);}
   function clearHeartbeat(){heartbeatAnimation?.cancel();heartbeatAnimation=null;const edge=$('#edge-light');edge.classList.remove('heartbeat');delete edge.dataset.urgent;}
   function heartbeat(){
@@ -1047,7 +1118,8 @@
     const shell=$('.app-shell'),hud=$('#game-hud'),setup=view==='setup',pass=view==='pass';
     shell.dataset.phase=view;shell.dataset.outcome=view==='result'?(game.outcome==='crew'?'crew':'impostors'):'';
     const edge=$('#edge-light');edge.dataset.verdict=shell.dataset.outcome;
-    hud.hidden=view==='splash';$('#hud-lock').hidden=!pass;$('#hud-private').hidden=!pass;
+    document.documentElement.classList.toggle('reveal-active',view==='suspense');
+    hud.hidden=view==='splash'||view==='suspense';$('#hud-lock').hidden=!pass;$('#hud-private').hidden=!pass;
     $('#hud-label').textContent=setup?(tabletLayout.matches?'Prepara la mesa':`Paso ${step+1} de 4`):pass?`Jugador ${game.passIndex+1} de ${game.players.length}`:view==='splash'?'':`${game.players.length} jugadores`;
     const progress=$('#progress');progress.hidden=!setup||tabletLayout.matches;
     progress.setAttribute('aria-label',`Configuración: paso ${step+1} de 4`);
@@ -1057,7 +1129,7 @@
   function screen(content){return `<section class="screen ${view==='splash'?'splash':''}" ${view==='game'?'id="gameplayScreen"':''} data-screen="${view==='setup'?`setup-${step}`:view}">${content}</section>`;}
   function primary(label,action,disabled=false,id=''){return `<button ${id?`id="${id}"`:''} class="primary" data-action="${action}" ${disabled?'disabled':''}>${label}${icon('arrow-right')}</button>`;}
   const tabletLayout=window.matchMedia('(min-width: 768px)');
-  const holdPrompt=()=> 'Mantén presionado para revelar';
+  const holdPrompt=()=> 'Mantener para ver carta';
   let activeLayer=null,wizardLayer=null;
   const fragment = html => {const template=document.createElement('template');template.innerHTML=html;return template.content;};
   function mountWizard(){
@@ -1090,11 +1162,13 @@
     if(view==='setup'){next=mountWizard();syncWizard();}
     else {
       next=document.createElement('div');next.className='view-layer';next.dataset.view=view;
-      next.append(fragment(({splash:splashView,pass:passView,game:gameView,vote:voteView,guess:guessView,result:resultView}[view])()));
+      next.append(fragment(({splash:splashView,pass:passView,game:gameView,votingPhase:votingPhase,voteSummary:voteSummaryView,suspense:suspenseView,guess:guessView,result:resultView}[view])()));
     }
     if(next!==activeLayer){
       const outgoing=activeLayer;
       if(outgoing){
+        // Private selections disappear immediately between voters.
+        if(outgoing.dataset.view==='votingPhase')outgoing.replaceChildren();
         outgoing.inert=true;outgoing.setAttribute('aria-hidden','true');outgoing.classList.remove('view-enter');outgoing.classList.add('view-exit');
         // Remove live IDs immediately; the outgoing artwork may finish its transition.
         if(outgoing!==wizardLayer)outgoing.querySelectorAll('[id]').forEach(el=>el.removeAttribute('id'));
@@ -1119,9 +1193,11 @@
     if(view==='splash')html=primary('Entrar a la fiesta','enter');
     if(view==='setup')html=`<p id="wizard-status" class="action-hint" role="status">${escapeHTML(step===3?startError():stepError())}</p><div class="action-row">${step>0?`<button class="secondary back" data-action="back">${icon('arrow-left')}Atrás</button>`:''}${primary(step===3?'Comenzar partida':'Siguiente',step===3?'start':'next',!!(step===3?startError():stepError()),'wizard-next')}</div>`;
     if(view==='setup'&&tabletLayout.matches)html=`<p id="wizard-status" class="action-hint" role="status">${escapeHTML(startError()||debateHint())}</p>${primary('Comenzar partida','start',!!startError(),'wizard-next')}`;
-    if(view==='pass')html=`<button id="hold-button" class="hold-button md:p-12" aria-label="Mantén presionado para ver tu carta"><span>${icon('fingerprint')}<span id="hold-label">${holdPrompt()}</span></span></button>${primary(game.passIndex===game.players.length-1?'Comenzar debate':'Pasar el teléfono','next-player',!game.seen||holding,'next-player')}`;
+
     if(view==='game')html=`<div class="timer-controls"><button id="timer-toggle" class="secondary" data-action="timer-toggle">${icon('pause')}<span>Pausar</span></button><button class="secondary" data-action="timer-extend" aria-label="Agregar 30 segundos">+30s</button></div>${primary('Votar','vote')}`;
-    if(view==='vote')html=`<div class="action-row"><button class="secondary back" data-action="back-debate">Volver</button>${primary('Confirmar voto','confirm-vote',game.votes.length!==game.impostorIds.length)}</div>`;
+    if(view==='votingPhase')html=primary('Registrar voto','confirm-vote',game.selectedVote===null);
+    if(view==='voteSummary')html=primary(game.tiedIds.length?'Votar desempate':'Conocer el veredicto',game.tiedIds.length?'runoff':'reveal-result');
+    if(view==='suspense'&&game.revealStage==='verdict')html=primary(game.revealIndex<game.votes.length-1?'Revelar siguiente jugador':'Continuar','continue-verdict');
     if(view==='guess')html=`<button class="primary" data-action="guess-correct">${icon('check')}¡Acertó la palabra!</button><button class="secondary" data-action="guess-incorrect">No acertó</button>`;
     if(view==='result')html=`<div class="action-row"><button class="secondary back" data-action="setup">Editar grupo</button>${primary('Otra ronda','start')}</div>`;
     actions.replaceChildren(fragment(`<div class="deck-inner">${html}</div>`));
@@ -1136,8 +1212,8 @@
   function playerList(){return settings.players.length?`<ul class="player-list">${settings.players.map(({name,active},index)=>`<li class="player-row ${active?'':'inactive'}"><button class="player-toggle" data-action="toggle-player" data-index="${index}" aria-pressed="${active}" aria-label="${escapeHTML(name)}: ${active?'activo':'en descanso'}"><span class="player-number">${String(index+1).padStart(2,'0')}</span><span class="avatar">${escapeHTML(name.slice(0,2).toLocaleUpperCase('es'))}</span><span class="player-name">${escapeHTML(name)}${active?'':'<small class="rest-badge">En descanso</small>'}</span></button><button class="icon-button" data-action="remove-player" data-index="${index}" aria-label="Eliminar a ${escapeHTML(name)}">${icon('x')}</button></li>`).join('')}</ul>`:`<div class="empty-players"><div class="empty-crest">${crest()}</div><p>Todavía no hay sospechosos.</p><small>Agrega a tu grupo. Nadie es inocente por defecto.</small></div>`;}
   function refreshPlayers(){const container=$('#players-container');if(container){container.innerHTML=playerList();$('#player-count').textContent=`${String(settings.players.length).padStart(2,'0')} / 20`;const t=$('#player-threshold');t.innerHTML=`${icon(activePlayers().length>=3?'check':'users')}${activePlayers().length>=3?`${activePlayers().length} jugadores activos. La mesa está lista.`:`${activePlayers().length} jugadores activos. Necesitas al menos 3.`}`;t.classList.toggle('ready',activePlayers().length>=3);}if(wizardLayer)syncWizard();renderActions();icons();}
   function categoryCard(c){const custom=c.id.startsWith('custom-');return `${custom?'<div class="custom-category">':''}<button class="category" data-action="category" data-id="${c.id}" aria-pressed="${settings.active.includes(c.id)}"><span class="selection-mark">${icon('check')}</span><span class="category-icon">${icon(c.icon)}</span><span class="category-name">${escapeHTML(c.name)}</span><span class="category-size">${escapeHTML(c.description||`${c.words.length} secretos de tu grupo`)}</span></button>${custom?`<button class="custom-delete" data-action="delete-category" data-id="${c.id}" aria-label="Eliminar categoría ${escapeHTML(c.name)}">${icon('trash-2')}Eliminar</button></div>`:''}`;}
-  function startGame(){if(startError())return toast(startError());clearInterval(timerInterval);const categories=allCategories().filter(c=>settings.active.includes(c.id)),category=categories[randomIndex(categories.length)],players=activePlayers().map(({name},id)=>({id,name}));game={players,category,word:category.words[randomIndex(category.words.length)],impostorIds:shuffle(players).slice(0,settings.impostors).map(p=>p.id),hints:settings.hints,passIndex:0,seen:false,remaining:duration(),total:duration(),deadline:null,lastTick:null,votes:[],outcome:null,firstSpeaker:null};setView('pass');requestWakeLock();}
-  function passView(){return screen(`${heading(`El secreto · ${game.passIndex+1} de ${game.players.length}`,`Pasa el teléfono a<span class="pass-name">${escapeHTML(game.players[game.passIndex].name)}</span>`,'Asegúrate de que nadie más esté mirando.',true)}<div class="stage-body"><div id="secret-card" class="panel secret-card md:p-12 md:shadow-2xl md:shadow-black/80">${hiddenCard()}</div><p class="security-note">${icon('lock-keyhole')}Tu carta se oculta en cuanto sueltas.</p></div>`);}
+  function startGame(){if(startError())return toast(startError());clearInterval(timerInterval);const categories=allCategories().filter(c=>settings.active.includes(c.id)),category=categories[randomIndex(categories.length)],players=activePlayers().map(({name},id)=>({id,name}));game={players,category,word:category.words[randomIndex(category.words.length)],impostorIds:shuffle(players).slice(0,settings.impostors).map(p=>p.id),hints:settings.hints,passIndex:0,seen:false,remaining:duration(),total:duration(),deadline:null,lastTick:null,votes:[],ballots:[],voterIndex:0,selectedVote:null,eligibleIds:players.map(p=>p.id),lockedIds:[],tiedIds:[],tally:[],voteRound:1,revealIndex:0,revealStage:null,outcome:null,firstSpeaker:null};setView('pass');requestWakeLock();}
+  function passView(){return screen(`<div class="pass-focus"><p class="pass-eyebrow text-xs font-semibold text-neutral-400 tracking-widest">Pasa el teléfono a</p><h1 class="pass-name text-4xl md:text-6xl font-extrabold text-white">${escapeHTML(game.players[game.passIndex].name)}</h1><div class="pass-controls"><div id="secret-card" class="panel secret-card" hidden></div><button id="hold-button" class="hold-button" aria-label="Mantener para ver carta. Suelta para ocultarla." aria-controls="secret-card"><span>${icon('fingerprint')}<span id="hold-label">${holdPrompt()}</span></span></button>${primary(game.passIndex===game.players.length-1?'Comenzar debate':'Pasar el teléfono','next-player',!game.seen,'next-player')}</div></div>`);}
   function hiddenCard(){return `<div class="secret-content"><div class="secret-symbol">${crest()}</div><div class="role-label">ACCESO RESERVADO</div><h2 class="md:text-5xl">Que nadie mire.</h2><p>Tu lealtad está al otro lado.</p></div>`;}
   function revealedCard(player){
     const impostor=game.impostorIds.includes(player.id);
@@ -1153,7 +1229,7 @@
     holdTimeout=setTimeout(()=>{
       if(!holding||view!=='pass'||document.hidden||sheetOpen)return;
       const player=game.players[game.passIndex],impostor=game.impostorIds.includes(player.id),card=$('#secret-card');
-      card.classList.toggle('impostor',impostor);sound('card-reveal'); // Identical audio for every private role.
+      card.hidden=false;card.classList.toggle('impostor',impostor);sound('card-reveal'); // Identical audio for every private role.
       card.replaceChildren(fragment(revealedCard(player)));game.seen=true;
       $('#hold-label').textContent='Memoriza. Suelta para ocultar.';
     },650);
@@ -1167,7 +1243,8 @@
     // Blur can fire while the outgoing screen is losing its live IDs.
     if(button&&card){
       button.classList.remove('holding');$('#hold-label').textContent=holdPrompt();
-      card.classList.remove('impostor');
+      card.hidden=true;card.classList.remove('impostor');
+      button.closest('.pass-controls').classList.toggle('card-seen',!!game?.seen);
       if(wasHolding)card.replaceChildren(fragment(hiddenCard()));
       const next=$('#next-player');if(next){next.disabled=!game?.seen;if(wasHolding&&game?.seen){next.classList.add('handoff-ready');haptic();}}
     }
@@ -1177,6 +1254,7 @@
   }
   function bindHold(){
     const button=$('#hold-button');
+    if(button.dataset.bound)return;button.dataset.bound='true';
     // Touch owns finger input; Pointer Events own mouse, Pencil and fallback touch.
     // This avoids two gates/two tones from iPadOS's paired pointer/touch events.
     button.addEventListener('touchstart',event=>{
@@ -1260,7 +1338,103 @@
   }
   reducedMotion.addEventListener('change',()=>{cancelTimerAnimation();updateTimer();});
   function extendTimer(){updateTimer();const expired=game.remaining<=0;game.remaining+=30000;game.total+=30000;game.lastTick=null;if(game.deadline)game.deadline+=30000;$('#timer-announcement').textContent='30 segundos más. El secreto sigue en juego.';if(expired)startTimer();else updateTimer();}
-  function voteView(){const count=game.impostorIds.length;return screen(`${heading('El veredicto','¿Quién está<br><em>fingiendo?</em>',`Acuerden su voto y elijan ${count===1?'un sospechoso':'dos sospechosos'}.`)}<div class="stage-body"><div class="vote-grid scroll-list">${game.players.map(p=>`<button class="vote-choice" data-action="suspect" data-id="${p.id}" aria-pressed="${game.votes.includes(p.id)}"><span class="avatar">${escapeHTML(p.name.slice(0,2).toLocaleUpperCase('es'))}</span><span class="vote-name">${escapeHTML(p.name)}</span><span class="vote-check" ${game.votes.includes(p.id)?'':'hidden'}>${icon('check')}</span></button>`).join('')}</div><p class="vote-status" aria-live="polite">${game.votes.length} de ${count} ${count===1?'sospechoso seleccionado':'sospechosos seleccionados'}</p><p class="note">${icon('eye')}Si los descubren, tendrán un intento para adivinar la palabra.</p></div>`);}
+  function beginVoting(runoff=false){
+    if(!game||(!runoff&&view!=='game')||(runoff&&(view!=='voteSummary'||!game.tiedIds.length)))return;
+    pauseTimer();
+    if(runoff){game.eligibleIds=[...game.tiedIds];game.voteRound++;}
+    game.ballots=[];game.voterIndex=0;game.selectedVote=null;game.tiedIds=[];
+    setView('votingPhase');
+  }
+  function votingPhase(){
+    const voter=game.players[game.voterIndex];
+    return screen(`<div class="screen-heading vote-heading"><p class="chapter">${game.voteRound>1?'Desempate · ':''}Voto ${game.voterIndex+1} de ${game.players.length}</p><h1 id="voter-title">Turno de voto: ${escapeHTML(voter.name)}</h1><p class="intro">${game.voteRound>1?'Elige entre los participantes empatados.':'Elige a quien sospechas. Cada persona registra un voto.'} Después, pasa el teléfono.</p></div><div class="stage-body"><div class="vote-grid scroll-list" role="group" aria-labelledby="voter-title">${game.players.map(p=>`<button class="vote-choice" data-action="suspect" data-id="${p.id}" aria-pressed="false" ${game.eligibleIds.includes(p.id)?'':'disabled'}><span class="avatar" aria-hidden="true">${escapeHTML(p.name.slice(0,2).toLocaleUpperCase('es'))}</span><span class="vote-name">${escapeHTML(p.name)}</span><span class="vote-check" hidden>${icon('check')}</span></button>`).join('')}</div><p class="vote-status" role="status">Selecciona un participante.</p></div>`);
+  }
+  function registerVote(){
+    if(view!=='votingPhase'||!game.eligibleIds.includes(game.selectedVote)||game.ballots.length!==game.voterIndex)return;
+    game.ballots.push({voterId:game.players[game.voterIndex].id,suspectId:game.selectedVote});
+    game.selectedVote=null;game.voterIndex++;sound('vote');
+    if(game.voterIndex<game.players.length)setView('votingPhase');
+    else {countVotes();setView('voteSummary');}
+  }
+  function countVotes(){
+    game.tally=game.players.map(p=>({...p,count:game.ballots.filter(v=>v.suspectId===p.id).length})).sort((a,b)=>b.count-a.count||a.id-b.id);
+    const candidates=game.tally.filter(p=>game.eligibleIds.includes(p.id));
+    const slots=game.impostorIds.length-game.lockedIds.length,cutoff=candidates[slots-1].count;
+    const ahead=candidates.filter(p=>p.count>cutoff),tied=candidates.filter(p=>p.count===cutoff);
+    if(tied.length>slots-ahead.length){
+      game.lockedIds.push(...ahead.map(p=>p.id));game.tiedIds=tied.map(p=>p.id);game.votes=[];
+    }else{game.votes=[...game.lockedIds,...candidates.slice(0,slots).map(p=>p.id)];game.tiedIds=[];}
+  }
+  function voteSummaryView(){
+    const names=game.players.filter(p=>game.tiedIds.includes(p.id)).map(p=>escapeHTML(p.name)).join(', ');
+    return screen(`${heading('Todos votaron',game.voteRound>1?'Recuento del desempate':'Recuento de votos',`${game.ballots.length} votos registrados. ${game.impostorIds.length===2?'Se revelarán los dos participantes más votados.':''}`)}<div class="stage-body"><ol class="vote-summary-list scroll-list">${game.tally.map(p=>`<li class="vote-summary-row"><p><strong>${escapeHTML(p.name)}</strong>: ${p.count} ${p.count===1?'voto':'votos'}</p><div class="vote-bar" aria-hidden="true"><span style="width:${p.count/game.players.length*100}%"></span></div></li>`).join('')}</ol><p class="subtle">${game.tiedIds.length?`Empate entre ${names}. Todos vuelven a votar entre ellos; las posiciones ya decididas se conservan.`:'Los votos están contados. Los roles siguen en secreto.'}</p></div>`);
+  }
+  function suspenseView(){return screen('<div id="dramatic-content" class="dramatic-content" role="status" aria-live="polite" aria-atomic="true"><p class="processing-copy">Procesando votos...</p></div>');}
+  function stopRevealSounds(){
+    for(const oscillator of revealSounds){try{oscillator.stop();}catch{}}
+    revealSounds.clear();
+  }
+  function cancelReveal(){
+    clearTimeout(revealTimeout);clearTimeout(revealBeatTimeout);stopRevealSounds();
+    revealStep=null;revealRemaining=0;revealStarted=0;revealElapsed=0;
+  }
+  function suspenseBeat(){
+    if(view!=='suspense'||game.revealStage!=='processing'||document.hidden)return;
+    if(!settings.muted&&audioCtx?.state==='running'){
+      const now=audioCtx.currentTime;
+      [0,.14].forEach((delay,index)=>{
+        const o=audioCtx.createOscillator(),gain=audioCtx.createGain();
+        o.frequency.setValueAtTime(index?65:78,now+delay);o.frequency.exponentialRampToValueAtTime(38,now+delay+.16);
+        gain.gain.setValueAtTime(.0001,now+delay);gain.gain.exponentialRampToValueAtTime(index?.16:.24,now+delay+.012);gain.gain.exponentialRampToValueAtTime(.0001,now+delay+.18);
+        o.connect(gain);gain.connect(audioMaster);revealSounds.add(o);o.start(now+delay);o.stop(now+delay+.2);
+        o.onended=()=>{revealSounds.delete(o);o.disconnect();gain.disconnect();};
+      });
+    }
+    const elapsed=revealElapsed+(revealStarted?performance.now()-revealStarted:0);
+    revealBeatTimeout=setTimeout(suspenseBeat,Math.max(300,850-550*elapsed/4000));
+  }
+  function scheduleReveal(step,delay){
+    revealStep=step;revealRemaining=delay;revealElapsed=0;resumeReveal();
+  }
+  function resumeReveal(){
+    if(view!=='suspense'||!revealStep||document.hidden||revealStarted)return;
+    revealStarted=performance.now();
+    revealTimeout=setTimeout(()=>{
+      const step=revealStep;revealStep=null;revealStarted=0;clearTimeout(revealBeatTimeout);stopRevealSounds();
+      if(view==='suspense')step();
+    },revealRemaining);
+    if(game.revealStage==='processing')suspenseBeat();
+  }
+  function pauseReveal(){
+    if(view!=='suspense'||!revealStep||!revealStarted)return;
+    const elapsed=performance.now()-revealStarted;
+    revealRemaining=Math.max(0,revealRemaining-elapsed);revealElapsed+=elapsed;revealStarted=0;
+    clearTimeout(revealTimeout);clearTimeout(revealBeatTimeout);stopRevealSounds();
+  }
+  function beginReveal(){
+    if(!game||!game.votes.length||game.tiedIds.length||!['voteSummary','suspense'].includes(view))return;
+    cancelReveal();game.revealStage='processing';setView('suspense');
+    scheduleReveal(revealName,4000);
+  }
+  function revealName(){
+    game.revealStage='name';
+    const player=game.players.find(p=>p.id===game.votes[game.revealIndex]);
+    const lead=game.revealIndex===0&&!game.lockedIds.length?'El jugador con más votos fue':'Otro de los jugadores elegidos fue';
+    $('#dramatic-content').replaceChildren(fragment(`<p class="dramatic-name">${lead} <strong>${escapeHTML(player.name)}...</strong></p>`));
+    scheduleReveal(revealVerdict,1500);
+  }
+  function revealVerdict(){
+    game.revealStage='verdict';
+    const impostor=game.impostorIds.includes(game.votes[game.revealIndex]);
+    $('#dramatic-content').append(fragment(`<h1 class="dramatic-verdict">Y era... ${impostor?'¡EL IMPOSTOR!':'TRIPULANTE'}</h1>`));
+    sound(impostor?'crew-win':'impostor-win');haptic([18,35,24]);renderActions();icons();
+  }
+  function continueVerdict(){
+    if(view!=='suspense'||game.revealStage!=='verdict')return;
+    if(game.revealIndex<game.votes.length-1){game.revealIndex++;beginReveal();}
+    else if(game.impostorIds.every(id=>game.votes.includes(id)))setView('guess');
+    else finish('impostors');
+  }
   const impostorNames=()=>game.players.filter(p=>game.impostorIds.includes(p.id)).map(p=>escapeHTML(p.name)).join(' y ');
   function guessView(){const plural=game.impostorIds.length>1;return screen(`${heading('Última oportunidad',plural?'Los descubrieron.':'Te descubrieron.',`${plural?'Los impostores tienen':'El impostor tiene'} un intento para adivinar la palabra.`,true)}<section class="panel guess-card scroll-list"><div class="guess-content"><div class="secret-symbol">${crest('dagger')}</div><p class="result-names">${impostorNames()}</p><p class="verbal-prompt">${plural?'Los impostores deben acordar una respuesta y decirla':'El impostor debe decir su respuesta'} en voz alta a la mesa ahora.</p><p class="subtle">Después de escuchar la respuesta, la mesa decide.</p><button class="secondary word-reveal" data-action="reveal-word" aria-expanded="false" aria-controls="judge-word">${icon('eye')}<span>Ver palabra secreta</span></button><p id="judge-word" class="result-word" hidden></p></div></section>`);}
   function resultView(){const crew=game.outcome==='crew',plural=game.impostorIds.length>1;return screen(`${heading('Misterio resuelto',crew?'¡Ganaron los inocentes!':`Gan${plural?'aron<br>los impostores.':'ó<br>el impostor.'}`,crew?'Esta vez, la verdad salió a la luz.':game.outcome==='guessed'?'Una última palabra cambió toda la partida.':'El engaño sobrevivió a todas las miradas.',true)}<section class="panel result-card"><div class="result-content">${verdictSeal(crew)}<p class="label muted">${plural?'Los impostores eran':'El impostor era'}</p><p class="result-names">${impostorNames()}</p><div class="divider"></div><p class="label muted">La palabra secreta</p><p class="result-word">${escapeHTML(game.word)}</p><p class="subtle">${escapeHTML(game.category.name)}</p></div></section>${scoreboard()}<p class="result-detail">La mesa votó por ${game.players.filter(p=>game.votes.includes(p.id)).map(p=>escapeHTML(p.name)).join(' y ')}.</p>`);}
@@ -1316,7 +1490,7 @@
   function showOptions(){
     openModal(`${modalHeader('Opciones de la partida')}${scoreboard()}<div class="options-list"><button id="sound-button" class="secondary" data-action="sound" aria-pressed="${settings.muted}"></button><button class="secondary" data-action="help">${icon('circle-help')}Cómo jugar</button><button class="secondary" data-action="reset-score">${icon('rotate-ccw')}Reiniciar marcador</button><button class="secondary" data-action="reset">${icon('rotate-ccw')}${view==='setup'?'Volver al primer paso':'Terminar la partida'}</button></div>`);updateSound();icons();
   }
-  function showHelp(){openModal(`${modalHeader('El arte de sospechar')}<ol><li><strong>Reúne al grupo.</strong> Mínimo 3 jugadores para 1 impostor, o 5 para 2. Toca un nombre en la banca para activarlo o dejarlo en descanso sin borrarlo.</li><li><strong>Protege tu carta.</strong> Pasa el teléfono. Mantén presionado para ver tu rol y suelta para ocultarlo. Los inocentes ven la misma palabra; los impostores no. Con 2 impostores, cada uno conoce a su cómplice.</li><li><strong>Empieza el debate.</strong> Tras la última carta, el tiempo comienza: 30 segundos por jugador activo. La corona indica quién empieza. Den pistas sin revelar la palabra. Puedes pausar o agregar 30 segundos.</li><li><strong>Acuerden su voto.</strong> Con 2 impostores deben descubrir a ambos. Si el grupo falla, ganan los impostores.</li><li><strong>Una última oportunidad.</strong> Si los descubren, los impostores pueden ganar adivinando la palabra. Tienen un solo intento en voz alta, en equipo si son dos. La mesa decide si acertaron; pueden consultar la palabra después de escuchar su respuesta.</li></ol><div class="divider"></div><p><strong>En tu iPhone:</strong> abre en Safari, toca Compartir y selecciona “Agregar a inicio”.</p><p class="small-print">Los nombres y las categorías se guardan en este dispositivo. Los sonidos se generan en el teléfono. La partida funciona sin conexión una vez abierta; volver a abrir la página sin internet depende de la caché del navegador.</p><button class="primary" data-action="close-modal">Entendido</button>`);}
+  function showHelp(){openModal(`${modalHeader('El arte de sospechar')}<ol><li><strong>Reúne al grupo.</strong> Mínimo 3 jugadores para 1 impostor, o 5 para 2. Toca un nombre en la banca para activarlo o dejarlo en descanso sin borrarlo.</li><li><strong>Protege tu carta.</strong> Pasa el teléfono. Mantén presionado para ver tu rol y suelta para ocultarlo. Los inocentes ven la misma palabra; los impostores no. Con 2 impostores, cada uno conoce a su cómplice.</li><li><strong>Empieza el debate.</strong> Tras la última carta, el tiempo comienza: 30 segundos por jugador activo. La corona indica quién empieza. Den pistas sin revelar la palabra. Puedes pausar o agregar 30 segundos.</li><li><strong>Voten por turnos.</strong> Cada persona elige un participante y registra un voto. Revisen el recuento antes del veredicto. Con 2 impostores se revelan los dos más votados y deben descubrir a ambos. Los empates se resuelven con otra votación entre los empatados. Si el grupo falla, ganan los impostores.</li><li><strong>Una última oportunidad.</strong> Si los descubren, los impostores pueden ganar adivinando la palabra. Tienen un solo intento en voz alta, en equipo si son dos. La mesa decide si acertaron; pueden consultar la palabra después de escuchar su respuesta.</li></ol><div class="divider"></div><p><strong>En tu iPhone:</strong> abre en Safari, toca Compartir y selecciona “Agregar a inicio”.</p><p class="small-print">Los nombres y las categorías se guardan en este dispositivo. Los sonidos se generan en el teléfono. La partida funciona sin conexión una vez abierta; volver a abrir la página sin internet depende de la caché del navegador.</p><button class="primary" data-action="close-modal">Entendido</button>`);}
   function showCustom(){if(settings.custom.length>=20)return toast('Puedes crear hasta 20 categorías.');openModal(`${modalHeader('Tu propio misterio')}<p>Recuerdos, lugares o secretos que solo tu grupo conoce.</p><form id="category-form"><label for="category-name">Nombre de la categoría</label><input id="category-name" class="field" maxlength="36" required placeholder="Ej. Leyendas de la fiesta" autocomplete="off"><label for="category-words">Palabras separadas por comas o saltos de línea</label><textarea id="category-words" class="field" maxlength="5000" required placeholder="La terraza, El vecino, El karaoke"></textarea><p class="small-print">De 3 a 100 palabras distintas. Hasta 48 caracteres por palabra.</p><p id="category-error" class="error-text" role="alert"></p><button class="primary" type="submit">Guardar categoría ${icon('plus')}</button></form>`);}
   function confirmReset(){openModal(`${modalHeader(view==='setup'?'¿Volver al primer paso?':'¿Terminar la partida?')}<p>${view==='setup'?'Volverás a la lista de jugadores.':'La partida actual termina y sus roles se descartan.'} Tus jugadores, categorías y preferencias se conservan.</p><div class="action-row"><button class="secondary" data-action="close-modal">Cancelar</button><button class="danger" data-action="reset-confirm">${view==='setup'?'Volver':'Terminar'}</button></div>`);}
   document.addEventListener('submit',event=>{
@@ -1326,7 +1500,7 @@
   document.addEventListener('click',event=>{
     const b=event.target.closest('button[data-action]');if(!b||b.disabled)return;const action=b.dataset.action;haptic();
     if(action==='enter'){enterParty();return;}
-    if(action==='sound'){settings.muted=!settings.muted;if(settings.muted)stopHoldTone();if(audioMaster)audioMaster.gain.setValueAtTime(settings.muted?0:.65,audioCtx.currentTime);saveSettings();updateSound();icons();if(!settings.muted)sound('click');return;}
+    if(action==='sound'){settings.muted=!settings.muted;if(settings.muted)stopRevealSounds();if(settings.muted)stopHoldTone();if(audioMaster)audioMaster.gain.setValueAtTime(settings.muted?0:.65,audioCtx.currentTime);saveSettings();updateSound();icons();if(!settings.muted)sound('click');return;}
     if(!['suspect','confirm-vote','guess-correct','guess-incorrect'].includes(action))sound('click');
     if(action==='close-modal')return closeModal();
     if(action==='options')return showOptions();
@@ -1344,10 +1518,18 @@
     if(action==='start')startGame();if(action==='next-player')nextPlayer();
     if(action==='timer-toggle'){if(game.deadline)pauseTimer();else startTimer();}
     if(action==='timer-extend')extendTimer();
-    if(action==='vote'){pauseTimer();setView('vote');}
-    if(action==='suspect'){const id=Number(b.dataset.id);if(game.votes.includes(id))game.votes=game.votes.filter(x=>x!==id);else if(game.votes.length<game.impostorIds.length)game.votes.push(id);else if(game.impostorIds.length===1)game.votes=[id];else return toast('Quita una selección antes de elegir otra persona.');sound('vote');activeLayer.querySelectorAll('[data-action="suspect"]').forEach(el=>{const selected=game.votes.includes(Number(el.dataset.id));el.setAttribute('aria-pressed',String(selected));el.querySelector('.vote-check').hidden=!selected;});activeLayer.querySelector('.vote-status').textContent=`${game.votes.length} de ${game.impostorIds.length} ${game.impostorIds.length===1?'sospechoso seleccionado':'sospechosos seleccionados'}`;renderActions();icons();}
-    if(action==='back-debate')setView('game');
-    if(action==='confirm-vote'&&game.votes.length===game.impostorIds.length){if(game.impostorIds.every(id=>game.votes.includes(id))){sound('vote');setView('guess');}else finish('impostors');}
+    if(action==='vote')beginVoting();
+    if(action==='runoff')beginVoting(true);
+    if(action==='reveal-result'&&view==='voteSummary')beginReveal();
+    if(action==='continue-verdict')continueVerdict();
+    if(action==='suspect'&&view==='votingPhase'){
+      const id=Number(b.dataset.id);if(!game.eligibleIds.includes(id))return;
+      game.selectedVote=id;sound('vote');
+      activeLayer.querySelectorAll('[data-action="suspect"]').forEach(el=>{const selected=Number(el.dataset.id)===id;el.setAttribute('aria-pressed',String(selected));el.querySelector('.vote-check').hidden=!selected;});
+      activeLayer.querySelector('.vote-status').textContent=`Seleccionaste a ${game.players.find(p=>p.id===id).name}.`;
+      renderActions();icons();
+    }
+    if(action==='confirm-vote')registerVote();
     if(action==='reveal-word'&&view==='guess'){const word=$('#judge-word'),reveal=word.hidden;word.hidden=!reveal;word.textContent=reveal?game.word:'';b.setAttribute('aria-expanded',String(reveal));b.querySelector('span').textContent=reveal?'Ocultar palabra secreta':'Ver palabra secreta';}
     if(action==='guess-correct'&&view==='guess')finish('guessed');
     if(action==='guess-incorrect'&&view==='guess')finish('crew');
@@ -1359,7 +1541,7 @@
   window.addEventListener('blur',()=>{stopHold();concealJudgeWord();});window.addEventListener('pagehide',()=>{stopHold();concealJudgeWord();releaseWakeLock();});window.addEventListener('pointerup',stopHold);window.addEventListener('pointercancel',stopHold);
   ['touchend','touchcancel'].forEach(type=>window.addEventListener(type,stopHold,{passive:true}));
   document.addEventListener('touchstart',event=>{if(holding&&event.touches.length>1)stopHold();},{capture:true,passive:true});
-  document.addEventListener('visibilitychange',()=>{syncSplashMotion();stopHold();concealJudgeWord();clearHeartbeat();cancelTimerAnimation();if(!document.hidden){updateTimer();requestWakeLock();}else if(audioCtx?.state==='running')audioCtx.suspend().catch(()=>{});});
+  document.addEventListener('visibilitychange',()=>{syncSplashMotion();stopHold();concealJudgeWord();clearHeartbeat();cancelTimerAnimation();if(!document.hidden){if(view==='suspense')unlockAudio();resumeReveal();updateTimer();requestWakeLock();}else{pauseReveal();if(audioCtx?.state==='running')audioCtx.suspend().catch(()=>{});}});
   // Keyboard-aware viewport height without ever enabling document scrolling.
   function syncViewport(){
     const root=document.documentElement,v=window.visualViewport;
@@ -1435,19 +1617,24 @@
     // The fixture covers legacy player strings, inactive players, escaping and duplicates.
     const fixture={players:['Edda','Ángel',{name:'Luz',active:true},'Nico','Sol',{name:'En descanso',active:false},'Edda','<Ana>'],impostors:1,hints:false,muted:true,active:['halloween','birthday'],custom:[]};
     const memoryStorage={getItem:()=>JSON.stringify(fixture)};
-    const original={now:Date.now,setInterval:window.setInterval,clearInterval:window.clearInterval,randomIndex,requestWakeLock};
+    const original={now:Date.now,setInterval:window.setInterval,clearInterval:window.clearInterval,randomIndex,requestWakeLock,setTimeout:window.setTimeout,clearTimeout:window.clearTimeout,performanceNow:performance.now};
     let now=1000000,intervalId=0;
-    const intervals=new Map();
+    const intervals=new Map(),timeouts=new Map();
     Date.now=()=>now;
+    performance.now=()=>now;
+    window.setTimeout=(callback,delay=0)=>{const id=++intervalId;timeouts.set(id,{callback,next:now+delay});return id;};
+    window.clearTimeout=id=>timeouts.delete(id);
     window.setInterval=(callback,delay)=>{const id=++intervalId;intervals.set(id,{callback,delay,next:now+delay});return id;};
     window.clearInterval=id=>intervals.delete(id);
     requestWakeLock=async()=>{};
     const advance=ms=>{
       const end=now+ms;
       while(true){
-        const next=[...intervals.entries()].filter(([,timer])=>timer.next<=end).sort((a,b)=>a[1].next-b[1].next)[0];
+        const next=[...intervals.entries(),...timeouts.entries()].filter(([,timer])=>timer.next<=end).sort((a,b)=>a[1].next-b[1].next)[0];
         if(!next)break;
-        now=next[1].next;next[1].next+=next[1].delay;next[1].callback();
+        now=next[1].next;
+        if(timeouts.has(next[0]))timeouts.delete(next[0]);else next[1].next+=next[1].delay;
+        next[1].callback();
       }
       now=end;
     };
@@ -1516,8 +1703,76 @@
         extendTimer();assert(game.remaining===30000&&intervals.size===1,'No se puede extender un debate terminado.');
         pauseTimer();
       });
+      const cast=ids=>ids.forEach(id=>{activeLayer.querySelector(`[data-action="suspect"][data-id="${id}"]`).click();actions.querySelector('[data-action="confirm-vote"]').click();});
+      const prepare=(impostors=1)=>{settings.impostors=impostors;startGame();game.impostorIds=Array.from({length:impostors},(_,i)=>i);game.firstSpeaker=game.players[0];setView('game');beginVoting();};
+      test('Carta privada: mantener, soltar y pasar',()=>{
+        settings.impostors=1;startGame();
+        assert($('#secret-card').hidden,'La carta debe comenzar oculta.');
+        beginHold();advance(649);assert($('#secret-card').hidden,'La carta se abrió demasiado pronto.');
+        advance(1);assert(!$('#secret-card').hidden&&game.seen,'No se reveló la carta al mantener.');
+        stopHold();assert($('#secret-card').hidden&&!$('#next-player').disabled,'Soltar debe ocultar y permitir pasar.');
+        nextPlayer();assert(game.passIndex===1&&!game.seen&&$('#next-player').disabled,'El siguiente jugador heredó acceso.');
+      });
+      test('Votos individuales, selección única y recuento completo',()=>{
+        prepare();
+        assert(actions.querySelector('[data-action="confirm-vote"]').disabled,'Registrar debe estar bloqueado sin selección.');
+        registerVote();assert(!game.ballots.length,'Se registró un voto vacío.');
+        cast([0]);registerVote();assert(game.ballots.length===1,'Un doble registro duplicó el voto.');
+        assert(game.selectedVote===null&&!activeLayer.querySelector('[aria-pressed="true"]'),'El siguiente turno heredó la selección.');
+        assert(!app.querySelector('.view-exit [data-action="suspect"]'),'El voto anterior permanece visible.');
+        assert($('#voter-title').textContent===`Turno de voto: ${game.players[1].name}`,'Turno incorrecto.');
+        cast([0,0,1,1,2]);
+        assert(view==='voteSummary'&&game.ballots.length===6,'No se llegó al recuento.');
+        assert(game.tally.map(p=>p.count).join(',')==='3,2,1,0,0,0','Recuento incorrecto.');
+        assert(activeLayer.querySelectorAll('.vote-summary-row').length===6,'Faltan jugadores sin votos.');
+        assert(game.votes.join(',')==='0'&&!game.outcome,'Se reveló el resultado antes de solicitarlo.');
+      });
+      test('Suspenso de 4 segundos, pausa de 1,5 y última oportunidad',()=>{
+        beginReveal();advance(3999);
+        assert(game.revealStage==='processing'&&!activeLayer.querySelector('.dramatic-name'),'Se reveló el nombre antes de 4 segundos.');
+        advance(1);assert(game.revealStage==='name'&&!activeLayer.querySelector('.dramatic-verdict'),'Se filtró el veredicto con el nombre.');
+        advance(1499);assert(game.revealStage==='name','La micropausa fue demasiado corta.');
+        advance(1);assert(activeLayer.querySelector('.dramatic-verdict').textContent==='Y era... ¡EL IMPOSTOR!','Veredicto incorrecto.');
+        continueVerdict();assert(view==='guess','Debe conservar la oportunidad de adivinar.');
+        const before=sessionScore.innocents;finish('crew');finish('crew');
+        assert(sessionScore.innocents===before+1,'El resultado duplicó el marcador.');
+      });
+      test('Tripulante acusado y cancelación de la revelación',()=>{
+        prepare();cast([2,2,2,2,2,2]);beginReveal();advance(5500);
+        assert(activeLayer.querySelector('.dramatic-verdict').textContent==='Y era... TRIPULANTE','Un tripulante fue presentado como impostor.');
+        continueVerdict();assert(game.outcome==='impostors','Debe ganar el impostor si acusan a un tripulante.');
+        prepare();cast([0,0,0,0,0,0]);beginReveal();advance(2000);startGame();advance(8000);
+        assert(view==='pass'&&!revealStep,'Una revelación cancelada alteró la ronda nueva.');
+      });
+      test('Suspenso pausado al ocultar la página',()=>{
+        prepare();cast([0,0,0,0,0,0]);beginReveal();advance(2000);pauseReveal();advance(10000);
+        assert(game.revealStage==='processing','El suspenso avanzó mientras estaba pausado.');
+        resumeReveal();advance(1999);assert(game.revealStage==='processing','No conservó el tiempo restante.');
+        advance(1);assert(game.revealStage==='name','No reanudó el suspenso.');
+        cancelReveal();
+      });
+      test('Reanudar varias veces no duplica la revelación',()=>{
+        prepare();cast([0,0,0,0,0,0]);beginReveal();advance(30);resumeReveal();resumeReveal();
+        advance(3970);assert(game.revealStage==='name','No reveló el nombre a los cuatro segundos.');
+        advance(30);assert(game.revealStage==='name','Una reanudación duplicada adelantó el veredicto.');
+        advance(1470);assert(game.revealStage==='verdict','No completó la micropausa.');
+      });
+      test('Empate, desempate repetido y dos impostores',()=>{
+        prepare(2);cast([0,0,0,0,1,2]);
+        assert(game.lockedIds.join(',')==='0'&&game.tiedIds.join(',')==='1,2','No conservó el primer puesto al empatar el segundo.');
+        beginReveal();assert(view==='voteSummary','No debe revelar roles con un empate pendiente.');
+        beginVoting(true);assert(activeLayer.querySelector('[data-id="0"]').disabled,'El ganador previo no debe competir en el desempate.');
+        cast([1,2,1,2,1,2]);assert(game.tiedIds.length===2,'El empate repetido debe volver a resolverse.');
+        beginVoting(true);cast([1,1,1,1,1,2]);
+        assert(game.votes.join(',')==='0,1','El desempate perdió al ganador anterior.');
+        beginReveal();advance(5500);continueVerdict();
+        assert(game.revealIndex===1&&game.revealStage==='processing','Falta la segunda revelación con suspenso.');
+        advance(5500);continueVerdict();assert(view==='guess','Dos impostores descubiertos deben tener última oportunidad.');
+        const before=sessionScore.impostors;finish('guessed');assert(sessionScore.impostors===before+1,'Adivinar no concede la victoria.');
+      });
     }finally{
-      intervals.clear();Date.now=original.now;window.setInterval=original.setInterval;window.clearInterval=original.clearInterval;
+      cancelReveal();stopHold();intervals.clear();timeouts.clear();Date.now=original.now;performance.now=original.performanceNow;
+      window.setInterval=original.setInterval;window.clearInterval=original.clearInterval;window.setTimeout=original.setTimeout;window.clearTimeout=original.clearTimeout;
       randomIndex=original.randomIndex;requestWakeLock=original.requestWakeLock;
     }
     return results;
